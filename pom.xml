@@ -20,10 +20,15 @@
         <maven-compiler-plugin.version>3.14.0</maven-compiler-plugin.version>
         <maven-war-plugin.version>3.4.0</maven-war-plugin.version>
         <maven-dependency-plugin.version>3.8.1</maven-dependency-plugin.version>
-
         <maven-surefire-plugin.version>3.5.3</maven-surefire-plugin.version>
         <maven-failsafe-plugin.version>3.5.3</maven-failsafe-plugin.version>
         <maven-surefire-report-plugin.version>3.5.3</maven-surefire-report-plugin.version>
+		<!-- Maven 4 requires declarations of the plugins -->
+        <maven-clean-plugin.version>3.5.0</maven-clean-plugin.version>
+        <maven-resources-plugin.version>3.3.1</maven-resources-plugin.version>
+		
+		<!-- sonar report -->
+        <sonar-maven-plugin.version>5.1.0.4751</sonar-maven-plugin.version>
 
         <!-- Cargo maven plugin -->
         <!-- Since 1.10.1, it includes Glassfish 7 support -->
@@ -33,37 +38,51 @@
         <jakartaee-api.version>11.0.0</jakartaee-api.version>
         <slf4j.version>2.0.17</slf4j.version>
         <logback.version>1.5.18</logback.version>
-        <lombok.version>1.18.36</lombok.version>
+        <lombok.version>1.18.38</lombok.version>
 
         <!-- Hibernate 7.0.0 or higher implements JPA 3.2 -->
-        <hibernate.version>7.0.0.Final</hibernate.version>
+        <hibernate.version>7.0.6.Final</hibernate.version>
         <h2.version>2.3.232</h2.version>
-        <hibernate-validator.version>9.0.0.CR1</hibernate-validator.version>
-        <expressly.version>6.0.0-M2</expressly.version>
+        <hibernate-validator.version>9.0.0.Final</hibernate-validator.version>
+        <expressly.version>6.0.0</expressly.version>
 
         <!-- Arquillian BOM -->
-        <arquillian-bom.version>1.9.5.Final</arquillian-bom.version>
+        <arquillian-bom.version>1.10.0.Final</arquillian-bom.version>
         <!-- Since Aruqillian core 1.9.0.Final, need to add Aruqillian Jakarta BOM which aligns to Jakarta EE -->
         <arquillian-jakarta-bom.version>10.0.0.Final</arquillian-jakarta-bom.version>
         <shrinkwrap-resolver-bom.version>3.3.4</shrinkwrap-resolver-bom.version>
-        <junit-jupiter.version>5.13.1</junit-jupiter.version>
+        <junit-jupiter.version>5.13.3</junit-jupiter.version>
         <assertj.version>3.27.3</assertj.version>
         <awaitility.version>4.3.0</awaitility.version>
 
         <!-- Glassfish server -->
-        <glassfish.version>8.0.0-M11</glassfish.version>
+        <glassfish.version>8.0.0-M12</glassfish.version>
         <jersey.version>4.0.0-M2</jersey.version>
-        <eclipselink.version>5.0.0-B07</eclipselink.version>
+        <eclipselink.version>5.0.0-B09</eclipselink.version>
         <arquillian-glassfish.version>7.0.13</arquillian-glassfish.version>
+		
+		 <!-- Payara server -->
+        <payara.version>7.2025.1.Alpha1</payara.version>
+        <arquillian-payara.version>3.1</arquillian-payara.version>
 
         <!-- WildFly -->
-        <wildfly.version>36.0.0.Final</wildfly.version>
+        <wildfly.version>37.0.0.Beta1</wildfly.version>
         <wildfly-maven-plugin.version>5.1.3.Final</wildfly-maven-plugin.version>
+        <wildfly-arquillian.version>5.1.0.Beta11</wildfly-arquillian.version>
         <resteasy.version>7.0.0.Beta1</resteasy.version>
+		
+		<!-- OpenLiberty server -->
+        <liberty.runtime.version>25.0.0.8-beta</liberty.runtime.version>
+        <!-- WARNING: 10.15.x.x does not work with openliberty 20.0.0.1 -->
+        <derby.version>10.14.2.0</derby.version>
+        <liberty-maven-plugin.version>3.11.4</liberty-maven-plugin.version>
+        <!-- Jakarta EE 9 support see: https://github.com/OpenLiberty/liberty-arquillian/issues/71 -->
+        <arquillian-liberty-jakarta.version>2.1.3</arquillian-liberty-jakarta.version>
 
         <!-- by default skip tests -->
         <skip.unit.tests>false</skip.unit.tests>
         <skip.integration.tests>true</skip.integration.tests>
+        <commons-validator.version>1.10.0</commons-validator.version>
     </properties>
 
     <dependencyManagement>
@@ -126,14 +145,90 @@
         </dependencies>
     </dependencyManagement>
 
+    <dependencies>
+        <dependency>
+            <groupId>jakarta.platform</groupId>
+            <artifactId>jakarta.jakartaee-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>commons-validator</groupId>
+            <artifactId>commons-validator</artifactId>
+            <version>${commons-validator.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.persistence</groupId>
+            <artifactId>org.eclipse.persistence.jpa.modelgen.processor</artifactId>
+            <version>${eclipselink.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.arquillian.junit5</groupId>
+            <artifactId>arquillian-junit5-container</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- see: https://github.com/arquillian/arquillian-core/issues/248 -->
+        <!-- and https://github.com/arquillian/arquillian-core/pull/246/files -->
+        <dependency>
+            <groupId>org.jboss.arquillian.protocol</groupId>
+            <artifactId>arquillian-protocol-servlet-jakarta</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.shrinkwrap.resolver</groupId>
+            <artifactId>shrinkwrap-resolver-impl-maven</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.awaitility</groupId>
+            <artifactId>awaitility</artifactId>
+            <version>${awaitility.version}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
     <build>
         <finalName>${project.artifactId}</finalName>
         <pluginManagement>
             <plugins>
                 <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-clean-plugin</artifactId>
+                    <version>${maven-clean-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>${maven-resources-plugin.version}</version>
+                </plugin>
+                <plugin>
                     <groupId>org.codehaus.cargo</groupId>
                     <artifactId>cargo-maven3-plugin</artifactId>
                     <version>${cargo-maven3-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>io.openliberty.tools</groupId>
+                    <artifactId>liberty-maven-plugin</artifactId>
+                    <version>${liberty-maven-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.sonarsource.scanner.maven</groupId>
+                    <artifactId>sonar-maven-plugin</artifactId>
+                    <version>${sonar-maven-plugin.version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -142,7 +237,7 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven-compiler-plugin.version}</version>
-				<configuration>
+		        <configuration>
                     <annotationProcessorPaths>
                         <annotationProcessorPath>
                             <groupId>org.eclipse.persistence</groupId>
@@ -266,6 +361,66 @@
                 </plugins>
             </build>
         </profile>
+		<profile>
+            <id>payara</id>
+            <properties>
+                <glassfish.home>${project.build.directory}/payara6</glassfish.home>
+                <glassfish.domainDir>${glassfish.home}/glassfish/domains</glassfish.domainDir>
+                <glassfish.domainName>domain1</glassfish.domainName>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-dependency-plugin</artifactId>
+                        <version>${maven-dependency-plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <id>unpack</id>
+                                <phase>process-resources</phase>
+                                <goals>
+                                    <goal>unpack</goal>
+                                </goals>
+                                <configuration>
+                                    <artifactItems>
+                                        <artifactItem>
+                                            <groupId>fish.payara.distributions</groupId>
+                                            <artifactId>payara</artifactId>
+                                            <version>${payara.version}</version>
+                                            <type>zip</type>
+                                            <overWrite>false</overWrite>
+                                            <outputDirectory>${project.build.directory}</outputDirectory>
+                                        </artifactItem>
+                                    </artifactItems>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.codehaus.cargo</groupId>
+                        <artifactId>cargo-maven3-plugin</artifactId>
+                        <version>${cargo-maven3-plugin.version}</version>
+                        <configuration>
+                            <container>
+                                <containerId>payara</containerId>
+                                <type>installed</type>
+                                <home>${glassfish.home}</home>
+                            </container>
+                            <configuration>
+                                <type>existing</type> <!-- standalone type will create a new domain
+                                for deployment -->
+                                <home>${glassfish.domainDir}</home>
+                                <properties>
+                                    <cargo.glassfish.domain.name>${glassfish.domainName}</cargo.glassfish.domain.name>
+                                    <cargo.remote.timeout>600000</cargo.remote.timeout>
+                                    <cargo.remote.password/>
+                                </properties>
+                            </configuration>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
         <profile>
             <id>wildfly</id>
             <properties>
@@ -347,6 +502,55 @@
                     <url>https://build.shibboleth.net/nexus/content/repositories/releases/</url>
                 </repository>
             </repositories>
+        </profile>
+		<profile>
+            <id>openliberty</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-dependency-plugin</artifactId>
+                        <version>${maven-dependency-plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <id>copy</id>
+                                <phase>process-resources</phase>
+                                <goals>
+                                    <goal>copy</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>org.apache.derby</groupId>
+                                    <artifactId>derby</artifactId>
+                                    <version>${derby.version}</version>
+                                    <type>jar</type>
+                                    <overWrite>false</overWrite>
+                                </artifactItem>
+                            </artifactItems>
+                            <outputDirectory>
+                                ${project.build.directory}/liberty/wlp/usr/shared/resources
+                            </outputDirectory>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>io.openliberty.tools</groupId>
+                        <artifactId>liberty-maven-plugin</artifactId>
+                        <configuration>
+                            <embedded>true</embedded>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+		<profile>
+            <id>unit-test</id>
+            <properties>
+                <skip.unit.tests>false</skip.unit.tests>
+                <skip.integration.tests>true</skip.integration.tests>
+            </properties>
         </profile>
         <profile>
             <id>arq-glassfish-managed</id>
@@ -436,6 +640,488 @@
                 </plugins>
             </build>
         </profile>
+		<profile>
+            <id>arq-payara-managed</id>
+            <properties>
+                <skip.unit.tests>true</skip.unit.tests>
+                <skip.integration.tests>false</skip.integration.tests>
+            </properties>
+            <dependencies>
+                <!-- Jersey Client-->
+                <dependency>
+                    <groupId>org.glassfish.jersey.media</groupId>
+                    <artifactId>jersey-media-multipart</artifactId>
+                    <version>${jersey.version}</version>
+                    <scope>test</scope>
+                </dependency>
+                <dependency>
+                    <groupId>org.glassfish.jersey.media</groupId>
+                    <artifactId>jersey-media-json-binding</artifactId>
+                    <version>${jersey.version}</version>
+                    <scope>test</scope>
+                </dependency>
+                <dependency>
+                    <groupId>org.glassfish.jersey.inject</groupId>
+                    <artifactId>jersey-hk2</artifactId>
+                    <version>${jersey.version}</version>
+                    <scope>test</scope>
+                </dependency>
+                <dependency>
+                    <groupId>org.glassfish.jersey.core</groupId>
+                    <artifactId>jersey-client</artifactId>
+                    <version>${jersey.version}</version>
+                    <scope>test</scope>
+                </dependency>
+                <!-- Payara Server Container adaptor -->
+                <dependency>
+                    <groupId>fish.payara.arquillian</groupId>
+                    <artifactId>arquillian-payara-server-managed</artifactId>
+                    <version>${arquillian-payara.version}</version>
+                    <scope>test</scope>
+                </dependency>
+            </dependencies>
+            <build>
+                <testResources>
+                    <testResource>
+                        <directory>src/test/resources</directory>
+                    </testResource>
+                    <testResource>
+                        <directory>src/test/arq-payara-managed</directory>
+                    </testResource>
+                </testResources>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-dependency-plugin</artifactId>
+                        <version>${maven-dependency-plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <id>unpack</id>
+                                <phase>pre-integration-test</phase>
+                                <goals>
+                                    <goal>unpack</goal>
+                                </goals>
+                                <configuration>
+                                    <artifactItems>
+                                        <artifactItem>
+                                            <groupId>fish.payara.distributions</groupId>
+                                            <artifactId>payara</artifactId>
+                                            <version>${payara.version}</version>
+                                            <type>zip</type>
+                                            <overWrite>false</overWrite>
+                                            <outputDirectory>${project.build.directory}</outputDirectory>
+                                        </artifactItem>
+                                    </artifactItems>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-failsafe-plugin</artifactId>
+                        <version>${maven-failsafe-plugin.version}</version>
+                        <configuration>
+                            <systemPropertyVariables>
+                                <payara.home>${project.build.directory}/payara6</payara.home>
+                                <arquillian.launch>payara-managed</arquillian.launch>
+                            </systemPropertyVariables>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <!-- An optional Arquillian testing profile that executes tests in your
+                WildFly instance -->
+            <!-- This profile will start a new WildFly instance, and execute the test,
+                shutting it down when done -->
+            <!-- Run with: mvn clean verify -Parq-wildfly-managed -->
+            <id>arq-wildfly-managed</id>
+            <properties>
+                <skip.unit.tests>true</skip.unit.tests>
+                <skip.integration.tests>false</skip.integration.tests>
+                <wildfly.artifactId>wildfly-preview-dist</wildfly.artifactId>
+                <serverProfile>standalone-full.xml</serverProfile>
+                <serverRoot>${project.build.directory}/wildfly-preview-${wildfly.version}</serverRoot>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>org.hibernate.orm</groupId>
+                    <artifactId>hibernate-core</artifactId>
+                    <version>${hibernate.version}</version>
+                    <scope>provided</scope>
+                </dependency>
+                <!--<dependency>
+                    <groupId>io.undertow</groupId>
+                    <artifactId>undertow-websockets-jsr</artifactId>
+                    <version>${undertow-websockets-jsr.version}</version>
+                    <scope>test</scope>
+                </dependency>-->
+
+                <!-- TESTS -->
+                <!-- JAXRS test need the dependency:resteasy-client -->
+                <!-- Import the RestEasy Client and jackson2/json-binding/json-p provider, we use
+                test scope
+                    as we need that for test purposes -->
+                <dependency>
+                    <groupId>org.jboss.resteasy</groupId>
+                    <artifactId>resteasy-client</artifactId>
+                    <version>${resteasy.version}</version>
+                    <scope>test</scope>
+                </dependency>
+                <dependency>
+                    <groupId>org.jboss.resteasy</groupId>
+                    <artifactId>resteasy-jackson2-provider</artifactId>
+                    <version>${resteasy.version}</version>
+                    <scope>test</scope>
+                </dependency>
+
+                <dependency>
+                    <groupId>org.wildfly.arquillian</groupId>
+                    <artifactId>wildfly-arquillian-container-managed</artifactId>
+                    <version>${wildfly-arquillian.version}</version>
+                    <scope>test</scope>
+                </dependency>
+            </dependencies>
+
+            <build>
+                <testResources>
+                    <testResource>
+                        <directory>src/test/arq-wildfly-managed</directory>
+                        <includes>
+                            <include>*</include>
+                        </includes>
+                    </testResource>
+                    <testResource>
+                        <directory>src/test/resources</directory>
+                    </testResource>
+                </testResources>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <version>${maven-compiler-plugin.version}</version>
+                        <configuration>
+                            <annotationProcessorPaths>
+                                <annotationProcessorPath>
+                                    <groupId>org.projectlombok</groupId>
+                                    <artifactId>lombok</artifactId>
+                                    <version>${lombok.version}</version>
+                                </annotationProcessorPath>
+                                <annotationProcessorPath>
+                                    <groupId>org.hibernate.orm</groupId>
+                                    <artifactId>hibernate-processor</artifactId>
+                                    <version>${hibernate.version}</version>
+                                </annotationProcessorPath>
+                            </annotationProcessorPaths>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-dependency-plugin</artifactId>
+                        <version>${maven-dependency-plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <id>unpack</id>
+                                <phase>pre-integration-test</phase>
+                                <goals>
+                                    <goal>unpack</goal>
+                                </goals>
+                                <configuration>
+                                    <artifactItems>
+                                        <artifactItem>
+                                            <groupId>org.wildfly</groupId>
+                                            <artifactId>${wildfly.artifactId}</artifactId>
+                                            <version>${wildfly.version}</version>
+                                            <type>zip</type>
+                                            <overWrite>false</overWrite>
+                                            <outputDirectory>${project.build.directory}</outputDirectory>
+                                        </artifactItem>
+                                    </artifactItems>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <artifactId>maven-failsafe-plugin</artifactId>
+                        <version>${maven-failsafe-plugin.version}</version>
+                        <configuration>
+                            <environmentVariables>
+                                <JBOSS_HOME>${project.build.directory}/wildfly-preview-${wildfly.version}</JBOSS_HOME>
+                            </environmentVariables>
+                            <systemPropertyVariables>
+                                <arquillian.launch>wildfly</arquillian.launch>
+                            </systemPropertyVariables>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+		<profile>
+            <!-- Run with: mvn clean verify -Parq-liberty-managed -->
+            <id>arq-liberty-managed</id>
+            <properties>
+                <skip.unit.tests>true</skip.unit.tests>
+                <skip.integration.tests>false</skip.integration.tests>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>io.openliberty.arquillian</groupId>
+                    <artifactId>arquillian-liberty-managed-jakarta</artifactId>
+                    <version>${arquillian-liberty-jakarta.version}</version>
+                </dependency>
+                <!--It
+                seems OpenLiberty 21.0.0.1 beta switched to use Resteasy as Jakarta Restful WS
+                provider.
+                But there is no official public version for Jakarta EE 9 in the Maven central repository.
+                Use Jersey Client in the test codes here.-->
+
+                <dependency>
+                    <groupId>org.glassfish.jersey.media</groupId>
+                    <artifactId>jersey-media-json-binding</artifactId>
+                    <version>${jersey.version}</version>
+                    <scope>test</scope>
+                </dependency>
+                <dependency>
+                    <groupId>org.glassfish.jersey.inject</groupId>
+                    <artifactId>jersey-hk2</artifactId>
+                    <version>${jersey.version}</version>
+                    <scope>test</scope>
+                </dependency>
+
+                <dependency>
+                    <groupId>org.glassfish.jersey.core</groupId>
+                    <artifactId>jersey-client</artifactId>
+                    <version>${jersey.version}</version>
+                    <scope>test</scope>
+                </dependency>
+            </dependencies>
+            <build>
+                <testResources>
+                    <testResource>
+                        <directory>src/test/arq-liberty-managed</directory>
+                        <includes>
+                            <include>*</include>
+                        </includes>
+                        <excludes>
+                            <exclude>server.xml</exclude>
+                        </excludes>
+                    </testResource>
+                    <testResource>
+                        <directory>src/test/arq-liberty-managed</directory>
+                        <includes>
+                            <include>server.xml</include>
+                        </includes>
+                        <targetPath>
+                            ${project.build.directory}/wlp/usr/servers/defaultServer
+                        </targetPath>
+                    </testResource>
+                    <testResource>
+                        <directory>src/test/resources</directory>
+                    </testResource>
+                </testResources>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-dependency-plugin</artifactId>
+                        <version>${maven-dependency-plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <id>copy</id>
+                                <phase>process-test-resources</phase>
+                                <goals>
+                                    <goal>copy</goal>
+                                </goals>
+                                <configuration>
+                                    <artifactItems>
+                                        <artifactItem>
+                                            <groupId>org.apache.derby</groupId>
+                                            <artifactId>derby</artifactId>
+                                            <version>${derby.version}</version>
+                                            <type>jar</type>
+                                            <overWrite>false</overWrite>
+                                        </artifactItem>
+                                    </artifactItems>
+                                    <outputDirectory>${project.build.directory}/wlp/usr/shared/resources
+                                    </outputDirectory>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>unpack</id>
+                                <phase>pre-integration-test</phase>
+                                <goals>
+                                    <goal>unpack</goal>
+                                </goals>
+                                <configuration>
+                                    <artifactItems>
+                                        <artifactItem>
+                                            <groupId>io.openliberty</groupId>
+                                            <artifactId>openliberty-runtime</artifactId>
+                                            <version>${liberty.runtime.version}</version>
+                                            <type>zip</type>
+                                            <overWrite>false</overWrite>
+                                            <outputDirectory>${project.build.directory}</outputDirectory>
+                                        </artifactItem>
+                                        <artifactItem>
+                                            <groupId>io.openliberty.arquillian</groupId>
+                                            <artifactId>arquillian-liberty-support-jakarta</artifactId>
+                                            <version>${arquillian-liberty-jakarta.version}</version>
+                                            <type>zip</type>
+                                            <classifier>feature</classifier>
+                                            <overWrite>false</overWrite>
+                                            <outputDirectory>${project.build.directory}/wlp/usr</outputDirectory>
+                                        </artifactItem>
+                                    </artifactItems>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <artifactId>maven-failsafe-plugin</artifactId>
+                        <version>${maven-failsafe-plugin.version}</version>
+                        <configuration>
+                            <environmentVariables>
+                                <!-- WLP_HOME is not picked by arquillian liberty -->
+                                <!--<WLP_HOME>${project.build.directory}/wlp</WLP_HOME>-->
+                            </environmentVariables>
+                            <systemPropertyVariables>
+                                <arquillian.launch>liberty-managed</arquillian.launch>
+                                <java.util.logging.config.file>
+                                    ${project.build.testOutputDirectory}/logging.properties
+                                </java.util.logging.config.file>
+                            </systemPropertyVariables>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+		
+		<profile>
+            <id>coverage</id>
+            <properties>
+                <jacoco.version>0.8.13</jacoco.version>
+                <asm.version>9.8</asm.version>
+                <arquillian-jacoco.version>1.1.0</arquillian-jacoco.version>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>org.jboss.arquillian.extension</groupId>
+                    <artifactId>arquillian-jacoco</artifactId>
+                    <version>${arquillian-jacoco.version}</version>
+                    <scope>test</scope>
+                </dependency>
+                <!-- https://mvnrepository.com/artifact/org.ow2.asm/asm -->
+                <dependency>
+                    <groupId>org.ow2.asm</groupId>
+                    <artifactId>asm</artifactId>
+                    <version>${asm.version}</version>
+                    <scope>test</scope>
+                </dependency>
+                <!-- https://mvnrepository.com/artifact/org.ow2.asm/asm-util -->
+                <dependency>
+                    <groupId>org.ow2.asm</groupId>
+                    <artifactId>asm-util</artifactId>
+                    <version>${asm.version}</version>
+                    <scope>test</scope>
+                </dependency>
+                <!-- https://mvnrepository.com/artifact/org.jacoco/org.jacoco.core -->
+                <dependency>
+                    <groupId>org.jacoco</groupId>
+                    <artifactId>org.jacoco.core</artifactId>
+                    <version>${jacoco.version}</version>
+                    <scope>test</scope>
+                </dependency>
+                <!-- https://mvnrepository.com/artifact/org.jacoco/org.jacoco.agent -->
+                <dependency>
+                    <groupId>org.jacoco</groupId>
+                    <artifactId>org.jacoco.agent</artifactId>
+                    <version>${jacoco.version}</version>
+                    <scope>test</scope>
+                </dependency>
+            </dependencies>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.jacoco</groupId>
+                        <artifactId>jacoco-maven-plugin</artifactId>
+                        <version>${jacoco.version}</version>
+                        <configuration>
+                            <excludes>
+                                <!-- excludes the resources not to calculated in coverage report-->
+                                <exclude>**/*Resource.*</exclude>
+                            </excludes>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>default-prepare-agent</id>
+                                <phase>process-test-classes</phase>
+                                <goals>
+                                    <goal>prepare-agent</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>default-prepare-agent-integration</id>
+                                <phase>pre-integration-test</phase>
+                                <goals>
+                                    <goal>prepare-agent-integration</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>merge-results</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>merge</goal>
+                                </goals>
+                                <configuration>
+                                    <fileSets>
+                                        <fileSet>
+                                            <directory>${project.build.directory}</directory>
+                                            <includes>
+                                                <include>jacoco.exec</include>
+                                                <include>jacoco-it.exec</include>
+                                            </includes>
+                                        </fileSet>
+                                    </fileSets>
+                                    <destFile>${project.build.directory}/jacoco-aggregate.exec</destFile>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>post-merge-report</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>report</goal>
+                                </goals>
+                                <configuration>
+                                    <dataFile>${project.build.directory}/jacoco-aggregate.exec</dataFile>
+                                </configuration>
+                            </execution>
+                            <!-- <execution>
+                                 <id>default-check</id>
+                                 <goals>
+                                     <goal>check</goal>
+                                 </goals>
+                                 <configuration>
+                                     <rules>
+                                         <rule>
+                                             <element>BUNDLE</element>
+                                             <limits>
+                                                 <limit>
+                                                     <counter>COMPLEXITY</counter>
+                                                     <value>COVEREDRATIO</value>
+                                                     <minimum>0.60</minimum>
+                                                 </limit>
+                                             </limits>
+                                         </rule>
+                                     </rules>
+                                     <dataFile>${project.build.directory}/jacoco-aggregate.exec</dataFile>
+                                 </configuration>
+                             </execution>-->
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        
     </profiles>
 
     <pluginRepositories>
