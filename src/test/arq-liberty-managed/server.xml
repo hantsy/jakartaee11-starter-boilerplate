@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<server description="new server">
+
+    <!-- Enable features -->
+    <featureManager>
+        <feature>jakartaee-10.0</feature>
+        <feature>usr:arquillian-support-jakarta-2.1</feature>
+        <feature>localConnector-1.0</feature>
+    </featureManager>
+
+    <cdi emptyBeansXmlCDI3Compatibility="true"/>
+    
+    <!-- To access this server from a remote client add a host attribute to the following element, e.g. host="*" -->
+    <httpEndpoint id="defaultHttpEndpoint"
+                  httpPort="9080"
+                  httpsPort="9443" />
+                  
+    <!-- Automatically expand WAR files and EAR files -->
+    <applicationManager updateTrigger="mbean"  autoExpand="true"/>
+
+    <!-- see: https://rieckpil.de/howto-simple-jms-application-with-the-embedded-messaging-engine-in-open-liberty/-->
+    <messagingEngine>
+        <queue id="HelloQueue"/>
+    </messagingEngine>
+
+    <!--<jmsQueueConnectionFactory jndiName="java:comp/DefaultJMSConnectionFactory">
+        <properties.wasJms remoteServerAddress="localhost:7276:BootStrapBasicMessaging" />
+    </jmsQueueConnectionFactory>-->
+
+    <jmsQueue id="jms/HelloQueue" jndiName="java:app/jms/HelloQueue">
+        <properties.wasJms queueName="HelloQueue"/>
+    </jmsQueue>
+
+    <jmsActivationSpec id="jms/HelloConsumer">
+        <properties.wasJms
+                destinationRef="jms/HelloQueue"
+                destinationType="jakarta.jms.Queue"
+        /><!-- remoteServerAddress="localhost:7276:BootstrapBasicMessaging" -->
+    </jmsActivationSpec>
+
+    <!-- Derby Library Configuration -->
+    <library id="derbyJDBCLib">
+        <fileset dir="${shared.resource.dir}" includes="derby*.jar"/>
+    </library>
+
+    <!-- Datasource Configuration -->
+    <!-- remove jndiName="" to serve java:comp/DefaultDataSource for Java EE 7 or above -->
+    <dataSource id="DefaultDataSource">
+        <jdbcDriver libraryRef="derbyJDBCLib" />
+        <properties.derby.embedded databaseName="ExampleDb" createDatabase="create"/>
+    </dataSource>
+
+</server>
