@@ -25,5 +25,5 @@ jobs:
           java-version: "21"
           cache: "maven"
 
-      - name: Run integration test with -Parq-payara-managed
+      - name: Build with Maven
         run: mvn -B clean verify -Parq-payara-managed
