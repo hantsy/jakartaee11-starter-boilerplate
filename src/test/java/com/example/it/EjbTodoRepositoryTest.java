@@ -35,7 +35,7 @@ public class EjbTodoRepositoryTest {
                 .addPackage(Todo.class.getPackage())
                 .addClasses(EjbTodoRepository.class, EntityRepository.class)
                 .addClass(DbUtil.class)
-                .addAsResource("test-persistence.xml", "META-INF/persistence.xml")
+                .addAsManifestResource("test-persistence.xml", "persistence.xml")
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
     }
 

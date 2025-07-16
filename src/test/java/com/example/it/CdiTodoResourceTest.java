@@ -57,7 +57,7 @@ public class CdiTodoResourceTest {
                         RestActivator.class,
                         UpdateTodoCommand.class,
                         TodoNotFoundExceptionMapper.class)
-                .addAsResource("test-persistence.xml", "META-INF/persistence.xml")
+                .addAsManifestResource("test-persistence.xml", "persistence.xml")
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
         LOGGER.log(Level.INFO, "war archive: {0}", war.toString(true));
         return war;

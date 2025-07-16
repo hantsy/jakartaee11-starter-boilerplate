@@ -15,6 +15,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.logging.Logger;
 
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ExtendWith(ArquillianExtension.class)
@@ -44,7 +45,7 @@ public class HelloJmsTest {
         JMSConsumer consumer = jmsContext.createConsumer(helloQueue);
         sender.sayHellFromJms();
         Message message = consumer.receive(1000);
-        assertTrue(message instanceof TextMessage);
+        assertInstanceOf(TextMessage.class, message);
         String text = message.getBody(String.class);
         LOGGER.info("message text:" + text);
         assertTrue(text.startsWith("Hello JMS"));
