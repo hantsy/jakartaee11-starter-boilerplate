@@ -61,7 +61,7 @@
 
         <!-- Payara server -->
         <payara.version>7.2025.1.Alpha3</payara.version>
-        <arquillian-payara.version>3.1</arquillian-payara.version>
+        <arquillian-payara.version>4.0.alpha2</arquillian-payara.version>
 
         <!-- WildFly -->
         <wildfly.version>37.0.0.Beta1</wildfly.version>
