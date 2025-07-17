@@ -32,7 +32,8 @@ public class CdiTodoRepositoryTest {
                 .addPackage(Todo.class.getPackage())
                 .addPackage(CdiTodoRepository.class.getPackage())
                 .addClass(DbUtil.class)
-                .addAsManifestResource("test-persistence.xml", "persistence.xml")
+                // copy persistence to /WEB-INF/classes/META-INF/
+                .addAsResource("test-persistence.xml", "/META-INF/persistence.xml")
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
         LOGGER.log(Level.INFO, "deployment war:{0}", new Object[]{webArchive.toString(true)});
         return webArchive;
