@@ -27,13 +27,13 @@
         <properties.wasJms remoteServerAddress="localhost:7276:BootStrapBasicMessaging" />
     </jmsQueueConnectionFactory>-->
 
-    <jmsQueue id="jms/HelloQueue" jndiName="java:app/jms/HelloQueue">
+    <jmsQueue id="helloQueue" jndiName="jms/HelloQueue">
         <properties.wasJms queueName="HelloQueue"/>
     </jmsQueue>
 
-    <jmsActivationSpec id="jms/HelloConsumer">
+    <jmsActivationSpec id="helloConsumer">
         <properties.wasJms
-                destinationRef="jms/HelloQueue"
+                destinationRef="helloQueue"
                 destinationType="jakarta.jms.Queue"
         /><!-- remoteServerAddress="localhost:7276:BootstrapBasicMessaging" -->
     </jmsActivationSpec>

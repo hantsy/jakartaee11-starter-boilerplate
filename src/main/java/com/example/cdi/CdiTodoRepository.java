@@ -3,6 +3,7 @@ package com.example.cdi;
 import com.example.domain.Todo;
 import com.example.domain.Todo_;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.criteria.*;
@@ -14,7 +15,8 @@ import java.util.UUID;
 @ApplicationScoped
 public class CdiTodoRepository implements CrudRepository<Todo, UUID> {
 
-    @PersistenceContext
+    //@PersistenceContext
+    @Inject
     EntityManager entityManager;
 
     @Override

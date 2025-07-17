@@ -7,7 +7,7 @@ import jakarta.jms.JMSDestinationDefinitions;
 
 @JMSDestinationDefinitions({
         @JMSDestinationDefinition(
-                name = "java:app/jms/HelloQueue",
+                name = "jms/HelloQueue",
                 // resourceAdapter = "jmsra",
                 interfaceName = "jakarta.jms.Queue",
                 destinationName = "HelloQueue")
