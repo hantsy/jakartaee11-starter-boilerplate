@@ -1,5 +1,7 @@
 @SequenceGenerator(
-        name = "TASK_SEQ", allocationSize = 25
+        name = "todo_gen",
+        sequenceName = "todo_seq",
+        allocationSize = 25
 )
 package com.example.domain;
 
