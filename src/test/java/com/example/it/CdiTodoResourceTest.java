@@ -49,7 +49,6 @@ public class CdiTodoResourceTest {
     public static WebArchive createDeployment() {
         WebArchive war = ShrinkWrap.create(WebArchive.class, "test.war")
                 .addPackage(Todo.class.getPackage())
-                .addPackage(EjbTodoRepository.class.getPackage())
                 .addPackage(CdiTodoRepository.class.getPackage())
                 .addClasses(
                         CdiTodoResource.class,
