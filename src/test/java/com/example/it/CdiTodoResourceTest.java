@@ -1,37 +1,8 @@
 package com.example.it;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-
-import java.net.URL;
-import java.util.List;
-import java.util.UUID;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.junit5.ArquillianExtension;
-import org.jboss.arquillian.test.api.ArquillianResource;
-import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.asset.EmptyAsset;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
-import org.junit.jupiter.api.extension.ExtendWith;
-
 import com.example.cdi.CdiTodoRepository;
 import com.example.domain.Todo;
-import com.example.ejb.EjbTodoRepository;
-import com.example.rest.CdiTodoResource;
-import com.example.rest.CreateTodoCommand;
-import com.example.rest.RestActivator;
-import com.example.rest.TodoNotFoundExceptionMapper;
-import com.example.rest.UpdateTodoCommand;
-
+import com.example.rest.*;
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.Entity;
@@ -39,6 +10,24 @@ import jakarta.ws.rs.client.WebTarget;
 import jakarta.ws.rs.core.GenericType;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.arquillian.test.api.ArquillianResource;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.EmptyAsset;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.extension.ExtendWith;
+
+import java.net.URI;
+import java.net.URL;
+import java.util.List;
+import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ExtendWith(ArquillianExtension.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -70,7 +59,7 @@ public class CdiTodoResourceTest {
 
     @BeforeEach
     public void setup() {
-        LOGGER.log(Level.INFO, "base URL:{0}", new Object[] { baseUrl });
+        LOGGER.log(Level.INFO, "base URL:{0}", new Object[]{baseUrl});
         this.client = ClientBuilder.newClient();
         // this.client.register()
     }
@@ -86,7 +75,7 @@ public class CdiTodoResourceTest {
     @Order(1)
     public void testTodosAPI() throws Exception {
         LOGGER.log(Level.INFO, " Running test:: testTodosAPI ... ");
-        final WebTarget allTodosTarget = client.target(new URL(baseUrl, "api/cditodos").toExternalForm());
+        final WebTarget allTodosTarget = client.target(URI.create(baseUrl + "api/cditodos"));
         try (final Response allTodos = allTodosTarget.request()
                 .accept(MediaType.APPLICATION_JSON)
                 .get()) {
@@ -101,7 +90,7 @@ public class CdiTodoResourceTest {
     public void testTodoNotFound() throws Exception {
         LOGGER.log(Level.INFO, " Running test:: testTodoNotFound ... ");
         final WebTarget getByIdTarget = client
-                .target(new URL(baseUrl, "api/cditodos/" + UUID.randomUUID()).toExternalForm());
+                .target(URI.create(baseUrl + "api/cditodos/" + new Random().nextLong(10_000)));
         try (final Response getById = getByIdTarget.request()
                 .accept(MediaType.APPLICATION_JSON)
                 .get()) {
@@ -113,7 +102,7 @@ public class CdiTodoResourceTest {
     @Order(3)
     public void testCreateTodoAPI() throws Exception {
         LOGGER.log(Level.INFO, " Running test:: testCreateTodoAPI ... ");
-        final WebTarget createTodoTarget = client.target(new URL(baseUrl, "api/cditodos").toExternalForm());
+        final WebTarget createTodoTarget = client.target(URI.create(baseUrl + "api/cditodos"));
         var body = new CreateTodoCommand("test");
         try (final Response createTodoResponse = createTodoTarget.request()
                 .post(Entity.json(body))) {

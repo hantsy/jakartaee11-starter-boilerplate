@@ -7,5 +7,5 @@ import jakarta.data.repository.Repository;
 import java.util.UUID;
 
 @Repository
-public interface DataTodoRepository extends CrudRepository<Todo, UUID> {
+public interface DataTodoRepository extends CrudRepository<Todo, Long> {
 }

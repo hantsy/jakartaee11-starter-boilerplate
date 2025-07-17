@@ -12,7 +12,7 @@ import java.time.Instant;
 public class AbstractEntity<ID extends Serializable> implements Auditable, Persistable<ID> {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private ID id;
 
     private Instant createdAt;

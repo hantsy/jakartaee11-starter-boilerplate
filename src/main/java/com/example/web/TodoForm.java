@@ -2,29 +2,27 @@ package com.example.web;
 
 import jakarta.validation.constraints.NotBlank;
 
-import java.util.UUID;
-
 
 public class TodoForm {
-    UUID id;
-    
+    Long id;
+
     @NotBlank
     String title;
 
-    public TodoForm(UUID id, String title) {
+    public TodoForm(Long id, String title) {
         this.id = id;
         this.title = title;
     }
 
     public TodoForm() {
     }
-    
 
-    public UUID getId() {
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -40,8 +38,8 @@ public class TodoForm {
     public String toString() {
         return "TodoForm{" + "id=" + id + ", title=" + title + '}';
     }
-    
-    
+
+
 }
 
 //public record TodoForm(

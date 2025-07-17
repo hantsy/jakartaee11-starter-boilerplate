@@ -69,20 +69,20 @@ public class TodoList implements Serializable {
         facesContext.addMessage(null,new FacesMessage("Todo was saved sucessfully."));
     }
 
-    public void editTodo(UUID id) {
+    public void editTodo(Long id) {
         LOGGER.log(Level.INFO, "editting todo:{0}", new Object[]{id});
         var todo = todoRepository.findById(id);
         this.form = new TodoForm(todo.getId(), todo.getTitle());
     }
 
-    public void deleteTodo(UUID id) {
+    public void deleteTodo(Long id) {
         LOGGER.log(Level.INFO, "deleting todo:{0}", new Object[]{id});
         todoRepository.deleteById(id);
         loadTodos();
         facesContext.addMessage(null,new FacesMessage("Todo '%s' was deleted sucessfully.".formatted(id.toString())));
     }
     
-    public void toggleCompletedStatus(UUID id) {
+    public void toggleCompletedStatus(Long id) {
          LOGGER.log(Level.INFO, "toggle status:{0}", new Object[]{id});
         var todo = todoRepository.findById(id);
         if(todo.isCompleted()) {

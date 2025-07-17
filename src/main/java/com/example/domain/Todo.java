@@ -8,7 +8,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "todos")
-public class Todo extends AbstractEntity<UUID> {
+public class Todo extends AbstractEntity<Long> {
     private String title;
 
     private boolean completed = false;

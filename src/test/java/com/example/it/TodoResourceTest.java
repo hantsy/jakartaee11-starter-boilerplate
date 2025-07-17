@@ -21,9 +21,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
+import java.net.URI;
 import java.net.URL;
 import java.util.List;
-import java.util.UUID;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -75,7 +76,7 @@ public class TodoResourceTest {
     @Test
     public void testTodosAPI() throws Exception {
         LOGGER.log(Level.INFO, " Running test:: testTodosAPI ... ");
-        final WebTarget allTodosTarget = client.target(new URL(baseUrl, "api/todos").toExternalForm());
+        final WebTarget allTodosTarget = client.target(URI.create(baseUrl + "api/todos"));
         try (final Response allTodos = allTodosTarget.request()
                 .accept(MediaType.APPLICATION_JSON)
                 .get()) {
@@ -93,7 +94,7 @@ public class TodoResourceTest {
     @Test
     public void testTodoNotFound() throws Exception {
         LOGGER.log(Level.INFO, " Running test:: testTodoNotFound ... ");
-        final WebTarget getByIdTarget = client.target(new URL(baseUrl, "api/todos/"+ UUID.randomUUID()).toExternalForm());
+        final WebTarget getByIdTarget = client.target(URI.create(baseUrl + "api/todos/" + new Random().nextLong(10_000)));
         try (final Response getById = getByIdTarget.request()
                 .accept(MediaType.APPLICATION_JSON)
                 .get()) {

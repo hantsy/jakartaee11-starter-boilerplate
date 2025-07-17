@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.UUID;
 
 @ApplicationScoped
-public class CdiTodoRepository implements CrudRepository<Todo, UUID> {
+public class CdiTodoRepository implements CrudRepository<Todo, Long> {
 
     //@PersistenceContext
     @Inject
@@ -41,7 +41,7 @@ public class CdiTodoRepository implements CrudRepository<Todo, UUID> {
         return this.entityManager.createQuery(query).getResultList();
     }
 
-    public void markAsCompleted(UUID id) {
+    public void markAsCompleted(Long id) {
         CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
         // create query for updating
         CriteriaUpdate<Todo> query = cb.createCriteriaUpdate(Todo.class);
@@ -56,7 +56,7 @@ public class CdiTodoRepository implements CrudRepository<Todo, UUID> {
         this.entityManager.createQuery(query).executeUpdate();
     }
 
-    public void markAsUnCompleted(UUID id) {
+    public void markAsUnCompleted(Long id) {
         CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
         // create query for updating
         CriteriaUpdate<Todo> query = cb.createCriteriaUpdate(Todo.class);

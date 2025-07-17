@@ -15,7 +15,7 @@ import java.util.UUID;
 @TransactionAttribute
 // CDI compatible @Transactional annotation does not work with EJB in OpenLiberty,
 // see: https://github.com/OpenLiberty/open-liberty/issues/25363
-public class EjbTodoRepository extends EntityRepository<Todo, UUID> {
+public class EjbTodoRepository extends EntityRepository<Todo, Long> {
 
     @PersistenceContext
     EntityManager entityManager;
@@ -43,7 +43,7 @@ public class EjbTodoRepository extends EntityRepository<Todo, UUID> {
         return this.entityManager.createQuery(query).getResultList();
     }
 
-    public void markAsCompleted(UUID id) {
+    public void markAsCompleted(Long id) {
         CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
         // create query for updating
         CriteriaUpdate<Todo> query = cb.createCriteriaUpdate(Todo.class);
@@ -58,7 +58,7 @@ public class EjbTodoRepository extends EntityRepository<Todo, UUID> {
         this.entityManager.createQuery(query).executeUpdate();
     }
 
-    public void markAsUnCompleted(UUID id) {
+    public void markAsUnCompleted(Long id) {
         CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
         // create query for updating
         CriteriaUpdate<Todo> query = cb.createCriteriaUpdate(Todo.class);

@@ -36,7 +36,7 @@ public class CdiTodoResource {
 
     @GET
     @Path("{id}")
-    public Response getById(@PathParam("id") UUID id) {
+    public Response getById(@PathParam("id") Long id) {
         return todoRepository.findOptionalById(id)
                 .map(todo -> Response.ok(todo).build())
                 .orElseThrow(() -> new TodoNotFoundException(id));
@@ -50,7 +50,7 @@ public class CdiTodoResource {
 
     @PUT
     @Path("{id}")
-    public Response updateById(@PathParam("id") UUID id, @Valid UpdateTodoCommand data) {
+    public Response updateById(@PathParam("id") Long id, @Valid UpdateTodoCommand data) {
         return todoRepository.findOptionalById(id)
                 .map(todo -> {
                     todo.setTitle(data.title());
@@ -61,21 +61,21 @@ public class CdiTodoResource {
 
     @DELETE
     @Path("{id}")
-    public Response deleteById(@PathParam("id") UUID id) {
+    public Response deleteById(@PathParam("id") Long id) {
         todoRepository.deleteById(id);
         return Response.noContent().build();
     }
 
     @POST
     @Path("{id}/completed")
-    public Response markAsCompleted(@PathParam("id") UUID id) {
+    public Response markAsCompleted(@PathParam("id") Long id) {
         todoRepository.markAsCompleted(id);
         return Response.noContent().build();
     }
 
     @DELETE
     @Path("{id}/completed")
-    public Response markAsUnCompleted(@PathParam("id") UUID id) {
+    public Response markAsUnCompleted(@PathParam("id") Long id) {
         todoRepository.markAsUnCompleted(id);
         return Response.noContent().build();
     }
