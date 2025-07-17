@@ -9,12 +9,11 @@ import jakarta.persistence.criteria.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @ApplicationScoped
 public class CdiTodoRepository implements CrudRepository<Todo, Long> {
 
-    //@PersistenceContext
+    // 3.2 support @Inject EntityManager/EFM to replace @PersistenceContext
     @Inject
     EntityManager entityManager;
 
