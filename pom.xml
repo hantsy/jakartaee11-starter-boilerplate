@@ -61,7 +61,7 @@
 
         <!-- Payara server -->
         <payara.version>7.2025.1.Alpha3</payara.version>
-        <arquillian-payara.version>4.0.alpha2</arquillian-payara.version>
+        <arquillian-payara.version>4.0.alpha3</arquillian-payara.version>
 
         <!-- WildFly -->
         <wildfly.version>37.0.0.Beta1</wildfly.version>
@@ -647,29 +647,11 @@
                 <skip.integration.tests>false</skip.integration.tests>
             </properties>
             <dependencies>
-                <!-- Jersey Client-->
+                <!-- Payara Client-->
                 <dependency>
-                    <groupId>org.glassfish.jersey.media</groupId>
-                    <artifactId>jersey-media-multipart</artifactId>
-                    <version>${jersey.version}</version>
-                    <scope>test</scope>
-                </dependency>
-                <dependency>
-                    <groupId>org.glassfish.jersey.media</groupId>
-                    <artifactId>jersey-media-json-binding</artifactId>
-                    <version>${jersey.version}</version>
-                    <scope>test</scope>
-                </dependency>
-                <dependency>
-                    <groupId>org.glassfish.jersey.inject</groupId>
-                    <artifactId>jersey-hk2</artifactId>
-                    <version>${jersey.version}</version>
-                    <scope>test</scope>
-                </dependency>
-                <dependency>
-                    <groupId>org.glassfish.jersey.core</groupId>
-                    <artifactId>jersey-client</artifactId>
-                    <version>${jersey.version}</version>
+                    <groupId>fish.payara.arquillian</groupId>
+                    <artifactId>payara-client-ee11</artifactId>
+                    <version>${arquillian-payara.version}</version>
                     <scope>test</scope>
                 </dependency>
                 <!-- Payara Server Container adaptor -->
