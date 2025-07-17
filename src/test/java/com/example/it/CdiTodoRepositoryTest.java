@@ -1,7 +1,6 @@
 package com.example.it;
 
 import com.example.cdi.CdiTodoRepository;
-import com.example.cdi.CrudRepository;
 import com.example.domain.Todo;
 import jakarta.annotation.Resource;
 import jakarta.inject.Inject;
@@ -13,7 +12,6 @@ import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -30,12 +28,14 @@ public class CdiTodoRepositoryTest {
 
     @Deployment
     public static WebArchive createDeployment() {
-        return ShrinkWrap.create(WebArchive.class, "test.war")
+        WebArchive webArchive = ShrinkWrap.create(WebArchive.class, "test.war")
                 .addPackage(Todo.class.getPackage())
                 .addPackage(CdiTodoRepository.class.getPackage())
                 .addClass(DbUtil.class)
                 .addAsManifestResource("test-persistence.xml", "persistence.xml")
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
+        LOGGER.log(Level.INFO, "deployment war:{0}", new Object[]{webArchive.toString(true)});
+        return webArchive;
     }
 
     @Inject

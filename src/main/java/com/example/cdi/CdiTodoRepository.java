@@ -5,7 +5,6 @@ import com.example.domain.Todo_;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.criteria.*;
 
 import java.util.ArrayList;

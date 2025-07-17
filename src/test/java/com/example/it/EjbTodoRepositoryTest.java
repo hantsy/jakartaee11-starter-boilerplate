@@ -31,12 +31,14 @@ public class EjbTodoRepositoryTest {
 
     @Deployment
     public static WebArchive createDeployment() {
-        return ShrinkWrap.create(WebArchive.class, "test.war")
+        WebArchive webArchive = ShrinkWrap.create(WebArchive.class, "test.war")
                 .addPackage(Todo.class.getPackage())
                 .addClasses(EjbTodoRepository.class, EntityRepository.class)
                 .addClass(DbUtil.class)
                 .addAsManifestResource("test-persistence.xml", "persistence.xml")
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
+        LOGGER.log(Level.INFO, "deployment war:{0}", new Object[]{webArchive.toString(true)});
+        return webArchive;
     }
 
     @EJB

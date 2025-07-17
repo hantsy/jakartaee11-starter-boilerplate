@@ -13,6 +13,7 @@ import jakarta.jms.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
@@ -24,11 +25,13 @@ public class HelloJmsTest {
     
     @Deployment
     public static JavaArchive createDeployment() {
-        return ShrinkWrap.create(JavaArchive.class)
+        JavaArchive javaArchive = ShrinkWrap.create(JavaArchive.class)
                 .addClass(JmsResources.class)
                 // .addClass(HelloConsumer.class)
                 .addClass(HelloSender.class)
                 .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
+        LOGGER.log(Level.INFO, "deployment war:{0}", new Object[]{javaArchive.toString(true)});
+        return javaArchive;
     }
     
     @Inject
