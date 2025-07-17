@@ -360,7 +360,7 @@
         <profile>
             <id>payara</id>
             <properties>
-                <glassfish.home>${project.build.directory}/payara6</glassfish.home>
+                <glassfish.home>${project.build.directory}/payara7</glassfish.home>
                 <glassfish.domainDir>${glassfish.home}/glassfish/domains</glassfish.domainDir>
                 <glassfish.domainName>domain1</glassfish.domainName>
             </properties>
@@ -719,7 +719,7 @@
                         <version>${maven-failsafe-plugin.version}</version>
                         <configuration>
                             <systemPropertyVariables>
-                                <payara.home>${project.build.directory}/payara6</payara.home>
+                                <payara.home>${project.build.directory}/payara7</payara.home>
                                 <arquillian.launch>payara-managed</arquillian.launch>
                             </systemPropertyVariables>
                         </configuration>
