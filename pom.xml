@@ -632,6 +632,9 @@
                             <environmentVariables>
                                 <GLASSFISH_HOME>${project.build.directory}/glassfish8</GLASSFISH_HOME>
                             </environmentVariables>
+                            <systemPropertyVariables>
+                                <arquillian.launch>glassfish-managed</arquillian.launch>
+                            </systemPropertyVariables>
                         </configuration>
                     </plugin>
                 </plugins>
@@ -842,7 +845,7 @@
                                 <JBOSS_HOME>${project.build.directory}/wildfly-preview-${wildfly.version}</JBOSS_HOME>
                             </environmentVariables>
                             <systemPropertyVariables>
-                                <arquillian.launch>wildfly</arquillian.launch>
+                                <arquillian.launch>wildfly-managed</arquillian.launch>
                             </systemPropertyVariables>
                         </configuration>
                     </plugin>
