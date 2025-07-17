@@ -79,8 +79,13 @@ public class TodoResourceTest {
                 .accept(MediaType.APPLICATION_JSON)
                 .get()) {
             assertEquals(200, allTodos.getStatus());
-            assertEquals(2, allTodos.readEntity(new GenericType<List<Todo>>() {/* empty body */
-            }).size());
+
+            //@formatter:off
+            List<Todo> todos = allTodos.readEntity(new GenericType<>() { });
+            //@formatter:on
+
+            LOGGER.log(Level.INFO, " Get /todods response: {0} ", todos);
+            assertEquals(4, todos.size());
         }
     }
 

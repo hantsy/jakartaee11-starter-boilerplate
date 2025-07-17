@@ -14,6 +14,7 @@ import java.util.logging.Logger;
 @Singleton
 public class DataInitializer {
     private static Logger LOG = Logger.getLogger(DataInitializer.class.getName());
+
     @Inject
     EjbTodoRepository todoRepository;
 

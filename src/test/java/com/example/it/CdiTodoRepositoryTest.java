@@ -32,7 +32,7 @@ public class CdiTodoRepositoryTest {
     public static WebArchive createDeployment() {
         return ShrinkWrap.create(WebArchive.class, "test.war")
                 .addPackage(Todo.class.getPackage())
-                .addClasses(CdiTodoRepository.class, CrudRepository.class)
+                .addPackage(CdiTodoRepository.class.getPackage())
                 .addClass(DbUtil.class)
                 .addAsManifestResource("test-persistence.xml", "persistence.xml")
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
