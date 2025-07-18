@@ -40,7 +40,7 @@ public class HelloJmsTest {
     @Inject
     JMSContext jmsContext;
     
-    @Resource(lookup = "jms/HelloQueue")
+    @Resource(lookup = "java:comp/jms/HelloQueue")
     private Destination helloQueue;
     
     @Test
