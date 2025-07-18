@@ -48,7 +48,7 @@
         <properties.wasJms remoteServerAddress="localhost:7276:BootStrapBasicMessaging" />
     </jmsQueueConnectionFactory>-->
 
-    <jmsQueue id="helloQueue" jndiName="jms/HelloQueue">
+    <jmsQueue id="helloQueue" jndiName="java:comp/jms/HelloQueue">
         <properties.wasJms queueName="HelloQueue"/>
     </jmsQueue>
 

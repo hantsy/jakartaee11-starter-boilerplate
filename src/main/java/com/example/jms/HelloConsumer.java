@@ -16,7 +16,7 @@ import java.util.logging.Logger;
                         propertyValue = "jakarta.jms.Queue"),
                 @ActivationConfigProperty(
                         propertyName = "destinationLookup",
-                        propertyValue = "jms/HelloQueue")
+                        propertyValue = "java:comp/jms/HelloQueue")
         }
 )
 public class HelloConsumer implements MessageListener {

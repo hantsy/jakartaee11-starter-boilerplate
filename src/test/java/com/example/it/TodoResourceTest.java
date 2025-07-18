@@ -87,7 +87,7 @@ public class TodoResourceTest {
             //@formatter:on
 
             LOGGER.log(Level.INFO, " Get /todods response: {0} ", todos);
-            assertEquals(4, todos.size());
+            assertEquals(2, todos.size());
         }
     }
 

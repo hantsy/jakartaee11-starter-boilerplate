@@ -16,7 +16,7 @@ public class HelloSender {
     @Inject
     JMSContext context;
     
-    @Resource(lookup = "jms/HelloQueue")
+    @Resource(lookup = "java:comp/jms/HelloQueue")
     private Destination helloQueue;
     
     public void sayHellFromJms() {
