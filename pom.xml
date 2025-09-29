@@ -67,7 +67,7 @@
         <wildfly.version>37.0.1.Final</wildfly.version>
         <wildfly-maven-plugin.version>5.1.4.Final</wildfly-maven-plugin.version>
         <wildfly-arquillian.version>5.1.0.Final</wildfly-arquillian.version>
-        <resteasy.version>7.0.0.Beta1</resteasy.version>
+        <resteasy.version>7.0.0.Final</resteasy.version>
 
         <!-- OpenLiberty server -->
         <!-- Since 23.0.0.3, openliberty adds complete Jakarta EE 10 support.
