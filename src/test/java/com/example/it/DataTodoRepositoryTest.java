@@ -14,6 +14,7 @@ import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -24,6 +25,7 @@ import java.util.logging.Logger;
 import static org.junit.jupiter.api.Assertions.*;
 // see: https://github.com/eclipse-ee4j/glassfish/issues/25778
 // @ExtendWith(ArquillianExtension.class)
+@Disabled
 public class DataTodoRepositoryTest {
     private final static Logger LOGGER = Logger.getLogger(DataTodoRepositoryTest.class.getName());
 
