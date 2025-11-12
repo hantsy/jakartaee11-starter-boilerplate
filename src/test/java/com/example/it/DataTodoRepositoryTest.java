@@ -22,8 +22,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static org.junit.jupiter.api.Assertions.*;
-
-@ExtendWith(ArquillianExtension.class)
+// see: https://github.com/eclipse-ee4j/glassfish/issues/25778
+// @ExtendWith(ArquillianExtension.class)
 public class DataTodoRepositoryTest {
     private final static Logger LOGGER = Logger.getLogger(DataTodoRepositoryTest.class.getName());
 
