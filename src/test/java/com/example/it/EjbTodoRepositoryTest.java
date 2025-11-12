@@ -31,7 +31,7 @@ public class EjbTodoRepositoryTest {
 
     @Deployment
     public static WebArchive createDeployment() {
-        WebArchive webArchive = ShrinkWrap.create(WebArchive.class, "test.war")
+        WebArchive webArchive = ShrinkWrap.create(WebArchive.class, "EjbTodoRepositoryTest.war")
                 .addPackage(Todo.class.getPackage())
                 .addClasses(EjbTodoRepository.class, EntityRepository.class)
                 .addClass(DbUtil.class)

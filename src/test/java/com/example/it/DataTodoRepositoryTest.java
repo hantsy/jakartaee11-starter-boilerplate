@@ -31,7 +31,7 @@ public class DataTodoRepositoryTest {
 
     @Deployment
     public static WebArchive createDeployment() {
-        WebArchive webArchive = ShrinkWrap.create(WebArchive.class, "test.war")
+        WebArchive webArchive = ShrinkWrap.create(WebArchive.class, "DataTodoRepositoryTest.war")
                 .addPackage(Todo.class.getPackage())
                 .addPackage(DataTodoRepository.class.getPackage())
                 .addClass(DbUtil.class)

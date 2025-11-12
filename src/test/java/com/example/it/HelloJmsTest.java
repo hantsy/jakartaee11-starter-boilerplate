@@ -25,7 +25,7 @@ public class HelloJmsTest {
     
     @Deployment
     public static JavaArchive createDeployment() {
-        JavaArchive javaArchive = ShrinkWrap.create(JavaArchive.class)
+        JavaArchive javaArchive = ShrinkWrap.create(JavaArchive.class, "HelloJmsTest.jar")
                 .addClass(JmsResources.class)
                 // .addClass(HelloConsumer.class)
                 .addClass(HelloSender.class)

@@ -28,7 +28,7 @@ public class CdiTodoRepositoryTest {
 
     @Deployment
     public static WebArchive createDeployment() {
-        WebArchive webArchive = ShrinkWrap.create(WebArchive.class, "test.war")
+        WebArchive webArchive = ShrinkWrap.create(WebArchive.class, "CdiTodoRepositoryTest.war")
                 .addPackage(Todo.class.getPackage())
                 .addPackage(CdiTodoRepository.class.getPackage())
                 .addClass(DbUtil.class)

@@ -36,7 +36,7 @@ public class CdiTodoResourceTest {
 
     @Deployment(testable = false)
     public static WebArchive createDeployment() {
-        WebArchive war = ShrinkWrap.create(WebArchive.class, "test.war")
+        WebArchive war = ShrinkWrap.create(WebArchive.class, "CdiTodoResourceTest.war")
                 .addPackage(Todo.class.getPackage())
                 .addPackage(CdiTodoRepository.class.getPackage())
                 .addClasses(
@@ -75,7 +75,7 @@ public class CdiTodoResourceTest {
     @Order(1)
     public void testTodosAPI() throws Exception {
         LOGGER.log(Level.INFO, " Running test:: testTodosAPI ... ");
-        final WebTarget allTodosTarget = client.target(URI.create(baseUrl + "api/cditodos"));
+        final WebTarget allTodosTarget = client.target(URI.create(baseUrl.toExternalForm() + "api/cditodos"));
         try (final Response allTodos = allTodosTarget.request()
                 .accept(MediaType.APPLICATION_JSON)
                 .get()) {
@@ -90,7 +90,7 @@ public class CdiTodoResourceTest {
     public void testTodoNotFound() throws Exception {
         LOGGER.log(Level.INFO, " Running test:: testTodoNotFound ... ");
         final WebTarget getByIdTarget = client
-                .target(URI.create(baseUrl + "api/cditodos/" + new Random().nextLong(10_000)));
+                .target(URI.create(baseUrl.toExternalForm() + "api/cditodos/" + new Random().nextLong(10_000)));
         try (final Response getById = getByIdTarget.request()
                 .accept(MediaType.APPLICATION_JSON)
                 .get()) {
@@ -102,7 +102,7 @@ public class CdiTodoResourceTest {
     @Order(3)
     public void testCreateTodoAPI() throws Exception {
         LOGGER.log(Level.INFO, " Running test:: testCreateTodoAPI ... ");
-        final WebTarget createTodoTarget = client.target(URI.create(baseUrl + "api/cditodos"));
+        final WebTarget createTodoTarget = client.target(URI.create(baseUrl.toExternalForm() + "api/cditodos"));
         var body = new CreateTodoCommand("test");
         try (final Response createTodoResponse = createTodoTarget.request()
                 .post(Entity.json(body))) {

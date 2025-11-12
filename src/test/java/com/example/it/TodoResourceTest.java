@@ -37,7 +37,7 @@ public class TodoResourceTest {
 
     @Deployment(testable = false)
     public static WebArchive createDeployment() {
-        WebArchive war = ShrinkWrap.create(WebArchive.class, "test.war")
+        WebArchive war = ShrinkWrap.create(WebArchive.class, "TodoResourceTest.war")
                 .addPackage(Todo.class.getPackage())
                 .addPackage(EjbTodoRepository.class.getPackage())
                 .addClasses(
@@ -76,7 +76,7 @@ public class TodoResourceTest {
     @Test
     public void testTodosAPI() throws Exception {
         LOGGER.log(Level.INFO, " Running test:: testTodosAPI ... ");
-        final WebTarget allTodosTarget = client.target(URI.create(baseUrl + "api/todos"));
+        final WebTarget allTodosTarget = client.target(URI.create(baseUrl.toExternalForm() + "api/todos"));
         try (final Response allTodos = allTodosTarget.request()
                 .accept(MediaType.APPLICATION_JSON)
                 .get()) {
@@ -94,7 +94,7 @@ public class TodoResourceTest {
     @Test
     public void testTodoNotFound() throws Exception {
         LOGGER.log(Level.INFO, " Running test:: testTodoNotFound ... ");
-        final WebTarget getByIdTarget = client.target(URI.create(baseUrl + "api/todos/" + new Random().nextLong(10_000)));
+        final WebTarget getByIdTarget = client.target(URI.create(baseUrl.toExternalForm() + "api/todos/" + new Random().nextLong(10_000)));
         try (final Response getById = getByIdTarget.request()
                 .accept(MediaType.APPLICATION_JSON)
                 .get()) {
