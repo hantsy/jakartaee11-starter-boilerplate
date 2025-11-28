@@ -839,15 +839,11 @@
             <dependencies>
                 <dependency>
                     <groupId>io.openliberty.arquillian</groupId>
-                    <artifactId>arquillian-liberty-managed-jakarta-junit5</artifactId>
+                    <artifactId>arquillian-liberty-managed-jakarta</artifactId>
                     <version>${arquillian-liberty-jakarta.version}</version>
                 </dependency>
-                <!--It
-                seems OpenLiberty 21.0.0.1 beta switched to use Resteasy as Jakarta Restful WS
-                provider.
-                But there is no official public version for Jakarta EE 9 in the Maven central repository.
-                Use Jersey Client in the test codes here.-->
-
+                <!--It seems OpenLiberty 21.0.0.1 beta switched to use Resteasy as Jakarta Restful WS
+                provider.-->
                 <dependency>
                     <groupId>org.glassfish.jersey.media</groupId>
                     <artifactId>jersey-media-json-binding</artifactId>
