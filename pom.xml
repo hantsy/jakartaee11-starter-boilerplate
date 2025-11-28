@@ -839,7 +839,7 @@
             <dependencies>
                 <dependency>
                     <groupId>io.openliberty.arquillian</groupId>
-                    <artifactId>arquillian-liberty-managed-jakarta</artifactId>
+                    <artifactId>arquillian-liberty-managed-jakarta-junit5</artifactId>
                     <version>${arquillian-liberty-jakarta.version}</version>
                 </dependency>
                 <!--It
