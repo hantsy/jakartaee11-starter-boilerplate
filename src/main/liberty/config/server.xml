@@ -3,7 +3,14 @@
 
     <!-- Enable features -->
     <featureManager>
-        <feature>jakartaee-10.0</feature>
+        <!--<feature>jakartaee-10.0</feature>-->
+        <feature>validation-3.1</feature> 
+		<feature>passwordUtilities-1.0</feature>
+		<feature>restfulWS-4.0</feature>
+		<feature>cdi-4.1</feature>
+		<feature>jsonb-3.0</feature>
+		<feature>data-1.0</feature>
+		<feature>persistence-3.2</feature>
     </featureManager>
 
     <!-- This template enables security. To get the full use of all the capabilities, a keystore and user registry are required. -->
