@@ -25,7 +25,7 @@
         <maven-surefire-report-plugin.version>3.5.4</maven-surefire-report-plugin.version>
         <!-- Maven 4 requires declarations of the plugins -->
         <maven-clean-plugin.version>3.5.0</maven-clean-plugin.version>
-        <maven-resources-plugin.version>3.3.1</maven-resources-plugin.version>
+        <maven-resources-plugin.version>3.4.0</maven-resources-plugin.version>
         <!-- sonar report -->
         <sonar-maven-plugin.version>5.3.0.6276</sonar-maven-plugin.version>
         <!-- Cargo maven plugin -->
