@@ -1,7 +1,5 @@
 package com.example.it;
 
-import com.example.cdi.CdiTodoRepository;
-import com.example.cdi.CrudRepository;
 import com.example.data.DataTodoRepository;
 import com.example.domain.Todo;
 import jakarta.annotation.Resource;
@@ -10,22 +8,20 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.UserTransaction;
 import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.arquillian.junit5.container.annotation.ArquillianTest;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 
 import javax.sql.DataSource;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static org.junit.jupiter.api.Assertions.*;
+
 // see: https://github.com/eclipse-ee4j/glassfish/issues/25778
-// @ExtendWith(ArquillianExtension.class)
-@Disabled
+@ArquillianTest
 public class DataTodoRepositoryTest {
     private final static Logger LOGGER = Logger.getLogger(DataTodoRepositoryTest.class.getName());
 
