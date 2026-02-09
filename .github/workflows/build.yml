@@ -13,25 +13,63 @@ on:
       - reopened
 
 jobs:
-  build:
+  jacoco-ut:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v6
       - name: Set up JDK
         uses: actions/setup-java@v5
         with:
           java-version: "21"
-          distribution: "zulu"
+          distribution: "temurin"
           cache: "maven"
+      - name: Build with Maven
+        run: mvn clean test jacoco:prepare-agent -Punit-test,coverage
+      - uses: actions/upload-artifact@v4
+        with:
+          name: jacoco
+          path: target/jacoco.exec
+  jacoco-it:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Set up JDK
+        uses: actions/setup-java@v5
+        with:
+          java-version: "21"
+          distribution: "temurin"
+          cache: "maven"
+      - name: Build with Maven
+        run: mvn clean integration-test jacoco:prepare-agent-integration -Parq-glassfish-managed,coverage
+      - uses: actions/upload-artifact@v4
+        with:
+          name: jacoco-it
+          path: target/jacoco-it.exec
+  jacoco-report:
+    runs-on: ubuntu-latest
+    needs:
+      - jacoco-ut
+      - jacoco-it
+    steps:
+      - uses: actions/checkout@v6
+      - name: Set up JDK
+        uses: actions/setup-java@v5
+        with:
+          java-version: "21"
+          distribution: "temurin"
+          cache: "maven"
+      - uses: actions/download-artifact@v5
+        with:
+          path: target/
+          merge-multiple: true
+      - name: Display structure of downloaded files
+        run: ls -R target/
       - name: Build with Maven
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
-          mvn clean test jacoco:report -Punit-test,coverage
-          mvn verify jacoco:report-integration -Parq-wildfly-managed,coverage 
-          mvn sonar:sonar \
+          mvn jacoco:merge jacoco:report sonar:sonar \
           -Dsonar.host.url=https://sonarcloud.io \
           -Dsonar.token=$SONAR_TOKEN \
           -Dsonar.organization=hantsy \
