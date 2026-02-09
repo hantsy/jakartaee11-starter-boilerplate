@@ -69,7 +69,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
-          mvn jacoco:merge jacoco:report sonar:sonar \
+          mvn jacoco:merge jacoco:report sonar:sonar -Pcoverage\
           -Dsonar.host.url=https://sonarcloud.io \
           -Dsonar.token=$SONAR_TOKEN \
           -Dsonar.organization=hantsy \
