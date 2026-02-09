@@ -1057,8 +1057,7 @@
                                         <fileSet>
                                             <directory>${project.build.directory}</directory>
                                             <includes>
-                                                <include>jacoco.exec</include>
-                                                <include>jacoco-it.exec</include>
+                                                <include>*.exec</include>
                                             </includes>
                                         </fileSet>
                                     </fileSets>
