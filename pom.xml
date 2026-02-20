@@ -59,7 +59,7 @@
         <embedded-glassfish-maven-plugin.version>7.0</embedded-glassfish-maven-plugin.version>
 
         <!-- Payara server -->
-        <payara.version>7.2026.1</payara.version>
+        <payara.version>7.2026.2</payara.version>
         <arquillian-payara.version>4.0.alpha4</arquillian-payara.version>
 
         <!-- WildFly -->
