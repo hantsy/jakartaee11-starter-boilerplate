@@ -25,7 +25,7 @@ jobs:
           cache: "maven"
       - name: Build with Maven
         run: mvn clean test jacoco:prepare-agent -Punit-test,coverage
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v6
         with:
           name: jacoco
           path: target/jacoco.exec
@@ -41,7 +41,7 @@ jobs:
           cache: "maven"
       - name: Build with Maven
         run: mvn clean integration-test jacoco:prepare-agent-integration -Parq-glassfish-managed,coverage
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v6
         with:
           name: jacoco-it
           path: target/jacoco-it.exec
