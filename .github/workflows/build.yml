@@ -60,7 +60,7 @@ jobs:
           java-version: "21"
           distribution: "temurin"
           cache: "maven"
-      - uses: actions/download-artifact@v7
+      - uses: actions/download-artifact@v8
         with:
           path: target/
           merge-multiple: true
