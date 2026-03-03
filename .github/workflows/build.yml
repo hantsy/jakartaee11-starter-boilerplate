@@ -6,11 +6,6 @@ on:
       - "docs/**"
     branches:
       - master
-  pull_request:
-    types:
-      - opened
-      - synchronize
-      - reopened
 
 jobs:
   jacoco-ut:
