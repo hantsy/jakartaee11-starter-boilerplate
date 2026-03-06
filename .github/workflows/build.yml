@@ -19,7 +19,7 @@ jobs:
           distribution: "temurin"
           cache: "maven"
       - name: Build with Maven
-        run: mvn clean test jacoco:prepare-agent -Punit-test,coverage
+        run: mvn clean jacoco:prepare-agent test -Punit-test,coverage
       - uses: actions/upload-artifact@v7
         with:
           name: jacoco
@@ -35,7 +35,7 @@ jobs:
           distribution: "temurin"
           cache: "maven"
       - name: Build with Maven
-        run: mvn clean integration-test jacoco:prepare-agent-integration -Parq-glassfish-managed,coverage
+        run: mvn clean  jacoco:prepare-agent-integration integration-test -Parq-glassfish-managed,coverage
       - uses: actions/upload-artifact@v7
         with:
           name: jacoco-it
