@@ -1029,8 +1029,8 @@
                         <version>${jacoco.version}</version>
                         <configuration>
                             <excludes>
-                                <!-- excludes the resources not to calculated in coverage report-->
-                                <exclude>**/*Resource.*</exclude>
+                                <!-- excludes the resources not to be calculated in the coverage report-->
+                                <!--<exclude>**/*Resources.*</exclude>-->
                             </excludes>
                         </configuration>
                         <executions>
