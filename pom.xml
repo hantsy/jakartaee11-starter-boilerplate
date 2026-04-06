@@ -28,7 +28,7 @@
         <maven-resources-plugin.version>3.5.0</maven-resources-plugin.version>
         <!-- sonar report -->
         <sonar-maven-plugin.version>5.5.0.6356</sonar-maven-plugin.version>
-        <cargo-maven3-plugin.version>1.10.26</cargo-maven3-plugin.version>
+        <cargo-maven3-plugin.version>1.10.27</cargo-maven3-plugin.version>
 
         <!-- Jakarta EE API -->
         <jakartaee-api.version>11.0.0</jakartaee-api.version>
