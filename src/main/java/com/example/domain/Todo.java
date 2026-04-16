@@ -1,9 +1,9 @@
 package com.example.domain;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 
 import java.util.Objects;
-import java.util.UUID;
 
 @Entity
 @Table(name = "todos")
@@ -36,6 +36,7 @@ public class Todo extends AbstractEntity<Long> {
         todo.setTitle(title);
         return todo;
     }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
