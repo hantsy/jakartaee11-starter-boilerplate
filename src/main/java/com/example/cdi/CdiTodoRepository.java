@@ -1,7 +1,7 @@
 package com.example.cdi;
 
+import com.example.domain.Status;
 import com.example.domain.Todo;
-import com.example.domain.Todo_;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
@@ -48,8 +48,8 @@ public class CdiTodoRepository implements CrudRepository<Todo, Long> {
         Root<Todo> root = query.from(Todo.class);
 
         // set predicates
-        query.set(root.get("completed"), true)
-                .where(cb.equal(root.get("id"), id), cb.equal(root.get("completed"), false));
+        query.set(root.get("status"), Status.COMPLETED)
+                .where(cb.equal(root.get("id"), id), cb.equal(root.get("status"), Status.PENDING));
 
         // perform query
         this.entityManager.createQuery(query).executeUpdate();
@@ -63,10 +63,8 @@ public class CdiTodoRepository implements CrudRepository<Todo, Long> {
         Root<Todo> root = query.from(Todo.class);
 
         // set predicates
-        // query.set(root.get("completed"), false)
-        //        .where(cb.equal(root.get("id"), id), cb.equal(root.get("completed"), true));
-        query.set(root.get(Todo_.completed), false)
-                .where(cb.equal(root.get(Todo_.id), id), cb.equal(root.get(Todo_.completed), true));
+        query.set(root.get("status"), Status.PENDING)
+                .where(cb.equal(root.get("id"), id), cb.equal(root.get("status"), Status.COMPLETED));
 
         // perform query
         this.entityManager.createQuery(query).executeUpdate();

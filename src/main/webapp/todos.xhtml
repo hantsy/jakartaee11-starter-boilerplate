@@ -42,7 +42,7 @@
                 <ul id="todotasks" class="list-group list-group-flush">
                     <ui:repeat var="todo" value="#{todoList.todos}">
                         <li class="list-group-item d-flex justify-content-between align-items-center">
-                            <span class="#{todo.completed?'completed':''}"> #{todo.title}                          
+                            <span class="#{todo.status == 'COMPLETED'?'completed':''}"> #{todo.title}
                             </span> 
                             <span>
                                 <a jsf:immediate="true" jsf:action="#{todoList.editTodo(todo.id)}"> 

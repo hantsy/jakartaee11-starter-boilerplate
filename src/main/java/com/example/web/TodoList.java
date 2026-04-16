@@ -1,5 +1,6 @@
 package com.example.web;
 
+import com.example.domain.Status;
 import com.example.domain.Todo;
 import com.example.ejb.EjbTodoRepository;
 import jakarta.faces.application.FacesMessage;
@@ -84,7 +85,7 @@ public class TodoList implements Serializable {
     public void toggleCompletedStatus(Long id) {
          LOGGER.log(Level.INFO, "toggle status:{0}", new Object[]{id});
         var todo = todoRepository.findById(id);
-        if(todo.isCompleted()) {
+        if(todo.getStatus() == Status.COMPLETED) {
             markAsUnCompleted(todo);
         }else{
             markAsCompleted(todo);

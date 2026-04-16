@@ -1,7 +1,6 @@
 package com.example.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.util.Objects;
 import java.util.UUID;
@@ -11,7 +10,7 @@ import java.util.UUID;
 public class Todo extends AbstractEntity<Long> {
     private String title;
 
-    private boolean completed = false;
+    private Status status = Status.PENDING;
 
     public String getTitle() {
         return title;
@@ -21,12 +20,12 @@ public class Todo extends AbstractEntity<Long> {
         this.title = title;
     }
 
-    public boolean isCompleted() {
-        return completed;
+    public Status getStatus() {
+        return status;
     }
 
-    public void setCompleted(boolean completed) {
-        this.completed = completed;
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     public Todo() {
@@ -40,8 +39,7 @@ public class Todo extends AbstractEntity<Long> {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || !(o instanceof Todo)) return false;
-        Todo todo = (Todo) o;
+        if (o == null || !(o instanceof Todo todo)) return false;
         return Objects.equals(title, todo.title);
     }
 
@@ -55,7 +53,7 @@ public class Todo extends AbstractEntity<Long> {
         return "Todo{" +
                 "id = " + this.getId() +
                 ", title='" + title + "'" +
-                ", completed=" + completed +
+                ", status=" + status +
                 ", createdAt=" + this.getCreatedAt() +
                 ", lastModifiedAt=" + this.getLastModifiedAt() +
                 '}';

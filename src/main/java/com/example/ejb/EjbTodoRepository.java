@@ -1,5 +1,6 @@
 package com.example.ejb;
 
+import com.example.domain.Status;
 import com.example.domain.Todo;
 import jakarta.ejb.Stateless;
 import jakarta.ejb.TransactionAttribute;
@@ -9,7 +10,6 @@ import jakarta.persistence.criteria.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Stateless
 @TransactionAttribute
@@ -51,8 +51,8 @@ public class EjbTodoRepository extends EntityRepository<Todo, Long> {
         Root<Todo> root = query.from(Todo.class);
 
         // set predicates
-        query.set(root.get("completed"), true)
-                .where(cb.equal(root.get("id"), id), cb.equal(root.get("completed"), false));
+        query.set(root.get("status"), Status.COMPLETED)
+                .where(cb.equal(root.get("id"), id), cb.equal(root.get("status"), Status.PENDING));
 
         // perform query
         this.entityManager.createQuery(query).executeUpdate();
@@ -66,8 +66,8 @@ public class EjbTodoRepository extends EntityRepository<Todo, Long> {
         Root<Todo> root = query.from(Todo.class);
 
         // set predicates
-        query.set(root.get("completed"), false)
-                .where(cb.equal(root.get("id"), id), cb.equal(root.get("completed"), true));
+        query.set(root.get("status"), Status.PENDING)
+                .where(cb.equal(root.get("id"), id), cb.equal(root.get("status"), Status.COMPLETED));
 
         // perform query
         this.entityManager.createQuery(query).executeUpdate();
