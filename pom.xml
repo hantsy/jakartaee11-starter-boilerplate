@@ -946,7 +946,7 @@
                                 <configuration>
                                     <artifactItems>
                                         <artifactItem>
-                                            <groupId>io.openliberty</groupId>
+                                            <groupId>io.openliberty.beta</groupId>
                                             <artifactId>openliberty-runtime</artifactId>
                                             <version>${liberty.runtime.version}</version>
                                             <type>zip</type>
