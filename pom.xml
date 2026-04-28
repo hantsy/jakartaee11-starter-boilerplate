@@ -76,6 +76,7 @@
 		see: https://openliberty.io/blog/2026/04/07/26.0.0.4-beta.html
 		-->
         <liberty.runtime.version>26.0.0.4-beta</liberty.runtime.version>
+        <liberty.runtime.groupId>io.openliberty.beta</liberty.runtime.groupId>
         <!-- WARNING: 10.15.x.x does not work with openliberty 20.0.0.1 -->
         <derby.version>10.14.2.0</derby.version>
         <liberty-maven-plugin.version>3.12.0</liberty-maven-plugin.version>
@@ -549,7 +550,7 @@
                         <artifactId>liberty-maven-plugin</artifactId>
                         <configuration>
                             <runtimeArtifact>
-					            <groupId>io.openliberty.beta</groupId>
+					            <groupId>${liberty.runtime.groupId}</groupId>
 					            <artifactId>openliberty-runtime</artifactId>
 					            <version>${liberty.runtime.version}</version>
 					            <type>zip</type>
@@ -946,7 +947,7 @@
                                 <configuration>
                                     <artifactItems>
                                         <artifactItem>
-                                            <groupId>io.openliberty.beta</groupId>
+                                            <groupId>${liberty.runtime.groupId}</groupId>
                                             <artifactId>openliberty-runtime</artifactId>
                                             <version>${liberty.runtime.version}</version>
                                             <type>zip</type>
