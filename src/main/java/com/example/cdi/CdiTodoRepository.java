@@ -6,11 +6,13 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.criteria.*;
+import jakarta.transaction.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @ApplicationScoped
+@Transactional
 public class CdiTodoRepository implements CrudRepository<Todo, Long> {
 
     // 3.2 support @Inject EntityManager/EFM to replace @PersistenceContext
