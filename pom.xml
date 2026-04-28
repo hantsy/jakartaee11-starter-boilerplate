@@ -27,7 +27,7 @@
         <maven-clean-plugin.version>3.5.0</maven-clean-plugin.version>
         <maven-resources-plugin.version>3.5.0</maven-resources-plugin.version>
         <!-- sonar report -->
-        <sonar-maven-plugin.version>5.5.0.6356</sonar-maven-plugin.version>
+        <sonar-maven-plugin.version>5.6.0.6792</sonar-maven-plugin.version>
         <cargo-maven3-plugin.version>1.10.27</cargo-maven3-plugin.version>
 
         <!-- Jakarta EE API -->
@@ -37,7 +37,7 @@
         <lombok.version>1.18.38</lombok.version>
 
         <!-- Hibernate 7.0.0 or higher implements JPA 3.2 -->
-        <hibernate.version>7.3.1.Final</hibernate.version>
+        <hibernate.version>7.3.2.Final</hibernate.version>
         <h2.version>2.3.232</h2.version>
         <hibernate-validator.version>9.1.0.Final</hibernate-validator.version>
         <expressly.version>6.0.0</expressly.version>
@@ -46,7 +46,7 @@
         <arquillian-bom.version>1.10.1.Final</arquillian-bom.version>
         <!-- Since Aruqillian core 1.9.0.Final, need to add Aruqillian Jakarta BOM which aligns to Jakarta EE -->
         <arquillian-jakarta-bom.version>10.0.0.Final</arquillian-jakarta-bom.version>
-        <shrinkwrap-resolver-bom.version>3.3.5</shrinkwrap-resolver-bom.version>
+        <shrinkwrap-resolver-bom.version>3.3.6</shrinkwrap-resolver-bom.version>
         <junit-jupiter.version>6.0.3</junit-jupiter.version>
         <assertj.version>3.27.7</assertj.version>
         <awaitility.version>4.3.0</awaitility.version>
@@ -54,7 +54,7 @@
         <!-- Glassfish server -->
         <glassfish.version>8.0.1</glassfish.version>
         <jersey.version>4.0.2</jersey.version>
-        <eclipselink.version>5.0.0-B13</eclipselink.version>
+        <eclipselink.version>5.0.0</eclipselink.version>
         <arquillian-glassfish.version>7.0.14</arquillian-glassfish.version>
         <embedded-glassfish-maven-plugin.version>7.0</embedded-glassfish-maven-plugin.version>
 
@@ -72,7 +72,10 @@
         <!-- Since 23.0.0.3, openliberty adds complete Jakarta EE 10 support.
 		See: https://openliberty.io/blog/2023/04/04/23.0.0.3.html
          -->
-        <liberty.runtime.version>26.0.0.3</liberty.runtime.version>
+		<!-- Since 26.0.0.4 beta added Jakarta EE 11 support.
+		see: https://openliberty.io/blog/2026/04/07/26.0.0.4-beta.html
+		-->
+        <liberty.runtime.version>26.0.0.4-beta</liberty.runtime.version>
         <!-- WARNING: 10.15.x.x does not work with openliberty 20.0.0.1 -->
         <derby.version>10.14.2.0</derby.version>
         <liberty-maven-plugin.version>3.12.0</liberty-maven-plugin.version>
@@ -545,7 +548,12 @@
                         <groupId>io.openliberty.tools</groupId>
                         <artifactId>liberty-maven-plugin</artifactId>
                         <configuration>
-                            <embedded>true</embedded>
+                            <runtimeArtifact>
+					            <groupId>io.openliberty.beta</groupId>
+					            <artifactId>openliberty-runtime</artifactId>
+					            <version>${liberty.runtime.version}</version>
+					            <type>zip</type>
+					        </runtimeArtifact>
                         </configuration>
                     </plugin>
                 </plugins>
@@ -938,7 +946,7 @@
                                 <configuration>
                                     <artifactItems>
                                         <artifactItem>
-                                            <groupId>io.openliberty</groupId>
+                                            <groupId>io.openliberty.beta</groupId>
                                             <artifactId>openliberty-runtime</artifactId>
                                             <version>${liberty.runtime.version}</version>
                                             <type>zip</type>
