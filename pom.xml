@@ -75,12 +75,12 @@
 		<!-- Since 26.0.0.4 beta added Jakarta EE 11 support.
 		see: https://openliberty.io/blog/2026/04/07/26.0.0.4-beta.html
 		-->
-        <liberty.runtime.version>26.0.0.4</liberty.runtime.version>
+        <liberty.runtime.version>26.0.0.4-beta</liberty.runtime.version>
         <!-- WARNING: 10.15.x.x does not work with openliberty 20.0.0.1 -->
         <derby.version>10.14.2.0</derby.version>
         <liberty-maven-plugin.version>3.12.0</liberty-maven-plugin.version>
         <!-- Jakarta EE 9 support see: https://github.com/OpenLiberty/liberty-arquillian/issues/71 -->
-        <arquillian-liberty-jakarta.version>2.1.3</arquillian-liberty-jakarta.version>
+        <arquillian-liberty-jakarta.version>3.0.0-SNAPSHOT</arquillian-liberty-jakarta.version>
 
         <!-- by default skip tests -->
         <skip.unit.tests>true</skip.unit.tests>
@@ -548,7 +548,12 @@
                         <groupId>io.openliberty.tools</groupId>
                         <artifactId>liberty-maven-plugin</artifactId>
                         <configuration>
-                            <embedded>true</embedded>
+                            <runtimeArtifact>
+					            <groupId>io.openliberty.beta</groupId>
+					            <artifactId>openliberty-runtime</artifactId>
+					            <version>${liberty.runtime.version}</version>
+					            <type>zip</type>
+					        </runtimeArtifact>
                         </configuration>
                     </plugin>
                 </plugins>
