@@ -19,23 +19,23 @@ You can build and run the application with different application servers using M
 
 * **GlassFish**:
   ```bash
-  mvn clean package -Pglassfish
+  mvn clean package cargo:run -Pglassfish
   ```
 * **GlassFish Embedded**:
   ```bash
-  mvn clean package -Pglassfish-embedded
+  mvn clean glassfish-embedded:run -Pglassfish-embedded
   ```
 * **Payara**:
   ```bash
-  mvn clean package -Ppayara
+  mvn clean package cargo:run -Ppayara
   ```
 * **Open Liberty**:
   ```bash
-  mvn clean package -Popenliberty
+  mvn clean liberty:dev -Popenliberty
   ```
 * **WildFly**:
   ```bash
-  mvn clean package -Pwildfly
+  mvn clean wildfly:run -Pwildfly
   ```
 
 ## Running Arquillian Tests
