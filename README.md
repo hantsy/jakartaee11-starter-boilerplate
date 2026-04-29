@@ -6,7 +6,7 @@
 [![arq-wildfly-managed](https://github.com/hantsy/jakartaee11-starter-boilerplate/actions/workflows/arq-wildfly-managed.yml/badge.svg)](https://github.com/hantsy/jakartaee11-starter-boilerplate/actions/workflows/arq-wildfly-managed.yml)
 [![arq-liberty-managed](https://github.com/hantsy/jakartaee11-starter-boilerplate/actions/workflows/arq-liberty-managed.yml/badge.svg)](https://github.com/hantsy/jakartaee11-starter-boilerplate/actions/workflows/arq-liberty-managed.yml)
 
-This project provides a starter boilerplate for Jakarta EE 11 applications, supporting various application servers and integration tests written in [Arquillian testing framework](https://arquillain.org).
+This project provides a starter boilerplate for building Jakarta EE 11 applications. It includes support for various application servers and example integration tests written using the [Arquillian testing framework](https://arquillain.org).
 
 ## Prerequisites
 
