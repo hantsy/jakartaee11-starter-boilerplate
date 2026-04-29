@@ -75,7 +75,7 @@
 		<!-- Since 26.0.0.4 beta added Jakarta EE 11 support.
 		see: https://openliberty.io/blog/2026/04/07/26.0.0.4-beta.html
 		-->
-        <liberty.runtime.version>26.0.0.4-beta</liberty.runtime.version>
+        <liberty.runtime.version>26.0.0.5-beta</liberty.runtime.version>
         <liberty.runtime.groupId>io.openliberty.beta</liberty.runtime.groupId>
         <!-- WARNING: 10.15.x.x does not work with openliberty 20.0.0.1 -->
         <derby.version>10.14.2.0</derby.version>
