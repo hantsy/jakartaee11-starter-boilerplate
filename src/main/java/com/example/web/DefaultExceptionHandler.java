@@ -34,20 +34,23 @@ public class DefaultExceptionHandler extends ExceptionHandlerWrapper {
             Throwable t = context.getException();
             LOG.log(Level.INFO, "Caught exception@{0}", t.getClass().getName());
             //t.printStackTrace();
-            if (t instanceof ViewExpiredException) {
-                try {
-                    handleViewExpiredException((ViewExpiredException) t);
-                } finally {
-                    events.remove();
+            switch (t) {
+                case ViewExpiredException viewExpiredException -> {
+                    try {
+                        handleViewExpiredException(viewExpiredException);
+                    } finally {
+                        events.remove();
+                    }
                 }
-            } else if (t instanceof TodoNotFoundException) {
-                try {
-                    handleNotFoundException((TodoNotFoundException) t);
-                } finally {
-                    events.remove();
+                case TodoNotFoundException todoNotFoundException -> {
+                    try {
+                        handleNotFoundException(todoNotFoundException);
+                    } finally {
+                        events.remove();
+                    }
                 }
-            } else {
-
+                default -> {
+                }
             }
 
             LOG.log(Level.INFO, "exception handling is done...");
@@ -67,7 +70,7 @@ public class DefaultExceptionHandler extends ExceptionHandlerWrapper {
     }
 
     private void handleNotFoundException(TodoNotFoundException e) {
-        LOG.log(Level.INFO, "handling exception:{0}", e.getMessage());
+        LOG.log(Level.INFO, "handling TodoNotFoundException:{0}", e.getMessage());
         FacesContext context = FacesContext.getCurrentInstance();
         String viewId = "/error.xhtml";
         LOG.log(Level.INFO, "view id @{0}", viewId);

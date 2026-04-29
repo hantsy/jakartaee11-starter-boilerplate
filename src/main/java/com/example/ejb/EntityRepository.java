@@ -14,8 +14,11 @@ import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public abstract class EntityRepository<E extends Persistable<ID>, ID extends Serializable> {
+    private final static Logger LOGGER = Logger.getLogger(EntityRepository.class.getName());
     abstract EntityManager getEntityManager();
 
     private Class<E> entityClass;
@@ -50,7 +53,7 @@ public abstract class EntityRepository<E extends Persistable<ID>, ID extends Ser
         try {
             entity = this.getEntityManager().find(this.entityClass, id);
         } catch (NoResultException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "error occurred when finding entity with id " + id, e);
         }
         return entity;
     }
@@ -61,7 +64,7 @@ public abstract class EntityRepository<E extends Persistable<ID>, ID extends Ser
         try {
             entity = this.getEntityManager().find(this.entityClass, id);
         } catch (NoResultException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "error occurred when finding entity with id " + id, e);
         }
         return Optional.ofNullable(entity);
     }

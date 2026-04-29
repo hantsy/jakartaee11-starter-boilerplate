@@ -1,7 +1,7 @@
 package com.example.rest;
 
 
-import com.example.cdi.CdiTodoRepository;
+import com.example.data.DataTodoRepository;
 import com.example.domain.Todo;
 import com.example.domain.TodoNotFoundException;
 import jakarta.enterprise.context.RequestScoped;
@@ -22,32 +22,31 @@ import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
 
 import java.net.URI;
-import java.util.List;
 
 @RequestScoped
-@Path("cditodos")
+@Path("datatodos")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-public class CdiTodoResource {
+public class DataTodoResource {
 
     @Inject
-    CdiTodoRepository todoRepository;
+    DataTodoRepository todoRepository;
 
     @Context
     UriInfo uriInfo;
 
     @GET
     public Response getAll(@QueryParam("title") String title) {
-        List<Todo> todos = title == null || title.isBlank()
-                ? todoRepository.findAll()
-                : todoRepository.findByTitle(title.trim());
+        var todos = title == null || title.isBlank()
+                ? todoRepository.findAll().toList()
+                : todoRepository.findByTitleLike("%" + title.trim() + "%");
         return Response.ok(todos).build();
     }
 
     @GET
     @Path("{id}")
     public Response getById(@PathParam("id") Long id) {
-        return todoRepository.findOptionalById(id)
+        return todoRepository.findById(id)
                 .map(todo -> Response.ok(todo).build())
                 .orElseThrow(() -> new TodoNotFoundException(id));
     }
@@ -61,7 +60,7 @@ public class CdiTodoResource {
     @PUT
     @Path("{id}")
     public Response updateById(@PathParam("id") Long id, @Valid UpdateTodoCommand data) {
-        return todoRepository.findOptionalById(id)
+        return todoRepository.findById(id)
                 .map(todo -> {
                     todo.setTitle(data.title());
                     return Response.noContent().build();

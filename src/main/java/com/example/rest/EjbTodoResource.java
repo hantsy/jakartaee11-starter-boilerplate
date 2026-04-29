@@ -14,12 +14,13 @@ import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
 
 import java.net.URI;
+import java.util.List;
 
 @RequestScoped
 @Path("todos")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-public class TodoResource {
+public class EjbTodoResource {
 
     @Inject
     EjbTodoRepository todoRepository;
@@ -29,7 +30,9 @@ public class TodoResource {
 
     @GET
     public Response getAll(@QueryParam("title") String title) {
-        var todos = todoRepository.findByTitle(title);
+        List<Todo> todos = title == null || title.isBlank()
+                ? todoRepository.findAll()
+                : todoRepository.findByTitle(title.trim());
         return Response.ok(todos).build();
     }
 

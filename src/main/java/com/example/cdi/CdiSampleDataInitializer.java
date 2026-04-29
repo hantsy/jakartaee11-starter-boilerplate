@@ -13,14 +13,14 @@ import java.util.logging.Logger;
 
 @ApplicationScoped
 @Transactional
-public class CdiDataInitializer {
-    private static Logger LOG = Logger.getLogger(CdiDataInitializer.class.getName());
+public class CdiSampleDataInitializer {
+    private static final Logger LOG = Logger.getLogger(CdiSampleDataInitializer.class.getName());
 
     @Inject
     CdiTodoRepository todoRepository;
 
     public void init(@Observes Startup event) {
-        LOG.log(Level.SEVERE, "initializing sample data: {0}", event);
+        LOG.log(Level.INFO, "initializing sample data: {0}", event);
         todoRepository.deleteAll();
         todoRepository.saveAll(
                 List.of(
@@ -28,5 +28,6 @@ public class CdiDataInitializer {
                         Todo.of("Upgrade to Jakarta EE 11(CdiDataInitializer)")
                 )
         );
+        LOG.log(Level.INFO, "initializing sample data is done: {0}", event);
     }
 }

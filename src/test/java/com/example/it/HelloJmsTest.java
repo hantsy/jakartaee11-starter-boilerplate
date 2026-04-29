@@ -1,7 +1,7 @@
 package com.example.it;
 
 import com.example.jms.HelloSender;
-import com.example.jms.JmsResources;
+import com.example.jms.JmsResourcesSetup;
 import jakarta.annotation.Resource;
 import jakarta.inject.Inject;
 import jakarta.jms.*;
@@ -25,7 +25,7 @@ public class HelloJmsTest {
     @Deployment
     public static JavaArchive createDeployment() {
         JavaArchive javaArchive = ShrinkWrap.create(JavaArchive.class, "HelloJmsTest.jar")
-                .addClass(JmsResources.class)
+                .addClass(JmsResourcesSetup.class)
                 // .addClass(HelloConsumer.class)
                 .addClass(HelloSender.class)
                 .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");

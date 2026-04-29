@@ -31,7 +31,7 @@
         <cargo-maven3-plugin.version>1.10.27</cargo-maven3-plugin.version>
 
         <!-- Jakarta EE API -->
-        <jakartaee-api.version>11.0.0</jakartaee-api.version>
+        <jakartaee.version>11.0.0</jakartaee.version>
         <slf4j.version>2.0.17</slf4j.version>
         <logback.version>1.5.18</logback.version>
         <lombok.version>1.18.38</lombok.version>
@@ -92,8 +92,16 @@
         <dependencies>
             <dependency>
                 <groupId>jakarta.platform</groupId>
+                <artifactId>jakarta.jakartaee-bom</artifactId>
+                <version>${jakartaee.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!-- Jakarta EE BOM does not include Jakarta API -->
+            <dependency>
+                <groupId>jakarta.platform</groupId>
                 <artifactId>jakarta.jakartaee-api</artifactId>
-                <version>${jakartaee-api.version}</version>
+                <version>${jakartaee.version}</version>
                 <scope>provided</scope>
             </dependency>
             <dependency>
@@ -865,6 +873,7 @@
                     <groupId>io.openliberty.arquillian</groupId>
                     <artifactId>arquillian-liberty-managed-jakarta</artifactId>
                     <version>${arquillian-liberty-jakarta.version}</version>
+                    <scope>test</scope>
                 </dependency>
                 <!--It seems OpenLiberty 21.0.0.1 beta switched to use Resteasy as Jakarta Restful WS
                 provider.-->
@@ -1115,7 +1124,7 @@
         <pluginRepository>
             <id>sonatype-snapshots</id>
             <name>Sonatype Snapshots</name>
-            <url>https://central.sonatype.com/repository/maven-snapshots/</url>
+            <url>https://central.sonatype.com/repository/maven-snapshots</url>
             <releases>
                 <enabled>false</enabled>
             </releases>
@@ -1129,7 +1138,7 @@
         <repository>
             <id>sonatype-snapshots</id>
             <name>Sonatype Snapshots</name>
-            <url>https://central.sonatype.com/repository/maven-snapshots/</url>
+            <url>https://central.sonatype.com/repository/maven-snapshots</url>
             <releases>
                 <enabled>false</enabled>
             </releases>

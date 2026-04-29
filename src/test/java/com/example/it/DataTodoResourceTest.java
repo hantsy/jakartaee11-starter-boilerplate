@@ -1,9 +1,14 @@
 package com.example.it;
 
 
+import com.example.cdi.CdiSampleDataInitializer;
+import com.example.data.DataTodoRepository;
 import com.example.domain.Todo;
-import com.example.ejb.EjbTodoRepository;
-import com.example.rest.*;
+import com.example.rest.CreateTodoCommand;
+import com.example.rest.DataTodoResource;
+import com.example.rest.RestActivator;
+import com.example.rest.TodoNotFoundExceptionMapper;
+import com.example.rest.UpdateTodoCommand;
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.WebTarget;
@@ -31,16 +36,16 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 @ArquillianTest
-public class TodoResourceTest {
-    private final static Logger LOGGER = Logger.getLogger(TodoResourceTest.class.getName());
+public class DataTodoResourceTest {
+    private final static Logger LOGGER = Logger.getLogger(DataTodoResourceTest.class.getName());
 
     @Deployment(testable = false)
     public static WebArchive createDeployment() {
-        WebArchive war = ShrinkWrap.create(WebArchive.class, "TodoResourceTest.war")
+        WebArchive war = ShrinkWrap.create(WebArchive.class, "DataTodoResourceTest.war")
                 .addPackage(Todo.class.getPackage())
-                .addPackage(EjbTodoRepository.class.getPackage())
+                .addPackage(DataTodoRepository.class.getPackage())
                 .addClasses(
-                        TodoResource.class,
+                        DataTodoResource.class,
                         CreateTodoCommand.class,
                         RestActivator.class,
                         UpdateTodoCommand.class,
@@ -75,7 +80,7 @@ public class TodoResourceTest {
     @Test
     public void testTodosAPI() throws Exception {
         LOGGER.log(Level.INFO, " Running test:: testTodosAPI ... ");
-        final WebTarget allTodosTarget = client.target(URI.create(baseUrl.toExternalForm() + "api/todos"));
+        final WebTarget allTodosTarget = client.target(URI.create(baseUrl.toExternalForm() + "api/datatodos"));
         try (final Response allTodos = allTodosTarget.request()
                 .accept(MediaType.APPLICATION_JSON)
                 .get()) {
@@ -85,7 +90,7 @@ public class TodoResourceTest {
             List<Todo> todos = allTodos.readEntity(new GenericType<>() { });
             //@formatter:on
 
-            LOGGER.log(Level.INFO, " Get /todods response: {0} ", todos);
+            LOGGER.log(Level.INFO, " Get /datatodos response: {0} ", todos);
             assertEquals(2, todos.size());
         }
     }
@@ -93,7 +98,7 @@ public class TodoResourceTest {
     @Test
     public void testTodoNotFound() throws Exception {
         LOGGER.log(Level.INFO, " Running test:: testTodoNotFound ... ");
-        final WebTarget getByIdTarget = client.target(URI.create(baseUrl.toExternalForm() + "api/todos/" + new Random().nextLong(10_000)));
+        final WebTarget getByIdTarget = client.target(URI.create(baseUrl.toExternalForm() + "api/datatodos/" + new Random().nextLong(10_000)));
         try (final Response getById = getByIdTarget.request()
                 .accept(MediaType.APPLICATION_JSON)
                 .get()) {

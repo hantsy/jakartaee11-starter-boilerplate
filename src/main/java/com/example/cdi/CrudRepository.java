@@ -58,7 +58,7 @@ public interface CrudRepository<E extends Persistable<ID>, ID extends Serializab
         try {
             entity = this.entityManager().find(this.entityClass(), id);
         } catch (NoResultException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "error occurred when finding entity with id " + id, e);
         }
         return entity;
     }
@@ -69,7 +69,7 @@ public interface CrudRepository<E extends Persistable<ID>, ID extends Serializab
         try {
             entity = this.entityManager().find(this.entityClass(), id);
         } catch (NoResultException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "error occurred when finding entity with id " + id, e);
         }
         return Optional.ofNullable(entity);
     }
