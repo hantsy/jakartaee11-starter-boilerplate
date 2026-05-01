@@ -31,7 +31,7 @@ You can build and run the application with different application servers using M
   ```
 * **Open Liberty**:
   ```bash
-  mvn clean liberty:dev -Popenliberty
+  mvn clean package liberty:dev -Popenliberty
   ```
 * **WildFly**:
   ```bash
