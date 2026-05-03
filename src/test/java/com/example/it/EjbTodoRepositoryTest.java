@@ -1,5 +1,6 @@
 package com.example.it;
 
+import com.example.domain.Status;
 import com.example.domain.Todo;
 import com.example.ejb.EjbTodoRepository;
 import com.example.ejb.EntityRepository;
@@ -31,7 +32,7 @@ public class EjbTodoRepositoryTest {
     public static WebArchive createDeployment() {
         WebArchive webArchive = ShrinkWrap.create(WebArchive.class, "EjbTodoRepositoryTest.war")
                 .addPackage(Todo.class.getPackage())
-                .addClasses(EjbTodoRepository.class, EntityRepository.class)
+                .addPackage(EjbTodoRepository.class.getPackage())
                 .addClass(DbUtil.class)
                 // copy persistence to /WEB-INF/classes/META-INF/
                 .addAsResource("test-persistence.xml", "/META-INF/persistence.xml")
@@ -74,9 +75,30 @@ public class EjbTodoRepositoryTest {
 
         dbUtil.assertCount("todos", 1);
 
+        var todoFindByTitle = todos.findByTitle("test");
+        assertNotNull(todoFindByTitle);
+        assertEquals(1, todoFindByTitle.size());
+        assertEquals("test", todoFindByTitle.getFirst().getTitle());
+
         var todoGetById = todos.findById(saved.getId());
         assertNotNull(todoGetById);
         assertEquals("test", todoGetById.getTitle());
+
+        utx.begin();
+        todos.markAsCompleted(saved.getId());
+        utx.commit();
+
+        var completedTodoById = todos.findById(saved.getId());
+        assertNotNull(completedTodoById);
+        assertEquals(Status.COMPLETED, completedTodoById.getStatus());
+
+        utx.begin();
+        todos.markAsUnCompleted(saved.getId());
+        utx.commit();
+
+        var uncompletedTodoById = todos.findById(saved.getId());
+        assertNotNull(uncompletedTodoById);
+        assertEquals(Status.PENDING, uncompletedTodoById.getStatus());
     }
 
     @Test

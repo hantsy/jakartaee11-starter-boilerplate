@@ -1,6 +1,7 @@
 package com.example.it;
 
 import com.example.data.DataTodoRepository;
+import com.example.domain.Status;
 import com.example.domain.Todo;
 import jakarta.annotation.Resource;
 import jakarta.inject.Inject;
@@ -72,9 +73,30 @@ public class DataTodoRepositoryTest {
 
         dbUtil.assertCount("todos", 1);
 
+        var todoFindByTitle = todos.findByTitleLike("%test%");
+        assertNotNull(todoFindByTitle);
+        assertEquals(1, todoFindByTitle.size());
+        assertEquals("test", todoFindByTitle.getFirst().getTitle());
+
         var todoGetById = todos.findById(saved.getId());
         assertTrue(todoGetById.isPresent());
         assertEquals("test", todoGetById.get().getTitle());
+
+        utx.begin();
+        todos.markAsCompleted(saved.getId());
+        utx.commit();
+
+        var completedTodoById = todos.findById(saved.getId());
+        assertTrue(completedTodoById.isPresent());
+        assertEquals(Status.COMPLETED, completedTodoById.get().getStatus());
+
+        utx.begin();
+        todos.markAsUnCompleted(saved.getId());
+        utx.commit();
+
+        var uncompletedTodoById = todos.findById(saved.getId());
+        assertTrue(uncompletedTodoById.isPresent());
+        assertEquals(Status.PENDING, uncompletedTodoById.get().getStatus());
     }
 
     @Test
