@@ -1,6 +1,7 @@
 package com.example.it;
 
 import com.example.cdi.CdiTodoRepository;
+import com.example.domain.Status;
 import com.example.domain.Todo;
 import jakarta.annotation.Resource;
 import jakarta.inject.Inject;
@@ -19,6 +20,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ArquillianTest
@@ -72,9 +74,30 @@ public class CdiTodoRepositoryTest {
 
         dbUtil.assertCount("todos", 1);
 
+        var todoFindByTitle = todos.findByTitle("test");
+        assertNotNull(todoFindByTitle);
+        assertEquals(1, todoFindByTitle.size());
+        assertEquals("test", todoFindByTitle.getFirst().getTitle());
+
         var todoGetById = todos.findById(saved.getId());
         assertNotNull(todoGetById);
         assertEquals("test", todoGetById.getTitle());
+
+        utx.begin();
+        todos.markAsCompleted(saved.getId());
+        utx.commit();
+
+        var completedTodoById = todos.findById(saved.getId());
+        assertNotNull(completedTodoById);
+        assertEquals(Status.COMPLETED, completedTodoById.getStatus());
+
+        utx.begin();
+        todos.markAsUnCompleted(saved.getId());
+        utx.commit();
+
+        var uncompletedTodoById = todos.findById(saved.getId());
+        assertNotNull(uncompletedTodoById);
+        assertEquals(Status.PENDING, uncompletedTodoById.getStatus());
     }
 
     @Test

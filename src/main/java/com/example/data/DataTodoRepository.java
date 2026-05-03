@@ -1,5 +1,6 @@
 package com.example.data;
 
+import com.example.domain.Status;
 import com.example.domain.Todo;
 import jakarta.data.repository.CrudRepository;
 import jakarta.data.repository.Delete;
@@ -15,11 +16,20 @@ import java.util.List;
 public interface DataTodoRepository extends CrudRepository<Todo, Long> {
     List<Todo> findByTitleLike(String title);
 
-    @Query("update Todo set status='COMPLETED' where id=:id")
-    void markAsCompleted(@Param("id") Long id);
+    // @Query("update Todo set status=com.example.domain.Status.COMPLETED where id=:id")
+    // void markAsCompleted(@Param("id") Long id);
+    default void markAsCompleted(Long id) {
+        updateStatus(id, Status.COMPLETED);
+    }
 
-    @Query("update Todo set status='PENDING' where id=:id")
-    void markAsUnCompleted(@Param("id") Long id);
+    // @Query("update Todo set status=com.example.domain.Status.PENDING where id=:id")
+    // void markAsUnCompleted(@Param("id") Long id)
+    default void markAsUnCompleted(Long id) {
+        updateStatus(id, Status.PENDING);
+    }
+
+    @Query("update Todo set status=:status where id=:id")
+    void updateStatus(@Param("id") Long id, @Param("status") Status status);
 
     @Delete()
     void deleteAll();

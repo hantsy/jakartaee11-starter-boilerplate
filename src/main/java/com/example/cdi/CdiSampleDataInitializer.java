@@ -24,8 +24,8 @@ public class CdiSampleDataInitializer {
         todoRepository.deleteAll();
         todoRepository.saveAll(
                 List.of(
-                        Todo.of("Say Hello to Jakarta EE 11(CdiDataInitializer)"),
-                        Todo.of("Upgrade to Jakarta EE 11(CdiDataInitializer)")
+                        Todo.of("Say Hello to Jakarta EE 11(CdiSampleDataInitializer)"),
+                        Todo.of("Upgrade to Jakarta EE 11(CdiSampleDataInitializer)")
                 )
         );
         LOG.log(Level.INFO, "initializing sample data is done: {0}", event);

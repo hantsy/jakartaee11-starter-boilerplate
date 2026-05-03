@@ -24,8 +24,8 @@ public class EjbSampleDataInitializer {
         todoRepository.deleteAll();
         todoRepository.saveAll(
                 List.of(
-                        Todo.of("Say Hello to Jakarta EE 10"),
-                        Todo.of("Upgrade to Jakarta EE 10")
+                        Todo.of("Say Hello to Jakarta EE 10(EjbSampleDataInitializer)"),
+                        Todo.of("Upgrade to Jakarta EE 10(EjbSampleDataInitializer)")
                 )
         );
     }
