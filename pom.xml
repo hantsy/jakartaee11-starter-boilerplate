@@ -457,11 +457,12 @@
                         <artifactId>maven-compiler-plugin</artifactId>
                         <configuration>
                             <annotationProcessorPaths>
-                                <annotationProcessorPath>
+                                <!-- adding jakarta qbn tools did not resolve the issue, but introduce more problems-->
+                                <!--<annotationProcessorPath>
                                     <groupId>org.wildfly.jakarta.data</groupId>
                                     <artifactId>jakarta-data-qbn-tools</artifactId>
                                     <version>1.0.0</version>
-                                </annotationProcessorPath>
+                                </annotationProcessorPath>-->
                                 <annotationProcessorPath>
                                     <groupId>org.hibernate.orm</groupId>
                                     <artifactId>hibernate-processor</artifactId>
@@ -811,11 +812,11 @@
                         <artifactId>maven-compiler-plugin</artifactId>
                         <configuration>
                             <annotationProcessorPaths>
-                                <annotationProcessorPath>
+                                <!--<annotationProcessorPath>
                                     <groupId>org.wildfly.jakarta.data</groupId>
                                     <artifactId>jakarta-data-qbn-tools</artifactId>
                                     <version>1.0.0</version>
-                                </annotationProcessorPath>
+                                </annotationProcessorPath>-->
                                 <annotationProcessorPath>
                                     <groupId>org.hibernate.orm</groupId>
                                     <artifactId>hibernate-processor</artifactId>
