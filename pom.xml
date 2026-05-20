@@ -47,7 +47,7 @@
         <jersey.version>4.0.2</jersey.version>
         <eclipselink.version>5.0.0</eclipselink.version>
         <arquillian-glassfish.version>7.0.14</arquillian-glassfish.version>
-        <embedded-glassfish-maven-plugin.version>7.0</embedded-glassfish-maven-plugin.version>
+        <embedded-glassfish-maven-plugin.version>8.0</embedded-glassfish-maven-plugin.version>
 
         <!-- Payara server -->
         <payara.version>7.2026.5</payara.version>
