@@ -31,7 +31,7 @@ You can build and run the application with different application servers using M
   ```
 * **GlassFish Embedded** via [GlassFish Embedded Maven Plugin](https://github.com/eclipse-ee4j/glassfish-maven-embedded-plugin):
   ```bash
-  mvn clean embedded-glassfish:run -Pglassfish-embedded
+  mvn clean package embedded-glassfish:run -Pglassfish-embedded
   ```
 * **Payara**:
   ```bash
