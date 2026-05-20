@@ -25,13 +25,13 @@ This project provides a starter boilerplate for building Jakarta EE 11 applicati
 
 You can build and run the application with different application servers using Maven profiles:
 
-* **GlassFish**:
+* **GlassFish** via [Cargo Maven Plugin](https://codehaus-cargo.github.io/cargo/GlassFish+8.x.html):
   ```bash
   mvn clean package cargo:run -Pglassfish
   ```
-* **GlassFish Embedded**:
+* **GlassFish Embedded** via [GlassFish Embedded Maven Plugin](https://github.com/eclipse-ee4j/glassfish-maven-embedded-plugin):
   ```bash
-  mvn clean glassfish-embedded:run -Pglassfish-embedded
+  mvn clean embedded-glassfish:run -Pglassfish-embedded
   ```
 * **Payara**:
   ```bash
