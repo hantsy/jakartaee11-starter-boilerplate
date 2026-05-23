@@ -55,7 +55,7 @@
 
         <!-- WildFly -->
         <!-- WildFly 40.0.0.Beta1 added Jakarta EE 11 support -->
-        <wildfly.version>40.0.0.Beta1</wildfly.version>
+        <wildfly.version>40.0.0.Final</wildfly.version>
         <wildfly-maven-plugin.version>6.0.0.Final</wildfly-maven-plugin.version>
         <wildfly-arquillian.version>6.0.0.Alpha1</wildfly-arquillian.version>
         <resteasy.version>7.0.2.Final</resteasy.version>
