@@ -26,7 +26,7 @@ public interface DataTodoRepository extends CrudRepository<Todo, Long> {
 
     // @Query("update Todo set status=com.example.domain.Status.PENDING where id=:id")
     // void markAsUnCompleted(@Param("id") Long id)
-    default void markAsUnCompleted(Long id) {
+    default void markAsPending(Long id) {
         updateStatus(id, Status.PENDING);
     }
 

@@ -6,7 +6,11 @@ import jakarta.ejb.Stateless;
 import jakarta.ejb.TransactionAttribute;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.criteria.*;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.CriteriaUpdate;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,7 +62,7 @@ public class EjbTodoRepository extends EntityRepository<Todo, Long> {
         this.entityManager.createQuery(query).executeUpdate();
     }
 
-    public void markAsUnCompleted(Long id) {
+    public void markAsPending(Long id) {
         CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
         // create query for updating
         CriteriaUpdate<Todo> query = cb.createCriteriaUpdate(Todo.class);
@@ -71,5 +75,22 @@ public class EjbTodoRepository extends EntityRepository<Todo, Long> {
 
         // perform query
         this.entityManager.createQuery(query).executeUpdate();
+    }
+
+    public List<Todo> findByStatus(Status status) {
+        CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
+        CriteriaQuery<Todo> query = cb.createQuery(Todo.class);
+        Root<Todo> root = query.from(Todo.class);
+        query.where(cb.equal(root.get("status"), status));
+        return this.entityManager.createQuery(query).getResultList();
+    }
+
+    public long countByStatus(Status status) {
+        CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
+        CriteriaQuery<Long> query = cb.createQuery(Long.class);
+        Root<Todo> root = query.from(Todo.class);
+        query.select(cb.count(root));
+        query.where(cb.equal(root.get("status"), status));
+        return this.entityManager.createQuery(query).getSingleResult();
     }
 }

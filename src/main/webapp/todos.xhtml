@@ -11,56 +11,154 @@
     </ui:define>
     <ui:define name="pageTitle"> TODO LIST</ui:define>
     <ui:define name="content">
-        <h:form id="form" role="form" syleClass="form" prependId="false">
-            <div class="row g-3 mb-3">
-                <div class="col-auto">
-                    <input type="text" 
-                           class="form-control #{not empty facesContext.getMessageList('form:name')?'is-invalid':''}"
-                           jsf:id="title"
-                           jsf:required="true"
-                           jsf:requiredMessage="Todo title is required."
-                           jsf:value="#{todoList.form.title}"></input>
-                    <small class="invalid-feedback">
-                        <h:message for="title" showDetail="false" showSummary="true"/>
-                    </small>   
+        <form jsf:id="form" role="form" class="form" jsf:prependId="false">
+
+            <!-- Section 1: Summary / Filter Buttons -->
+            <div class="row g-3 mb-4">
+                <div class="col-md-4">
+                    <a jsf:immediate="true" jsf:action="#{todoList.changeFilter('ALL')}" class="text-decoration-none">
+                        <f:ajax execute="@this" render="@form"/>
+                        <div class="card border-primary #{todoList.filter == 'ALL' ? 'bg-primary text-white shadow' : 'bg-light text-primary border-opacity-50'} text-center p-3 hover-shadow cursor-pointer transition-all">
+                            <div class="fs-6 fw-bold text-uppercase tracking-wider mb-1">ALL</div>
+                            <div class="display-6 fw-bold">#{todoList.allCount}</div>
+                        </div>
+                    </a>
                 </div>
-                <div class="col-auto">
-                    <input jsf:id="todoId" type="hidden" jsf:required="false" jsf:value="#{todoList.form.id}">
-                         <!--f:converter converterId="UUIDConverter" /-->
-                    </input>
+                <div class="col-md-4">
+                    <a jsf:immediate="true" jsf:action="#{todoList.changeFilter('PENDING')}"
+                       class="text-decoration-none">
+                        <f:ajax execute="@this" render="@form"/>
+                        <div class="card border-warning #{todoList.filter == 'PENDING' ? 'bg-warning text-dark shadow' : 'bg-light text-warning border-opacity-50'} text-center p-3 hover-shadow cursor-pointer transition-all">
+                            <div class="fs-6 fw-bold text-uppercase tracking-wider mb-1">PENDING</div>
+                            <div class="display-6 fw-bold">#{todoList.pendingCount}</div>
+                        </div>
+                    </a>
                 </div>
-                <div class="col-auto">
-                    <button type="submit" class="btn btn-large btn-primary mb-3" jsf:id="saveTodo" jsf:action="#{todoList.saveTodo()}">
-                        <f:ajax execute="@form" render="@all"/>
-                        Save
-                    </button>
+                <div class="col-md-4">
+                    <a jsf:immediate="true" jsf:action="#{todoList.changeFilter('COMPLETED')}"
+                       class="text-decoration-none">
+                        <f:ajax execute="@this" render="@form"/>
+                        <div class="card border-success #{todoList.filter == 'COMPLETED' ? 'bg-success text-white shadow' : 'bg-light text-success border-opacity-50'} text-center p-3 hover-shadow cursor-pointer transition-all">
+                            <div class="fs-6 fw-bold text-uppercase tracking-wider mb-1">COMPLETED</div>
+                            <div class="display-6 fw-bold">#{todoList.completedCount}</div>
+                        </div>
+                    </a>
                 </div>
             </div>
 
-            <!-- List group -->
-            <ui:fragment rendered="#{not empty todoList.todos}">
-                <ul id="todotasks" class="list-group list-group-flush">
-                    <ui:repeat var="todo" value="#{todoList.todos}">
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            <span class="#{todo.status == 'COMPLETED'?'completed':''}"> #{todo.title}
-                            </span> 
-                            <span>
-                                <a jsf:immediate="true" jsf:action="#{todoList.editTodo(todo.id)}"> 
-                                    <f:ajax execute="@this" render="@form"/>
-                                    <i class="bi bi-pencil-square"></i>
-                                </a>   
-                                <a jsf:immediate="true" jsf:action="#{todoList.deleteTodo(todo.id)}">
-                                    <f:ajax execute="@this" render="@all"/>
-                                    <i class="bi bi-trash"></i>
-                                </a>
-                            </span>
-                        </li>
-                    </ui:repeat>
-                </ul>
-            </ui:fragment>
-            <ui:fragment rendered="#{empty todoList.todos}">
-                <p class="m-5">No TODO items found</p>
-            </ui:fragment>
-        </h:form>
+            <!-- Section 2: Todo Form (Add / Update) -->
+            <div class="card mb-4 shadow-sm border-0 bg-white">
+                <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center py-3">
+                    <h5 class="mb-0 fw-semibold">
+                        <i class="bi #{todoList.form.id == null ? 'bi-plus-circle-fill' : 'bi-pencil-square'} me-2"></i>
+                        #{todoList.form.id == null ? 'Add a New Todo' : 'Update Todo Item'}
+                    </h5>
+                    <ui:fragment rendered="#{todoList.form.id != null}">
+                        <a jsf:immediate="true" jsf:action="#{todoList.cancelEdit()}"
+                           class="btn btn-sm btn-outline-light">
+                            <f:ajax execute="@this" render="@form"/>
+                            Cancel Edit
+                        </a>
+                    </ui:fragment>
+                </div>
+                <div class="card-body p-4 bg-light bg-opacity-50">
+                    <div class="row g-3 align-items-center">
+                        <div class="col-md-9 col-sm-12">
+                            <div class="form-floating">
+                                <input type="text" jsf:id="title"
+                                       class="form-control #{not empty facesContext.getMessageList('title') ? 'is-invalid' : ''}"
+                                       jsf:value="#{todoList.form.title}"
+                                       jsf:required="true"
+                                       jsf:requiredMessage="Todo title is required."
+                                       placeholder="What needs to be done?"/>
+                                <label for="title" class="text-secondary">What needs to be done?</label>
+                                <small class="invalid-feedback fw-bold">
+                                    <h:message for="title" showDetail="false" showSummary="true"/>
+                                </small>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-12 text-md-end">
+                            <input type="hidden" jsf:id="todoId" jsf:value="#{todoList.form.id}"/>
+                            <button jsf:id="saveTodo"
+                                    jsf:action="#{todoList.saveTodo()}"
+                                    class="btn #{todoList.form.id == null ? 'btn-primary' : 'btn-success'} btn-lg w-100 py-3 fw-bold">
+                                <f:ajax execute="@form" render="@all"/>
+                                #{todoList.form.id == null ? 'Add Todo' : 'Update Todo'}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 3: Todo List -->
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-secondary bg-opacity-10 text-dark d-flex justify-content-between align-items-center py-3 border-bottom">
+                    <h5 class="mb-0 fw-semibold text-secondary">
+                        <i class="bi bi-list-task me-2 text-primary"></i>
+                        Todo List: <span
+                            class="badge bg-primary text-white text-uppercase ms-1">#{todoList.filter}</span>
+                    </h5>
+                    <span class="badge bg-secondary text-white px-3 py-2 rounded-pill">
+                        Showing #{todoList.todos.size()} of #{todoList.allCount}
+                    </span>
+                </div>
+                <div class="card-body p-0">
+                    <ui:fragment rendered="#{not empty todoList.todos}">
+                        <div class="list-group list-group-flush">
+                            <ui:repeat var="todo" value="#{todoList.todos}">
+                                <div class="list-group-item d-flex align-items-center justify-content-between p-3 border-bottom hover-light transition-all">
+                                    <div class="d-flex align-items-center flex-grow-1">
+                                        <!-- Checkbox for completing/reverting -->
+                                        <a jsf:immediate="true" jsf:action="#{todoList.toggleCompletedStatus(todo.id)}"
+                                           class="text-decoration-none d-flex align-items-center">
+                                            <f:ajax execute="@this" render="@form"/>
+                                            <ui:fragment rendered="#{todo.status == 'COMPLETED'}">
+                                                <input type="checkbox" class="form-check-input fs-5 me-3 cursor-pointer"
+                                                       checked="checked" style="pointer-events: none;"/>
+                                            </ui:fragment>
+                                            <ui:fragment rendered="#{todo.status != 'COMPLETED'}">
+                                                <input type="checkbox" class="form-check-input fs-5 me-3 cursor-pointer"
+                                                       style="pointer-events: none;"/>
+                                            </ui:fragment>
+                                        </a>
+
+                                        <!-- Todo Title with Strike-through if completed -->
+                                        <span class="fs-5 me-3 #{todo.status == 'COMPLETED' ? 'text-decoration-line-through text-muted' : 'text-dark fw-medium'}">
+                                            #{todo.title}
+                                        </span>
+
+                                        <!-- Status Badge -->
+                                        <span class="badge #{todo.status == 'COMPLETED' ? 'bg-success bg-opacity-10 text-success border border-success border-opacity-25' : 'bg-warning bg-opacity-10 text-warning-emphasis border border-warning border-opacity-25'} px-2 py-1">
+                                            #{todo.status}
+                                        </span>
+                                    </div>
+
+                                    <!-- Actions (Edit/Delete) -->
+                                    <div class="d-flex gap-2">
+                                        <a jsf:immediate="true" jsf:action="#{todoList.editTodo(todo.id)}"
+                                           class="btn btn-sm btn-outline-primary" title="Edit Todo">
+                                            <f:ajax execute="@this" render="@form"/>
+                                            <i class="bi bi-pencil-square"></i>
+                                        </a>
+                                        <a jsf:immediate="true" jsf:action="#{todoList.deleteTodo(todo.id)}"
+                                           class="btn btn-sm btn-outline-danger" title="Delete Todo">
+                                            <f:ajax execute="@this" render="@all"/>
+                                            <i class="bi bi-trash"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </ui:repeat>
+                        </div>
+                    </ui:fragment>
+                    <ui:fragment rendered="#{empty todoList.todos}">
+                        <div class="text-center py-5 my-3 text-muted">
+                            <i class="bi bi-clipboard-x display-3 mb-3 d-block text-secondary text-opacity-50"></i>
+                            <p class="fs-5 mb-0">No #{todoList.filter.toLowerCase()} todos found.</p>
+                        </div>
+                    </ui:fragment>
+                </div>
+            </div>
+
+        </form>
     </ui:define>
 </ui:composition>

@@ -57,7 +57,7 @@ public class CdiTodoRepository implements CrudRepository<Todo, Long> {
         this.entityManager.createQuery(query).executeUpdate();
     }
 
-    public void markAsUnCompleted(Long id) {
+    public void markAsPending(Long id) {
         CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
         // create query for updating
         CriteriaUpdate<Todo> query = cb.createCriteriaUpdate(Todo.class);

@@ -1,6 +1,8 @@
 package com.example.ejb;
 
 import com.example.domain.Persistable;
+import com.example.domain.Status;
+import com.example.domain.Todo;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -46,6 +48,16 @@ public abstract class EntityRepository<E extends Persistable<ID>, ID extends Ser
         Root<E> root = query.from(this.entityClass);
         //perform query
         return this.getEntityManager().createQuery(query).getResultList();
+    }
+
+    public long count() {
+        CriteriaBuilder cb = this.getEntityManager().getCriteriaBuilder();
+
+        // return a Long type for count result
+        CriteriaQuery<Long> query = cb.createQuery(Long.class);
+        Root<E> root = query.from(this.entityClass);
+        query.select(cb.count(root));
+        return this.getEntityManager().createQuery(query).getSingleResult();
     }
 
     public E findById(ID id) {
