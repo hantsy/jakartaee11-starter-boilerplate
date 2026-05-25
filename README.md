@@ -8,6 +8,8 @@
 
 This project provides a starter boilerplate for building Jakarta EE 11 applications. It includes support for various application servers and example integration tests written using the [Arquillian testing framework](https://arquillain.org).
 
+![Web UI](./web-ui.png)
+
 ## Prerequisites
 
 * **Java 21**
