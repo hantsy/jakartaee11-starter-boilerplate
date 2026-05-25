@@ -19,9 +19,11 @@ This project provides a starter boilerplate for building Jakarta EE 11 applicati
 
 * __Payara (Jakarta REST)__: Serialization fails for Java 8 DateTime types because the Jackson v2 stack lacks the necessary `jackson-datatype-jsr310` module. Supplemental testing has also identified various regressions in data handling.
 
-* __WildFly 40.0.0.Beta1__: Initial support for derived query-by-method-name in Jakarta Data has been removed in this version.
+* __WildFly 40.0.0.Final__: Initial support for derived query-by-method-name in Jakarta Data has been removed in this version. See #https://github.com/hantsy/jakartaee11-starter-boilerplate/pull/151
 
-* __OpenLiberty 26.0.0.5-beta__: While all test cases pass in isolation, the runtime fails to resolve Jakarta Data repository interfaces during application startup. A fix is reportedly available in the nightly builds; verification is pending.
+* <del>__OpenLiberty 26.0.0.5-beta__: While all test cases pass in isolation, the runtime fails to resolve Jakarta Data repository interfaces during application startup. A fix is reportedly available in the nightly builds; verification is pending.</del>. Verified, OpenLiberty 26.0.0.6-beta worked well.
+
+* __Embedded GlassFish__: Failed due to a known JMS issue, see: https://github.com/eclipse-ee4j/glassfish/issues/24842
 
 ## Build and Run
 
