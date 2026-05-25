@@ -19,8 +19,8 @@ import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ArquillianTest
-public class HelloJmsTest {
-    private final static Logger LOGGER = Logger.getLogger(HelloJmsTest.class.getName());
+public class HelloJmsConsumerTest {
+    private final static Logger LOGGER = Logger.getLogger(HelloJmsConsumerTest.class.getName());
 
     @Deployment
     public static JavaArchive createDeployment() {

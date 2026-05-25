@@ -3,6 +3,7 @@ package com.example.jms;
 
 import jakarta.ejb.ActivationConfigProperty;
 import jakarta.ejb.MessageDriven;
+import jakarta.inject.Inject;
 import jakarta.jms.JMSException;
 import jakarta.jms.Message;
 import jakarta.jms.MessageListener;
@@ -21,11 +22,16 @@ import java.util.logging.Logger;
 )
 public class HelloConsumer implements MessageListener {
     private static final Logger LOGGER = Logger.getLogger(HelloConsumer.class.getName());
+
+    @Inject
+    HelloHandler handler;
     
     @Override
     public void onMessage(Message message) {
         try {
-            LOGGER.log(Level.INFO, "received message: {0}", message.getBody(String.class));
+            String body = message.getBody(String.class);
+            LOGGER.log(Level.INFO, "received message: {0}", body);
+            handler.handle(body);
         } catch (JMSException e) {
             e.printStackTrace();
         }
