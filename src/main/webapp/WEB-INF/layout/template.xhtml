@@ -3,10 +3,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="jakarta.faces.facelets"
       xmlns:f="jakarta.faces.core"
-      xmlns:h="jakarta.faces.html">
+      xmlns:h="jakarta.faces.html"
+      xmlns:jsf="jakarta.faces">
 <f:view contentType="text/html" encoding="UTF-8">
     <ui:insert name="metadata"></ui:insert>
-    <h:head>
+    <head jsf:id="head">
         <title>Jakarta EE Todo List - A JakartaEE Faces Sample</title>
         <!-- Required meta tags -->
         <meta charset="utf-8"></meta>
@@ -18,14 +19,13 @@
 
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"/>
         <link href="#{request.contextPath}/resources/css/main.css" rel="stylesheet"/>
-        <!--            <h:outputStylesheet library="css" name="main.css"></h:outputStylesheet>-->
         <ui:insert name="headIncludes"></ui:insert>
-    </h:head>
+    </head>
 
-    <h:body styleClass="d-flex flex-column h-100">
-        <h:panelGroup layout="block" styleClass="header">
+    <body jsf:id="body" class="d-flex flex-column h-100">
+        <div class="header">
             <ui:include src="/WEB-INF/layout/header.xhtml"/>
-        </h:panelGroup>
+        </div>
 
         <main role="main" class="flex-shrink-0">
             <div class="container">
@@ -48,6 +48,6 @@
             /** stop autoclosing **/
         </script>
         <ui:insert name="bodyIncludes"></ui:insert>
-    </h:body>
+    </body>
 </f:view>
 </html>
