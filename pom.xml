@@ -60,7 +60,7 @@
         <wildfly-arquillian.version>6.0.0.Alpha1</wildfly-arquillian.version>
         <resteasy.version>7.0.2.Final</resteasy.version>
         <!-- Hibernate 7.0.0 or higher implements JPA 3.2 -->
-        <hibernate.version>7.3.5.Final</hibernate.version>
+        <hibernate.version>7.3.6.Final</hibernate.version>
 
         <!-- OpenLiberty server -->
         <!-- Since 23.0.0.3, openliberty adds complete Jakarta EE 10 support.
@@ -1005,7 +1005,7 @@
             <id>coverage</id>
             <properties>
                 <jacoco.version>0.8.14</jacoco.version>
-                <asm.version>9.10</asm.version>
+                <asm.version>9.10.1</asm.version>
                 <arquillian-jacoco.version>1.1.0</arquillian-jacoco.version>
             </properties>
             <dependencies>

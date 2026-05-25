@@ -3,7 +3,6 @@ package com.example.it;
 import com.example.domain.Status;
 import com.example.domain.Todo;
 import com.example.ejb.EjbTodoRepository;
-import com.example.ejb.EntityRepository;
 import jakarta.annotation.Resource;
 import jakarta.ejb.EJB;
 import jakarta.inject.Inject;
@@ -93,7 +92,7 @@ public class EjbTodoRepositoryTest {
         assertEquals(Status.COMPLETED, completedTodoById.getStatus());
 
         utx.begin();
-        todos.markAsUnCompleted(saved.getId());
+        todos.markAsPending(saved.getId());
         utx.commit();
 
         var uncompletedTodoById = todos.findById(saved.getId());
@@ -117,5 +116,32 @@ public class EjbTodoRepositoryTest {
         var getById = entityManager.find(Todo.class, saved.getId());
         assertNotNull(getById);
         assertEquals("test", getById.getTitle());
+    }
+
+    @Test
+    public void testFindByStatusAndCountByStatus() throws Exception {
+        init();
+        utx.begin();
+        var t1 = todos.save(Todo.of("todo 1")); // defaults to PENDING
+        var t2 = todos.save(Todo.of("todo 2")); // defaults to PENDING
+        utx.commit();
+
+        assertEquals(2, todos.countByStatus(Status.PENDING));
+        assertEquals(0, todos.countByStatus(Status.COMPLETED));
+        assertEquals(2, todos.count());
+
+        var pendingTodos = todos.findByStatus(Status.PENDING);
+        assertEquals(2, pendingTodos.size());
+
+        utx.begin();
+        todos.markAsCompleted(t1.getId());
+        utx.commit();
+
+        assertEquals(1, todos.countByStatus(Status.PENDING));
+        assertEquals(1, todos.countByStatus(Status.COMPLETED));
+
+        var completedTodos = todos.findByStatus(Status.COMPLETED);
+        assertEquals(1, completedTodos.size());
+        assertEquals("todo 1", completedTodos.getFirst().getTitle());
     }
 }
