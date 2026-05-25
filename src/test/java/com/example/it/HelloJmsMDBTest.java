@@ -51,8 +51,13 @@ public class HelloJmsMDBTest {
 
     @Test
     public void testHelloQueue() throws Exception {
+        // reset message stack.
+        handler.clear();
+
+        // send hello message
         sender.sayHellFromJms();
 
+        // assert the message received by MDB
         Thread.sleep(1000);
         List<String> messages = handler.getMessages();
         assertNotNull(messages);

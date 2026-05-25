@@ -18,6 +18,10 @@ public class HelloHandler {
         messages.add(message);
     }
 
+    public void clear() {
+        this.messages.clear();
+    }
+
     public List<String> getMessages() {
         return this.messages;
     }

@@ -19,14 +19,13 @@ import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ArquillianTest
-public class HelloJmsConsumerTest {
-    private final static Logger LOGGER = Logger.getLogger(HelloJmsConsumerTest.class.getName());
+public class HelloJmsContextTest {
+    private final static Logger LOGGER = Logger.getLogger(HelloJmsContextTest.class.getName());
 
     @Deployment
     public static JavaArchive createDeployment() {
         JavaArchive javaArchive = ShrinkWrap.create(JavaArchive.class, "HelloJmsTest.jar")
                 .addClass(JmsResourcesSetup.class)
-                // .addClass(HelloConsumer.class)
                 .addClass(HelloSender.class)
                 .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
         LOGGER.log(Level.INFO, "deployment war:{0}", new Object[]{javaArchive.toString(true)});
