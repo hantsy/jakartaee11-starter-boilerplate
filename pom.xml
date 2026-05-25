@@ -361,6 +361,13 @@
         </profile>
         <profile>
             <id>glassfish-embedded</id>
+            <!--<dependencies>
+                <dependency>
+                    <groupId>org.glassfish.main.extras</groupId>
+                    <artifactId>glassfish-embedded-all</artifactId>
+                    <version>${glassfish.version}</version>
+                </dependency>
+            </dependencies>-->
             <build>
                 <plugins>
                     <plugin>
@@ -369,7 +376,6 @@
                         <version>${embedded-glassfish-maven-plugin.version}</version>
                         <configuration>
                             <glassfish.version>${glassfish.version}</glassfish.version>
-
                         </configuration>
                     </plugin>
                 </plugins>
