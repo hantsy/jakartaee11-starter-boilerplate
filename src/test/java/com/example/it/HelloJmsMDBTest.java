@@ -46,9 +46,6 @@ public class HelloJmsMDBTest {
     @Inject
     HelloHandler handler;
 
-    @Resource(lookup = "java:comp/jms/HelloQueue")
-    private Destination helloQueue;
-
     @Test
     public void testHelloQueue() throws Exception {
         // reset message stack.
