@@ -6,9 +6,9 @@
 [![arq-wildfly-managed](https://github.com/hantsy/jakartaee11-starter-boilerplate/actions/workflows/arq-wildfly-managed.yml/badge.svg)](https://github.com/hantsy/jakartaee11-starter-boilerplate/actions/workflows/arq-wildfly-managed.yml)
 [![arq-liberty-managed](https://github.com/hantsy/jakartaee11-starter-boilerplate/actions/workflows/arq-liberty-managed.yml/badge.svg)](https://github.com/hantsy/jakartaee11-starter-boilerplate/actions/workflows/arq-liberty-managed.yml)
 
-This project provides a starter boilerplate for building Jakarta EE 11 applications. It includes support for various application servers and example integration tests written using the [Arquillian testing framework](https://arquillain.org).
+A clean starter template for Jakarta EE 11 applications with ready-made integration examples for multiple Jakarta EE containers. This repository demonstrates modern Jakarta EE development with container-specific support and [Arquillian](https://arquillain.org) integration tests.
 
-![Web UI](./web-ui.png)
+![Web UI running on GlassFish v8](./web-ui.png)
 
 ## Prerequisites
 
@@ -17,56 +17,72 @@ This project provides a starter boilerplate for building Jakarta EE 11 applicati
 
 ## Technical Compatibility & Issues
 
-* __Payara (Jakarta REST)__: Serialization fails for Java 8 DateTime types because the Jackson v2 stack lacks the necessary `jackson-datatype-jsr310` module. Supplemental testing has also identified various regressions in data handling.
+* **Payara (Jakarta REST)**: Serialization of Java 8 DateTime types fails because the Jackson v2 stack does not include the required `jackson-datatype-jsr310` module. Additional testing also revealed regressions in data handling.
 
-* __WildFly 40.0.0.Final__: Initial support for derived query-by-method-name in Jakarta Data has been removed in this version. See #https://github.com/hantsy/jakartaee11-starter-boilerplate/pull/151
+* **WildFly 40.0.0.Final**: Hibernate Jakarta Data no longer includes initial support for derived query-by-method-name in this release. See <https://github.com/hantsy/jakartaee11-starter-boilerplate/pull/151> for details.
 
-* <del>__OpenLiberty 26.0.0.5-beta__: While all test cases pass in isolation, the runtime fails to resolve Jakarta Data repository interfaces during application startup. A fix is reportedly available in the nightly builds; verification is pending.</del>. Verified, OpenLiberty 26.0.0.6-beta worked well.
+* <del>**OpenLiberty 26.0.0.5-beta**: While all test cases pass in isolation, the runtime fails to resolve Jakarta Data repository interfaces during application startup. A fix is reportedly available in nightly builds; verification is pending.</del> Verified: OpenLiberty 26.0.0.6-beta works as expected.
 
-* __Embedded GlassFish__: Failed due to a known JMS issue, see: https://github.com/eclipse-ee4j/glassfish/issues/24842
+* **Embedded GlassFish**: Startup failed because of a known Jakarta Messaging issue. See <https://github.com/eclipse-ee4j/glassfish/issues/24842>.
 
 ## Build and Run
 
-You can build and run the application with different application servers using Maven profiles:
+Use Maven profiles to build and launch the application on different servers:
 
 * **GlassFish** via [Cargo Maven Plugin](https://codehaus-cargo.github.io/cargo/GlassFish+8.x.html):
+
   ```bash
   mvn clean package cargo:run -Pglassfish
   ```
-* **GlassFish Embedded** via [GlassFish Embedded Maven Plugin](https://github.com/eclipse-ee4j/glassfish-maven-embedded-plugin):
+
+* **Embedded GlassFish** via [Embedded GlassFish Maven Plugin](https://github.com/eclipse-ee4j/glassfish-maven-embedded-plugin):
+
   ```bash
   mvn clean package embedded-glassfish:run -Pglassfish-embedded
   ```
+
 * **Payara**:
+
   ```bash
   mvn clean package cargo:run -Ppayara
   ```
+
 * **Open Liberty**:
+
   ```bash
   mvn clean package liberty:dev -Popenliberty
   ```
+
 * **WildFly**:
+
   ```bash
   mvn clean wildfly:run -Pwildfly
   ```
 
 ## Running Arquillian Tests
 
-The project includes Arquillian integration tests for various managed containers. Use the following profiles to run them:
+Arquillian integration tests are included for several managed containers. Run the matching profile for the server you want to verify:
 
 * **GlassFish Managed**:
+
   ```bash
   mvn clean verify -Parq-glassfish-managed
   ```
+
 * **Payara Managed**:
+
   ```bash
   mvn clean verify -Parq-payara-managed
   ```
+
 * **WildFly Managed**:
+
   ```bash
   mvn clean verify -Parq-wildfly-managed
   ```
+
 * **Open Liberty Managed**:
+
   ```bash
   mvn clean verify -Parq-liberty-managed
   ```
