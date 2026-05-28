@@ -85,7 +85,7 @@ public class DataTodoResource {
     @DELETE
     @Path("{id}/completed")
     public Response markAsUnCompleted(@PathParam("id") Long id) {
-        todoRepository.markAsUnCompleted(id);
+        todoRepository.markAsPending(id);
         return Response.noContent().build();
     }
 

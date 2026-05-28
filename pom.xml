@@ -20,14 +20,14 @@
         <maven-compiler-plugin.version>3.15.0</maven-compiler-plugin.version>
         <maven-war-plugin.version>3.5.1</maven-war-plugin.version>
         <maven-dependency-plugin.version>3.10.0</maven-dependency-plugin.version>
-        <maven-surefire-plugin.version>3.5.5</maven-surefire-plugin.version>
-        <maven-failsafe-plugin.version>3.5.5</maven-failsafe-plugin.version>
-        <maven-surefire-report-plugin.version>3.5.5</maven-surefire-report-plugin.version>
+        <maven-surefire-plugin.version>3.5.6</maven-surefire-plugin.version>
+        <maven-failsafe-plugin.version>3.5.6</maven-failsafe-plugin.version>
+        <maven-surefire-report-plugin.version>3.5.6</maven-surefire-report-plugin.version>
         <!-- Maven 4 requires declarations of the plugins -->
         <maven-clean-plugin.version>3.5.0</maven-clean-plugin.version>
         <maven-resources-plugin.version>3.5.0</maven-resources-plugin.version>
         <!-- sonar report -->
-        <sonar-maven-plugin.version>5.6.0.6792</sonar-maven-plugin.version>
+        <sonar-maven-plugin.version>5.7.0.6970</sonar-maven-plugin.version>
         <cargo-maven3-plugin.version>1.10.27</cargo-maven3-plugin.version>
 
         <!-- Jakarta EE API -->
@@ -60,9 +60,9 @@
         <wildfly-arquillian.version>6.0.0.Alpha1</wildfly-arquillian.version>
         <resteasy.version>7.0.2.Final</resteasy.version>
         <!-- Hibernate 7.0.0 or higher implements JPA 3.2 -->
-        <hibernate.version>7.3.5.Final</hibernate.version>
+        <hibernate.version>7.4.0.Final</hibernate.version>
         <jakarta-data-qbn-tools.version>1.0.0</jakarta-data-qbn-tools.version>
-
+        
         <!-- OpenLiberty server -->
         <!-- Since 23.0.0.3, openliberty adds complete Jakarta EE 10 support.
 		See: https://openliberty.io/blog/2023/04/04/23.0.0.3.html
@@ -362,6 +362,13 @@
         </profile>
         <profile>
             <id>glassfish-embedded</id>
+            <!--<dependencies>
+                <dependency>
+                    <groupId>org.glassfish.main.extras</groupId>
+                    <artifactId>glassfish-embedded-all</artifactId>
+                    <version>${glassfish.version}</version>
+                </dependency>
+            </dependencies>-->
             <build>
                 <plugins>
                     <plugin>
@@ -370,7 +377,6 @@
                         <version>${embedded-glassfish-maven-plugin.version}</version>
                         <configuration>
                             <glassfish.version>${glassfish.version}</glassfish.version>
-
                         </configuration>
                     </plugin>
                 </plugins>
@@ -1006,7 +1012,7 @@
             <id>coverage</id>
             <properties>
                 <jacoco.version>0.8.14</jacoco.version>
-                <asm.version>9.10</asm.version>
+                <asm.version>9.10.1</asm.version>
                 <arquillian-jacoco.version>1.1.0</arquillian-jacoco.version>
             </properties>
             <dependencies>

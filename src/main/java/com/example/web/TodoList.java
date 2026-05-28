@@ -29,6 +29,11 @@ public class TodoList implements Serializable {
 
     TodoForm form;
 
+    private String filter = "ALL";
+    private long allCount;
+    private long pendingCount;
+    private long completedCount;
+
     public List<Todo> getTodos() {
         return todos;
     }
@@ -52,7 +57,26 @@ public class TodoList implements Serializable {
     }
 
     public void loadTodos() {
-        this.todos = todoRepository.findAll();
+        if ("PENDING".equals(filter)) {
+            this.todos = todoRepository.findByStatus(Status.PENDING);
+        } else if ("COMPLETED".equals(filter)) {
+            this.todos = todoRepository.findByStatus(Status.COMPLETED);
+        } else {
+            this.todos = todoRepository.findAll();
+        }
+        this.allCount = todoRepository.count();
+        this.pendingCount = todoRepository.countByStatus(Status.PENDING);
+        this.completedCount = todoRepository.countByStatus(Status.COMPLETED);
+    }
+
+    public void changeFilter(String newFilter) {
+        LOGGER.log(Level.INFO, "changing filter to: {0}", newFilter);
+        this.filter = newFilter;
+        loadTodos();
+    }
+
+    public void cancelEdit() {
+        this.form = new TodoForm();
     }
 
     public void saveTodo() {
@@ -98,8 +122,28 @@ public class TodoList implements Serializable {
     }
 
     public void markAsUnCompleted(Todo todo) {
-        todoRepository.markAsUnCompleted(todo.getId());
+        todoRepository.markAsPending(todo.getId());
         loadTodos();
+    }
+
+    public String getFilter() {
+        return filter;
+    }
+
+    public void setFilter(String filter) {
+        this.filter = filter;
+    }
+
+    public long getAllCount() {
+        return allCount;
+    }
+
+    public long getPendingCount() {
+        return pendingCount;
+    }
+
+    public long getCompletedCount() {
+        return completedCount;
     }
 
 }

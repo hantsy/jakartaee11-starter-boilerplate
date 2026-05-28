@@ -91,7 +91,7 @@ public class DataTodoRepositoryTest {
         assertEquals(Status.COMPLETED, completedTodoById.get().getStatus());
 
         utx.begin();
-        todos.markAsUnCompleted(saved.getId());
+        todos.markAsPending(saved.getId());
         utx.commit();
 
         var uncompletedTodoById = todos.findById(saved.getId());

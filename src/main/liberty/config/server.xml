@@ -48,14 +48,15 @@
         <properties.wasJms remoteServerAddress="localhost:7276:BootStrapBasicMessaging" />
     </jmsQueueConnectionFactory>-->
 
-    <jmsQueue id="helloQueue" jndiName="java:comp/jms/HelloQueue">
+    <jmsQueue id="HelloQueue" jndiName="jms/HelloQueue">
         <properties.wasJms queueName="HelloQueue"/>
     </jmsQueue>
 
-    <jmsActivationSpec id="helloConsumer">
+    <jmsActivationSpec id="jakartaee11-starter-boilerplate/HelloConsumer">
         <properties.wasJms
-                destinationRef="helloQueue"
+                destinationRef="HelloQueue"
                 destinationType="jakarta.jms.Queue"
+                destinationLookup="java:comp/jms/HelloQueue"
         /><!-- remoteServerAddress="localhost:7276:BootstrapBasicMessaging" -->
     </jmsActivationSpec>
 
