@@ -19,7 +19,7 @@
         <!-- Official Maven Plugins -->
         <maven-compiler-plugin.version>3.15.0</maven-compiler-plugin.version>
         <maven-war-plugin.version>3.5.1</maven-war-plugin.version>
-        <maven-dependency-plugin.version>3.10.0</maven-dependency-plugin.version>
+        <maven-dependency-plugin.version>3.11.0</maven-dependency-plugin.version>
         <maven-surefire-plugin.version>3.5.6</maven-surefire-plugin.version>
         <maven-failsafe-plugin.version>3.5.6</maven-failsafe-plugin.version>
         <maven-surefire-report-plugin.version>3.5.6</maven-surefire-report-plugin.version>
@@ -37,13 +37,13 @@
         <arquillian-bom.version>1.10.2.Final</arquillian-bom.version>
         <!-- Since Aruqillian core 1.9.0.Final, need to add Aruqillian Jakarta BOM which aligns to Jakarta EE -->
         <arquillian-jakarta-bom.version>10.0.0.Final</arquillian-jakarta-bom.version>
-        <shrinkwrap-resolver-bom.version>3.3.6</shrinkwrap-resolver-bom.version>
+        <shrinkwrap-resolver-bom.version>3.3.7</shrinkwrap-resolver-bom.version>
         <junit-jupiter.version>6.1.0</junit-jupiter.version>
         <assertj.version>3.27.7</assertj.version>
         <awaitility.version>4.3.0</awaitility.version>
 
         <!-- Glassfish server -->
-        <glassfish.version>8.0.2</glassfish.version>
+        <glassfish.version>8.0.3</glassfish.version>
         <jersey.version>4.0.2</jersey.version>
         <eclipselink.version>5.0.0</eclipselink.version>
         <arquillian-glassfish.version>7.0.14</arquillian-glassfish.version>
@@ -60,9 +60,9 @@
         <wildfly-arquillian.version>6.0.0.Alpha1</wildfly-arquillian.version>
         <resteasy.version>7.0.2.Final</resteasy.version>
         <!-- Hibernate 7.0.0 or higher implements JPA 3.2 -->
-        <hibernate.version>7.4.0.Final</hibernate.version>
+        <hibernate.version>7.4.1.Final</hibernate.version>
         <jakarta-data-qbn-tools.version>1.0.0</jakarta-data-qbn-tools.version>
-        
+
         <!-- OpenLiberty server -->
         <!-- Since 23.0.0.3, openliberty adds complete Jakarta EE 10 support.
 		See: https://openliberty.io/blog/2023/04/04/23.0.0.3.html
@@ -1011,7 +1011,7 @@
         <profile>
             <id>coverage</id>
             <properties>
-                <jacoco.version>0.8.14</jacoco.version>
+                <jacoco.version>0.8.15</jacoco.version>
                 <asm.version>9.10.1</asm.version>
                 <arquillian-jacoco.version>1.1.0</arquillian-jacoco.version>
             </properties>
