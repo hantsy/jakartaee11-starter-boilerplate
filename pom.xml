@@ -55,12 +55,12 @@
 
         <!-- WildFly -->
         <!-- WildFly 40.0.0.Beta1 added Jakarta EE 11 support -->
-        <wildfly.version>40.0.0.Final</wildfly.version>
+        <wildfly.version>40.0.1.Final</wildfly.version>
         <wildfly-maven-plugin.version>6.0.0.Final</wildfly-maven-plugin.version>
         <wildfly-arquillian.version>6.0.0.Alpha1</wildfly-arquillian.version>
         <resteasy.version>7.0.2.Final</resteasy.version>
         <!-- Hibernate 7.0.0 or higher implements JPA 3.2 -->
-        <hibernate.version>7.4.1.Final</hibernate.version>
+        <hibernate.version>7.4.2.Final</hibernate.version>
         <jakarta-data-qbn-tools.version>1.0.0</jakarta-data-qbn-tools.version>
 
         <!-- OpenLiberty server -->
@@ -70,7 +70,7 @@
 		<!-- Since 26.0.0.4 beta added Jakarta EE 11 support.
 		see: https://openliberty.io/blog/2026/04/07/26.0.0.4-beta.html
 		-->
-        <liberty.runtime.version>26.0.0.6-beta</liberty.runtime.version>
+        <liberty.runtime.version>26.0.0.7-beta</liberty.runtime.version>
         <liberty.runtime.groupId>io.openliberty.beta</liberty.runtime.groupId>
         <!-- WARNING: 10.15.x.x does not work with openliberty 20.0.0.1 -->
         <derby.version>10.14.2.0</derby.version>
