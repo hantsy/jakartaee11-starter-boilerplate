@@ -61,6 +61,7 @@
         <resteasy.version>7.0.2.Final</resteasy.version>
         <!-- Hibernate 7.0.0 or higher implements JPA 3.2 -->
         <hibernate.version>7.4.3.Final</hibernate.version>
+        <jakarta-data-qbn-tools.version>1.0.0</jakarta-data-qbn-tools.version>
 
         <!-- OpenLiberty server -->
         <!-- Since 23.0.0.3, openliberty adds complete Jakarta EE 10 support.
@@ -463,12 +464,12 @@
                         <artifactId>maven-compiler-plugin</artifactId>
                         <configuration>
                             <annotationProcessorPaths>
-                                <!-- adding jakarta qbn tools did not resolve the issue, but introduce more problems-->
-                                <!--<annotationProcessorPath>
+                                <!-- Enable Jakarta Data Query By Method Name (QBN) support -->
+                                <annotationProcessorPath>
                                     <groupId>org.wildfly.jakarta.data</groupId>
                                     <artifactId>jakarta-data-qbn-tools</artifactId>
-                                    <version>1.0.0</version>
-                                </annotationProcessorPath>-->
+                                    <version>${jakarta-data-qbn-tools.version}</version>
+                                </annotationProcessorPath>
                                 <annotationProcessorPath>
                                     <groupId>org.hibernate.orm</groupId>
                                     <artifactId>hibernate-processor</artifactId>
@@ -818,11 +819,11 @@
                         <artifactId>maven-compiler-plugin</artifactId>
                         <configuration>
                             <annotationProcessorPaths>
-                                <!--<annotationProcessorPath>
+                                <annotationProcessorPath>
                                     <groupId>org.wildfly.jakarta.data</groupId>
                                     <artifactId>jakarta-data-qbn-tools</artifactId>
-                                    <version>1.0.0</version>
-                                </annotationProcessorPath>-->
+                                    <version>${jakarta-data-qbn-tools.version}</version>
+                                </annotationProcessorPath>
                                 <annotationProcessorPath>
                                     <groupId>org.hibernate.orm</groupId>
                                     <artifactId>hibernate-processor</artifactId>
