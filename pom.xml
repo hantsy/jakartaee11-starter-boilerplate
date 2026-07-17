@@ -63,10 +63,7 @@
         <hibernate.version>7.4.5.Final</hibernate.version>
 
         <!-- OpenLiberty server -->
-        <!-- Jakarta EE 11 support is under active development in OpenLiberty.
-             The jakartaee-11.0 feature currently requires beta releases
-             from the io.openliberty.beta groupId.
-             Stable GA releases exist but may not include jakartaee-11.0 yet. -->
+        <!-- Jakarta EE 11 support was available since 26.0.0.4-beta releases. Stable GA releases exist in 26.0.0.5 or later. -->
         <liberty.runtime.version>26.0.0.8-beta</liberty.runtime.version>
         <liberty.runtime.groupId>io.openliberty.beta</liberty.runtime.groupId>
         <derby.version>10.14.2.0</derby.version>
