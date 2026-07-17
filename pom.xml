@@ -28,7 +28,7 @@
         <maven-resources-plugin.version>3.5.0</maven-resources-plugin.version>
         <!-- sonar report -->
         <sonar-maven-plugin.version>5.7.0.6970</sonar-maven-plugin.version>
-        <cargo-maven3-plugin.version>1.10.27</cargo-maven3-plugin.version>
+        <cargo-maven3-plugin.version>1.10.28</cargo-maven3-plugin.version>
 
         <!-- Jakarta EE API -->
         <jakartaee.version>11.0.0</jakartaee.version>
@@ -38,7 +38,7 @@
         <!-- Since Aruqillian core 1.9.0.Final, need to add Aruqillian Jakarta BOM which aligns to Jakarta EE -->
         <arquillian-jakarta-bom.version>10.0.0.Final</arquillian-jakarta-bom.version>
         <shrinkwrap-resolver-bom.version>3.3.7</shrinkwrap-resolver-bom.version>
-        <junit-jupiter.version>6.1.1</junit-jupiter.version>
+        <junit-jupiter.version>6.1.2</junit-jupiter.version>
         <assertj.version>3.27.7</assertj.version>
         <awaitility.version>4.3.0</awaitility.version>
 
@@ -55,27 +55,22 @@
 
         <!-- WildFly -->
         <!-- WildFly 40.0.0.Beta1 added Jakarta EE 11 support -->
-        <wildfly.version>41.0.0.Beta1</wildfly.version>
+        <wildfly.version>41.0.0.Final</wildfly.version>
         <wildfly-maven-plugin.version>6.0.0.Final</wildfly-maven-plugin.version>
         <wildfly-arquillian.version>6.0.0.Alpha1</wildfly-arquillian.version>
         <resteasy.version>7.0.2.Final</resteasy.version>
         <!-- Hibernate 7.0.0 or higher implements JPA 3.2 -->
-        <hibernate.version>7.4.3.Final</hibernate.version>
+        <hibernate.version>7.4.5.Final</hibernate.version>
         <jakarta-data-qbn-tools.version>1.0.0</jakarta-data-qbn-tools.version>
 
         <!-- OpenLiberty server -->
-        <!-- Since 23.0.0.3, openliberty adds complete Jakarta EE 10 support.
-		See: https://openliberty.io/blog/2023/04/04/23.0.0.3.html
-         -->
-		<!-- Since 26.0.0.4 beta added Jakarta EE 11 support.
-		see: https://openliberty.io/blog/2026/04/07/26.0.0.4-beta.html
+        <!-- Since 26.0.0.4 beta added Jakarta EE 11 support.
+		See: https://openliberty.io/blog/2026/04/07/26.0.0.4-beta.html
 		-->
-        <liberty.runtime.version>26.0.0.7-beta</liberty.runtime.version>
+        <liberty.runtime.version>26.0.0.8-beta</liberty.runtime.version>
         <liberty.runtime.groupId>io.openliberty.beta</liberty.runtime.groupId>
-        <!-- WARNING: 10.15.x.x does not work with openliberty 20.0.0.1 -->
         <derby.version>10.14.2.0</derby.version>
         <liberty-maven-plugin.version>3.12.0</liberty-maven-plugin.version>
-        <!-- Jakarta EE 9 support see: https://github.com/OpenLiberty/liberty-arquillian/issues/71 -->
         <arquillian-liberty-jakarta.version>3.0.0</arquillian-liberty-jakarta.version>
 
         <!-- by default skip tests -->
@@ -509,12 +504,8 @@
 
                     <!-- The WildFly plugin deploys your war to a local running WildFly container -->
                     <!-- To use, run: mvn package wildfly:deploy -->
-                    <!-- For Jakarta EE 11, use `wildfly-preview-dist` as artifactId instead to start
-                    and deploy applications-->
-                    <!-- Run: mvn clean wildfly:run -PWildfly
-                    -Dwildfly.artifactId=wildfly-preview-dist -Dwildfly.version=22.0.0.Alpha1 -->
-                    <!-- or set the `jboss-as.home` to run: mvn clean wildfly:run -PWildfly
-                    -Djboss-as.home=D:\appsvr\wildfly-preview-22.0.0.Alpha1-->
+                    <!-- WildFly 41.0.0.Final has native Jakarta EE 11 support via wildfly-dist -->
+                    <!-- Run with: mvn clean wildfly:run -Pwildfly -->
                     <plugin>
                         <groupId>org.wildfly.plugins</groupId>
                         <artifactId>wildfly-maven-plugin</artifactId>
