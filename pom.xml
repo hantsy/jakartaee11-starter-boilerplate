@@ -63,18 +63,14 @@
         <hibernate.version>7.4.5.Final</hibernate.version>
 
         <!-- OpenLiberty server -->
-        <!-- Since 23.0.0.3, openliberty adds complete Jakarta EE 10 support.
-		See: https://openliberty.io/blog/2023/04/04/23.0.0.3.html
-         -->
-		<!-- Since 26.0.0.4 beta added Jakarta EE 11 support.
-		see: https://openliberty.io/blog/2026/04/07/26.0.0.4-beta.html
-		-->
+        <!-- Jakarta EE 11 support is under active development in OpenLiberty.
+             The jakartaee-11.0 feature currently requires beta releases
+             from the io.openliberty.beta groupId.
+             Stable GA releases exist but may not include jakartaee-11.0 yet. -->
         <liberty.runtime.version>26.0.0.8-beta</liberty.runtime.version>
         <liberty.runtime.groupId>io.openliberty.beta</liberty.runtime.groupId>
-        <!-- WARNING: 10.15.x.x does not work with openliberty 20.0.0.1 -->
         <derby.version>10.14.2.0</derby.version>
         <liberty-maven-plugin.version>3.12.0</liberty-maven-plugin.version>
-        <!-- Jakarta EE 9 support see: https://github.com/OpenLiberty/liberty-arquillian/issues/71 -->
         <arquillian-liberty-jakarta.version>3.0.0</arquillian-liberty-jakarta.version>
 
         <!-- by default skip tests -->
@@ -508,12 +504,8 @@
 
                     <!-- The WildFly plugin deploys your war to a local running WildFly container -->
                     <!-- To use, run: mvn package wildfly:deploy -->
-                    <!-- For Jakarta EE 11, use `wildfly-preview-dist` as artifactId instead to start
-                    and deploy applications-->
-                    <!-- Run: mvn clean wildfly:run -PWildfly
-                    -Dwildfly.artifactId=wildfly-preview-dist -Dwildfly.version=22.0.0.Alpha1 -->
-                    <!-- or set the `jboss-as.home` to run: mvn clean wildfly:run -PWildfly
-                    -Djboss-as.home=D:\appsvr\wildfly-preview-22.0.0.Alpha1-->
+                    <!-- WildFly 41.0.0.Final has native Jakarta EE 11 support via wildfly-dist -->
+                    <!-- Run with: mvn clean wildfly:run -Pwildfly -->
                     <plugin>
                         <groupId>org.wildfly.plugins</groupId>
                         <artifactId>wildfly-maven-plugin</artifactId>
