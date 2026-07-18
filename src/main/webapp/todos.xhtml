@@ -82,7 +82,7 @@
                             <button jsf:id="saveTodo"
                                     jsf:action="#{todoList.saveTodo()}"
                                     class="btn #{todoList.form.id == null ? 'btn-primary' : 'btn-success'} btn-lg w-100 py-3 fw-bold">
-                                <f:ajax execute="@form" render="@all"/>
+                                <f:ajax execute="@form" render="@form"/>
                                 #{todoList.form.id == null ? 'Add Todo' : 'Update Todo'}
                             </button>
                         </div>
@@ -142,7 +142,7 @@
                                         </a>
                                         <a jsf:immediate="true" jsf:action="#{todoList.deleteTodo(todo.id)}"
                                            class="btn btn-sm btn-outline-danger" title="Delete Todo">
-                                            <f:ajax execute="@this" render="@all"/>
+                                            <f:ajax execute="@this" render="@form"/>
                                             <i class="bi bi-trash"></i>
                                         </a>
                                     </div>
