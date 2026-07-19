@@ -112,14 +112,9 @@
                                         <a jsf:immediate="true" jsf:action="#{todoList.toggleCompletedStatus(todo.id)}"
                                            class="text-decoration-none d-flex align-items-center">
                                             <f:ajax execute="@this" render="@all"/>
-                                            <ui:fragment rendered="#{todo.status == 'COMPLETED'}">
-                                                <input type="checkbox" class="form-check-input fs-5 me-3 cursor-pointer"
-                                                       checked="checked" style="pointer-events: none;"/>
-                                            </ui:fragment>
-                                            <ui:fragment rendered="#{todo.status != 'COMPLETED'}">
-                                                <input type="checkbox" class="form-check-input fs-5 me-3 cursor-pointer"
-                                                       style="pointer-events: none;"/>
-                                            </ui:fragment>
+                                            <input type="checkbox" class="form-check-input fs-5 me-3 cursor-pointer"
+                                                   checked="#{todo.status == 'COMPLETED' ? 'checked' : null}"
+                                                   style="pointer-events: none;"/>
                                         </a>
 
                                         <!-- Todo Title with Strike-through if completed -->
