@@ -19,7 +19,7 @@
     </application>
 
     <lifecycle>
-        <phase-listener>com.example.web.MessageHandler</phase-listener>
+        <!-- MessageHandler migrated to CDI @Observes, see com.example.web.MessageHandler -->
 <!--        <phase-listener>com.example.web.RequestLoggingPhaseListener</phase-listener>-->
     </lifecycle>
 </faces-config>

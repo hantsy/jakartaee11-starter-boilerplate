@@ -27,8 +27,23 @@
     <context-param>
         <param-name>jakarta.faces.ENABLE_WEBSOCKET_ENDPOINT</param-name>
         <param-value>true</param-value>
-    </context-param> 
-    
+    </context-param>
+
+    <context-param>
+        <param-name>jakarta.faces.WEBAPP_RESOURCES_DIRECTORY</param-name>
+        <param-value>/WEB-INF/resources</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>jakarta.faces.FACELETS_SKIP_COMMENTS</param-name>
+        <param-value>true</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>jakarta.faces.INTERPRET_EMPTY_STRING_SUBMITTED_VALUES_AS_NULL</param-name>
+        <param-value>true</param-value>
+    </context-param>
+
     <!--    <context-param>
         <param-name>jakarta.faces.DISABLE_FACESSERVLET_TO_XHTML</param-name>
         <param-value>true</param-name>
