@@ -90,7 +90,7 @@ public class TodoList implements Serializable {
         }
         loadTodos();
         this.form = new TodoForm();
-        facesContext.addMessage(null,new FacesMessage("Todo was saved sucessfully."));
+        facesContext.addMessage(null,new FacesMessage("Todo was saved successfully."));
     }
 
     public void editTodo(Long id) {
@@ -103,7 +103,7 @@ public class TodoList implements Serializable {
         LOGGER.log(Level.INFO, "deleting todo:{0}", new Object[]{id});
         todoRepository.deleteById(id);
         loadTodos();
-        facesContext.addMessage(null,new FacesMessage("Todo '%s' was deleted sucessfully.".formatted(id.toString())));
+        facesContext.addMessage(null,new FacesMessage("Todo '%s' was deleted successfully.".formatted(id.toString())));
     }
     
     public void toggleCompletedStatus(Long id) {
