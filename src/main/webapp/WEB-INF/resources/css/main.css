@@ -39,3 +39,6 @@ h1.page-header{
 .transition-all {
     transition: all 0.25s ease-in-out;
 }
+.list-group-item .form-check-input {
+    pointer-events: none;
+}
