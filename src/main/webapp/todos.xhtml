@@ -12,7 +12,7 @@
     <ui:define name="content">
 
         <!-- Section 1: Summary / Filter Buttons -->
-        <h:panelGroup id="filterPanel" layout="block">
+        <div jsf:id="filterPanel">
             <form jsf:id="filterForm" role="form" class="form">
                 <div class="row g-3 mb-4">
                     <div class="col-md-4">
@@ -50,126 +50,122 @@
                     </div>
                 </div>
             </form>
-        </h:panelGroup>
+        </div>
 
         <!-- Section 2: Todo Form (Add / Update) -->
-        <h:panelGroup id="todoFormPanel" layout="block">
-            <div class="card mb-4 shadow-sm border-0 bg-white">
-                <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center py-3">
-                    <h5 class="mb-0 fw-semibold">
-                        <i class="bi #{todoList.form.id == null ? 'bi-plus-circle-fill' : 'bi-pencil-square'} me-2"></i>
-                        #{todoList.form.id == null ? 'Add a New Todo' : 'Update Todo Item'}
-                    </h5>
-                    <ui:fragment rendered="#{todoList.form.id != null}">
-                        <a jsf:id="cancelEdit"
-                           jsf:action="#{todoList.cancelEdit()}"
-                           class="btn btn-sm btn-outline-light">
-                            <f:ajax execute="@this" render=":todoFormPanel :alertPanel"/>
-                            Cancel Edit
-                        </a>
-                    </ui:fragment>
-                </div>
-                <div class="card-body p-4 bg-light bg-opacity-50">
-                    <form jsf:id="todoForm" role="form" class="form">
-                        <div class="row g-3 align-items-center">
-                            <div class="col-md-9 col-sm-12">
-                                <div class="form-floating">
-                                    <input type="text" jsf:id="title"
-                                           class="form-control #{not empty facesContext.getMessageList('title') ? 'is-invalid' : ''}"
-                                           jsf:value="#{todoList.form.title}"
-                                           jsf:required="true"
-                                           jsf:requiredMessage="Todo title is required."
-                                           placeholder="What needs to be done?"/>
-                                    <label for="todoForm:title" class="text-secondary">What needs to be done?</label>
-                                    <small class="invalid-feedback fw-bold">
-                                        <h:message for="title" showDetail="false" showSummary="true"/>
-                                    </small>
-                                </div>
-                            </div>
-                            <div class="col-md-3 col-sm-12 text-md-end">
-                                <input type="hidden" jsf:id="todoId" jsf:value="#{todoList.form.id}"/>
-                                <button jsf:id="saveTodo"
-                                        jsf:action="#{todoList.saveTodo()}"
-                                        class="btn #{todoList.form.id == null ? 'btn-primary' : 'btn-success'} btn-lg w-100 py-3 fw-bold">
-                                    <f:ajax execute="@form" render=":filterPanel :todoFormPanel :todoListPanel :alertPanel"/>
-                                    #{todoList.form.id == null ? 'Add Todo' : 'Update Todo'}
-                                </button>
+        <div jsf:id="todoFormPanel" class="card mb-4 shadow-sm border-0 bg-white">
+            <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center py-3">
+                <h5 class="mb-0 fw-semibold">
+                    <i class="bi #{todoList.form.id == null ? 'bi-plus-circle-fill' : 'bi-pencil-square'} me-2"></i>
+                    #{todoList.form.id == null ? 'Add a New Todo' : 'Update Todo Item'}
+                </h5>
+                <ui:fragment rendered="#{todoList.form.id != null}">
+                    <a jsf:id="cancelEdit"
+                       jsf:action="#{todoList.cancelEdit()}"
+                       class="btn btn-sm btn-outline-light">
+                        <f:ajax execute="@this" render=":todoFormPanel :alertPanel"/>
+                        Cancel Edit
+                    </a>
+                </ui:fragment>
+            </div>
+            <div class="card-body p-4 bg-light bg-opacity-50">
+                <form jsf:id="todoForm" role="form" class="form">
+                    <div class="row g-3 align-items-center">
+                        <div class="col-md-9 col-sm-12">
+                            <div class="form-floating">
+                                <input type="text" jsf:id="title"
+                                       class="form-control #{not empty facesContext.getMessageList('todoForm:title') ? 'is-invalid' : ''}"
+                                       jsf:value="#{todoList.form.title}"
+                                       jsf:required="true"
+                                       jsf:requiredMessage="Todo title is required."
+                                       placeholder="What needs to be done?"/>
+                                <label for="todoForm:title" class="text-secondary">What needs to be done?</label>
+                                <small class="invalid-feedback fw-bold">
+                                    <h:message for="todoForm:title" showDetail="false" showSummary="true"/>
+                                </small>
                             </div>
                         </div>
-                    </form>
-                </div>
+                        <div class="col-md-3 col-sm-12 text-md-end">
+                            <input type="hidden" jsf:id="todoId" jsf:value="#{todoList.form.id}"/>
+                            <button jsf:id="saveTodo"
+                                    jsf:action="#{todoList.saveTodo()}"
+                                    class="btn #{todoList.form.id == null ? 'btn-primary' : 'btn-success'} btn-lg w-100 py-3 fw-bold">
+                                <f:ajax execute="@form"
+                                        render=":filterPanel :todoFormPanel :todoListPanel :alertPanel"/>
+                                #{todoList.form.id == null ? 'Add Todo' : 'Update Todo'}
+                            </button>
+                        </div>
+                    </div>
+                </form>
             </div>
-        </h:panelGroup>
+        </div>
 
         <!-- Section 3: Todo List -->
-        <h:panelGroup id="todoListPanel" layout="block">
-            <div class="card shadow-sm border-0">
-                <div class="card-header bg-secondary bg-opacity-10 text-dark d-flex justify-content-between align-items-center py-3 border-bottom">
-                    <h5 class="mb-0 fw-semibold text-secondary">
-                        <i class="bi bi-list-task me-2 text-primary"></i>
-                        Todo List: <span
-                            class="badge bg-primary text-white text-uppercase ms-1">#{todoList.filter}</span>
-                    </h5>
-                    <span class="badge bg-secondary text-white px-3 py-2 rounded-pill">
+        <div jsf:id="todoListPanel" class="card shadow-sm border-0">
+            <div class="card-header bg-secondary bg-opacity-10 text-dark d-flex justify-content-between align-items-center py-3 border-bottom">
+                <h5 class="mb-0 fw-semibold text-secondary">
+                    <i class="bi bi-list-task me-2 text-primary"></i>
+                    Todo List: <span class="badge bg-primary text-white text-uppercase ms-1">#{todoList.filter}</span>
+                </h5>
+                <span class="badge bg-secondary text-white px-3 py-2 rounded-pill">
                         Showing #{todoList.todos.size()} of #{todoList.allCount}
                     </span>
-                </div>
-                <div class="card-body p-0">
-                    <ui:fragment rendered="#{not empty todoList.todos}">
-                        <div class="list-group list-group-flush">
-                            <form jsf:id="listForm" role="form" class="form">
-                                <ui:repeat id="todos" var="todo" value="#{todoList.todos}">
-                                    <div class="list-group-item d-flex align-items-center justify-content-between p-3 border-bottom hover-light transition-all">
-                                        <div class="d-flex align-items-center flex-grow-1">
-                                            <!-- Checkbox for completing/reverting -->
-                                            <a jsf:id="toggleStatus"
-                                               jsf:action="#{todoList.toggleCompletedStatus(todo.id)}"
-                                               class="text-decoration-none d-flex align-items-center">
-                                                <f:ajax execute="@this" render=":filterPanel :todoListPanel :alertPanel"/>
-                                                <input type="checkbox" class="form-check-input fs-5 me-3 cursor-pointer"
-                                                       checked="#{todo.status == 'COMPLETED' ? 'checked' : null}"/>
-                                            </a>
+            </div>
+            <div class="card-body p-0">
+                <ui:fragment rendered="#{not empty todoList.todos}">
+                    <div class="list-group list-group-flush">
+                        <form jsf:id="listForm" role="form" class="form">
+                            <ui:repeat id="todos" var="todo" value="#{todoList.todos}">
+                                <div class="list-group-item d-flex align-items-center justify-content-between p-3 border-bottom hover-light transition-all">
+                                    <div class="d-flex align-items-center flex-grow-1">
+                                        <!-- Checkbox for completing/reverting -->
+                                        <a jsf:id="toggleStatus"
+                                           jsf:action="#{todoList.toggleCompletedStatus(todo.id)}"
+                                           class="text-decoration-none d-flex align-items-center">
+                                            <f:ajax execute="@this" render=":filterPanel :todoListPanel :alertPanel"/>
+                                            <input type="checkbox" class="form-check-input fs-5 me-3 cursor-pointer"
+                                                   checked="#{todo.status == 'COMPLETED' ? 'checked' : null}"/>
+                                        </a>
 
-                                            <!-- Todo Title with Strike-through if completed -->
-                                            <span class="fs-5 me-3 #{todo.status == 'COMPLETED' ? 'text-decoration-line-through text-muted' : 'text-dark fw-medium'}">
+                                        <!-- Todo Title with Strike-through if completed -->
+                                        <span class="fs-5 me-3 #{todo.status == 'COMPLETED' ? 'text-decoration-line-through text-muted' : 'text-dark fw-medium'}">
                                                 #{todo.title}
                                             </span>
 
-                                            <!-- Status Badge -->
-                                            <span class="badge #{todo.status == 'COMPLETED' ? 'bg-success bg-opacity-10 text-success border border-success border-opacity-25' : 'bg-warning bg-opacity-10 text-warning-emphasis border border-warning border-opacity-25'} px-2 py-1">
+                                        <!-- Status Badge -->
+                                        <span class="badge #{todo.status == 'COMPLETED' ? 'bg-success bg-opacity-10 text-success border border-success border-opacity-25' : 'bg-warning bg-opacity-10 text-warning-emphasis border border-warning border-opacity-25'} px-2 py-1">
                                                 #{todo.status}
                                             </span>
-                                        </div>
-
-                                        <!-- Actions (Edit/Delete) -->
-                                        <div class="d-flex gap-2">
-                                            <a jsf:id="editTodo"
-                                               jsf:action="#{todoList.editTodo(todo.id)}"
-                                               class="btn btn-sm btn-outline-primary" title="Edit Todo">
-                                                <f:ajax execute="@this" render=":todoFormPanel :todoListPanel :alertPanel"/>
-                                                <i class="bi bi-pencil-square"></i>
-                                            </a>
-                                            <a jsf:id="deleteTodo"
-                                               jsf:action="#{todoList.deleteTodo(todo.id)}"
-                                               class="btn btn-sm btn-outline-danger" title="Delete Todo">
-                                                <f:ajax execute="@this" render=":filterPanel :todoListPanel :alertPanel"/>
-                                                <i class="bi bi-trash"></i>
-                                            </a>
-                                        </div>
                                     </div>
-                                </ui:repeat>
-                            </form>
-                        </div>
-                    </ui:fragment>
-                    <ui:fragment rendered="#{empty todoList.todos}">
-                        <div class="text-center py-5 my-3 text-muted">
-                            <i class="bi bi-clipboard-x display-3 mb-3 d-block text-secondary text-opacity-50"></i>
-                            <p class="fs-5 mb-0">No #{todoList.filter.toLowerCase()} todos found.</p>
-                        </div>
-                    </ui:fragment>
-                </div>
+
+                                    <!-- Actions (Edit/Delete) -->
+                                    <div class="d-flex gap-2">
+                                        <a jsf:id="editTodo"
+                                           jsf:action="#{todoList.editTodo(todo.id)}"
+                                           class="btn btn-sm btn-outline-primary" title="Edit Todo">
+                                            <f:ajax execute="@this" render=":todoFormPanel :todoListPanel :alertPanel"/>
+                                            <i class="bi bi-pencil-square"></i>
+                                        </a>
+                                        <a jsf:id="deleteTodo"
+                                           jsf:action="#{todoList.deleteTodo(todo.id)}"
+                                           class="btn btn-sm btn-outline-danger" title="Delete Todo">
+                                            <f:ajax execute="@this" render=":filterPanel :todoListPanel :alertPanel"/>
+                                            <i class="bi bi-trash"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </ui:repeat>
+                        </form>
+                    </div>
+                </ui:fragment>
+                <ui:fragment rendered="#{empty todoList.todos}">
+                    <div class="text-center py-5 my-3 text-muted">
+                        <i class="bi bi-clipboard-x display-3 mb-3 d-block text-secondary text-opacity-50"></i>
+                        <p class="fs-5 mb-0">No #{todoList.filter.toLowerCase()} todos found.</p>
+                    </div>
+                </ui:fragment>
             </div>
-        </h:panelGroup>
+        </div>
 
     </ui:define>
 </ui:composition>
