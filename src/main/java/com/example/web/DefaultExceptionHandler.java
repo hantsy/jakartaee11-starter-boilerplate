@@ -64,8 +64,11 @@ public class DefaultExceptionHandler extends ExceptionHandlerWrapper {
         FacesContext context = FacesContext.getCurrentInstance();
         String viewId = vee.getViewId();
         LOG.log(Level.INFO, "view id @{0}", viewId);
+        // fallback to application root when viewId cannot be determined,
+        // otherwise navigating to null outcome redisplay the expired view and loops
+        String outcome = (viewId != null) ? viewId : "/todos.xhtml?faces-redirect=true";
         NavigationHandler nav = context.getApplication().getNavigationHandler();
-        nav.handleNavigation(context, null, viewId);
+        nav.handleNavigation(context, null, outcome);
         context.renderResponse();
     }
 
