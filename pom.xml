@@ -69,7 +69,7 @@
         <liberty.runtime.version>26.0.0.8-beta</liberty.runtime.version>
         <liberty.runtime.groupId>io.openliberty.beta</liberty.runtime.groupId>
         <derby.version>10.14.2.0</derby.version>
-        <liberty-maven-plugin.version>3.12.0</liberty-maven-plugin.version>
+        <liberty-maven-plugin.version>3.12.1</liberty-maven-plugin.version>
         <arquillian-liberty-jakarta.version>3.0.0</arquillian-liberty-jakarta.version>
 
         <!-- by default skip tests -->
