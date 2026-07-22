@@ -38,16 +38,8 @@ public class TodoList implements Serializable {
         return todos;
     }
 
-    public void setTodos(List<Todo> todos) {
-        this.todos = todos;
-    }
-
     public TodoForm getForm() {
         return form;
-    }
-
-    public void setForm(TodoForm form) {
-        this.form = form;
     }
     
     public void init(){

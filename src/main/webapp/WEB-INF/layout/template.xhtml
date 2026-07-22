@@ -3,10 +3,10 @@
 <html xmlns:ui="jakarta.faces.facelets"
       xmlns:f="jakarta.faces.core"
       xmlns:h="jakarta.faces.html"
-      xmlns:jsf="jakarta.faces">
+      xmlns:faces="jakarta.faces">
 <f:view contentType="text/html" encoding="UTF-8">
     <ui:insert name="metadata"></ui:insert>
-    <head jsf:id="head">
+    <head faces:id="head">
         <title>Jakarta EE Todo List - A JakartaEE Faces Sample</title>
         <!-- Required meta tags -->
         <meta charset="utf-8"></meta>
@@ -21,14 +21,14 @@
         <ui:insert name="headIncludes"></ui:insert>
     </head>
 
-    <body jsf:id="body" class="d-flex flex-column h-100">
+    <body faces:id="body" class="d-flex flex-column h-100">
         <div class="header">
             <ui:include src="/WEB-INF/layout/header.xhtml"/>
         </div>
 
         <main role="main" class="flex-shrink-0">
             <div class="container">
-                <div jsf:id="alertPanel">
+                <div faces:id="alertPanel">
                     <ui:include src="/WEB-INF/layout/alert.xhtml"/>
                 </div>
 
