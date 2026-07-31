@@ -1,5 +1,4 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:ui="jakarta.faces.facelets">
+<ui:composition xmlns:ui="jakarta.faces.facelets">
     <ui:fragment rendered="#{not facesContext.validationFailed and not empty facesContext.messageList}">
 
         <ui:repeat var="message" value="#{facesContext.messageList}">
@@ -8,12 +7,6 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         </ui:repeat>
-
-        <!--        <h:messages id="messages" layout="vertical" globalOnly="true"
-                            styleClass="list-unstyled" showSummary="true" showDetail="false"
-                            errorClass="alert alert-danger" infoClass="alert alert-info"
-                            warnClass="alert alert-warning" >
-                </h:messages>-->
 
     </ui:fragment>
 </ui:composition>
