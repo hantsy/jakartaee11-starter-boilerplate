@@ -23,7 +23,7 @@ A clean starter template for Jakarta EE 11 applications with ready-made integrat
 
 * <del>**OpenLiberty 26.0.0.5-beta**: While all test cases pass in isolation, the runtime fails to resolve Jakarta Data repository interfaces during application startup. A fix is reportedly available in nightly builds; verification is pending.</del> Verified: OpenLiberty 26.0.0.6-beta works as expected.
 
-* **Embedded GlassFish**: Startup failed because of a known Jakarta Messaging issue. See <https://github.com/eclipse-ee4j/glassfish/issues/24842>.
+* **Embedded GlassFish**: The `glassfish-embedded-all` uber-JAR is missing the OpenMQ/JMS implementation classes. The `glassfish-embedded` profile works around this by extracting MQ JARs from the full GlassFish distribution and merging them into a patched `glassfish-embedded-all` via `maven-dependency-plugin` + `maven-install-plugin`. The JMS Resource Adapter starts successfully; the MDB requires an external JMS broker (REMOTE mode). See <https://github.com/eclipse-ee4j/glassfish/issues/24842>.
 
 ## Build and Run
 
