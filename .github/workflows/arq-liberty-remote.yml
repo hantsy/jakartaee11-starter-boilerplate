@@ -1,0 +1,126 @@
+name: arq-liberty-remote
+
+on:
+  push:
+    paths-ignore:
+      - "docs/**"
+    branches:
+      - master
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Download Derby JDBC driver
+        run: |
+          export DB_VERSION="10.14.2.0"
+          mkdir -p /tmp/liberty-shared
+          curl -o /tmp/liberty-shared/derby-${DB_VERSION}.jar \
+            -L https://repo1.maven.org/maven2/org/apache/derby/derby/${DB_VERSION}/derby-${DB_VERSION}.jar
+          mkdir -p /tmp/liberty-config
+          cp src/test/arq-liberty-remote/server.xml /tmp/liberty-config/server.xml
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: liberty-config
+          path: |
+            /tmp/liberty-shared/
+            /tmp/liberty-config/
+
+  build:
+    needs: prepare
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Set up JDK
+        uses: actions/setup-java@v5
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: 'maven'
+
+      - uses: actions/download-artifact@v8
+        with:
+          name: liberty-config
+          path: /tmp/liberty-artifacts
+
+      - name: Prepare config directories
+        run: |
+          mkdir -p /tmp/liberty-dropins/defaults
+
+      - name: Start OpenLiberty
+        run: |
+          docker run -d --name liberty \
+            -p 9080:9080 -p 9443:9443 \
+            -v /tmp/liberty-artifacts/liberty-config/server.xml:/config/server.xml \
+            -v /tmp/liberty-dropins:/config/configDropins \
+            -v /tmp/liberty-artifacts/liberty-shared:/opt/ol/wlp/usr/shared/resources \
+            icr.io/appcafe/open-liberty:full-java21-openj9-ubi-minimal
+          echo "Waiting for Liberty server to start..."
+          for i in $(seq 1 30); do
+            if curl -sf -o /dev/null http://localhost:9080/; then
+              echo "Liberty server is ready"
+              exit 0
+            fi
+            echo "Waiting... ($i/30)"
+            sleep 10
+          done
+          echo "Server did not become ready, showing logs:"
+          docker logs liberty --tail 50
+          exit 1
+
+      - name: Import Liberty SSL certificate
+        run: |
+          # Extract auto-generated keystore password from Liberty config
+          KEYSTORE_PASS=$(cat /tmp/liberty-dropins/defaults/keystore.xml \
+            | grep -oP 'password="\K[^"]+' | head -1)
+          echo "Keystore password: ${KEYSTORE_PASS}"
+
+          # Find the keystore location
+          KEYSTORE_PATH=$(docker exec liberty sh -c "find /opt/ol/wlp/output -name 'key.p12' 2>/dev/null | head -1")
+          echo "Keystore path: ${KEYSTORE_PATH}"
+
+          # Export default certificate
+          docker exec liberty sh -c "echo '${KEYSTORE_PASS}' | keytool -export -alias default -file /tmp/testwlp.crt -keystore '${KEYSTORE_PATH}' -storepass '${KEYSTORE_PASS}' -storetype PKCS12"
+          docker cp liberty:/tmp/testwlp.crt /tmp/testwlp.crt
+
+          # JDK cacerts is read-only — use temp copy
+          cp ${JAVA_HOME}/lib/security/cacerts /tmp/cacerts
+          chmod 644 /tmp/cacerts
+          echo "Importing Liberty certificate into truststore..."
+          keytool -import -trustcacerts \
+            -keystore /tmp/cacerts \
+            -storepass changeit \
+            -alias testwlp \
+            -file /tmp/testwlp.crt \
+            -noprompt
+          echo "Certificate imported"
+
+      - name: Build with Maven
+        run: mvn clean verify -Parq-liberty-remote -Djavax.net.ssl.trustStore=/tmp/cacerts -Djavax.net.ssl.trustStorePassword=changeit
+
+      - name: Collect Liberty logs
+        if: failure()
+        run: |
+          docker logs liberty > /tmp/liberty-container.log 2>&1 || true
+          mkdir -p /tmp/liberty-server-logs
+          docker cp liberty:/opt/ol/wlp/output/defaultServer/logs/. /tmp/liberty-server-logs/ 2>/dev/null || true
+
+      - uses: actions/upload-artifact@v7
+        if: failure()
+        with:
+          name: liberty-remote-logs
+          path: |
+            /tmp/liberty-container.log
+            /tmp/liberty-server-logs/
+            target/surefire-reports/
+            target/failsafe-reports/

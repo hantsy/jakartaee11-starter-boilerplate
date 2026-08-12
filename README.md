@@ -5,6 +5,10 @@
 [![arq-payara-managed](https://github.com/hantsy/jakartaee11-starter-boilerplate/actions/workflows/arq-payara-managed.yml/badge.svg)](https://github.com/hantsy/jakartaee11-starter-boilerplate/actions/workflows/arq-payara-managed.yml)
 [![arq-wildfly-managed](https://github.com/hantsy/jakartaee11-starter-boilerplate/actions/workflows/arq-wildfly-managed.yml/badge.svg)](https://github.com/hantsy/jakartaee11-starter-boilerplate/actions/workflows/arq-wildfly-managed.yml)
 [![arq-liberty-managed](https://github.com/hantsy/jakartaee11-starter-boilerplate/actions/workflows/arq-liberty-managed.yml/badge.svg)](https://github.com/hantsy/jakartaee11-starter-boilerplate/actions/workflows/arq-liberty-managed.yml)
+[![arq-glassfish-remote](https://github.com/hantsy/jakartaee11-starter-boilerplate/actions/workflows/arq-glassfish-remote.yml/badge.svg)](https://github.com/hantsy/jakartaee11-starter-boilerplate/actions/workflows/arq-glassfish-remote.yml)
+[![arq-payara-remote](https://github.com/hantsy/jakartaee11-starter-boilerplate/actions/workflows/arq-payara-remote.yml/badge.svg)](https://github.com/hantsy/jakartaee11-starter-boilerplate/actions/workflows/arq-payara-remote.yml)
+[![arq-wildfly-remote](https://github.com/hantsy/jakartaee11-starter-boilerplate/actions/workflows/arq-wildfly-remote.yml/badge.svg)](https://github.com/hantsy/jakartaee11-starter-boilerplate/actions/workflows/arq-wildfly-remote.yml)
+[![arq-liberty-remote](https://github.com/hantsy/jakartaee11-starter-boilerplate/actions/workflows/arq-liberty-remote.yml/badge.svg)](https://github.com/hantsy/jakartaee11-starter-boilerplate/actions/workflows/arq-liberty-remote.yml)
 
 A clean starter template for Jakarta EE 11 applications with ready-made integration examples for multiple Jakarta EE containers. This repository demonstrates modern Jakarta EE development with container-specific support and [Arquillian](https://arquillain.org) integration tests.
 
@@ -81,8 +85,32 @@ Arquillian integration tests are included for several managed containers. Run th
   mvn clean verify -Parq-wildfly-managed
   ```
 
-* **Open Liberty Managed**:
+## Running Remote Arquillian Tests
+
+Remote profiles test against an already-running server instance (local or Docker). The server must be started and accessible before running the tests.
+
+* **GlassFish Remote**:
 
   ```bash
-  mvn clean verify -Parq-liberty-managed
+  mvn clean verify -Parq-glassfish-remote
   ```
+
+* **Payara Remote**:
+
+  ```bash
+  mvn clean verify -Parq-payara-remote
+  ```
+
+* **WildFly Remote**:
+
+  ```bash
+  mvn clean verify -Parq-wildfly-remote
+  ```
+
+* **Open Liberty Remote**:
+
+  ```bash
+  mvn clean verify -Parq-liberty-remote
+  ```
+
+The GitHub Actions workflows use Docker service containers to run the servers automatically. See the [workflow files](.github/workflows/) for the Docker configuration.

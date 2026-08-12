@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<server description="OpenLiberty Remote Test Server">
+
+    <!-- Enable features for Jakarta EE 11 and remote management -->
+    <featureManager>
+        <feature>jakartaee-11.0</feature>
+        <feature>restConnector-2.0</feature>
+    </featureManager>
+
+    <!-- Quick start security for remote adapter access -->
+    <quickStartSecurity userName="admin" userPassword="admin"/>
+
+    <cdi emptyBeansXmlCDI3Compatibility="true"/>
+
+    <!-- Remote file access for application deployment -->
+    <remoteFileAccess>
+        <writeDir>${server.config.dir}/dropins</writeDir>
+    </remoteFileAccess>
+
+    <!-- HTTP endpoints -->
+    <httpEndpoint id="defaultHttpEndpoint"
+                  host="*"
+                  httpPort="9080"
+                  httpsPort="9443" />
+
+    <!-- Automatically expand WAR files -->
+    <applicationManager updateTrigger="mbean" autoExpand="true"/>
+
+    <!-- Messaging engine and JMS queue -->
+    <messagingEngine>
+        <queue id="HelloQueue"/>
+    </messagingEngine>
+
+    <jmsQueue id="HelloQueue" jndiName="jms/HelloQueue">
+        <properties.wasJms queueName="HelloQueue"/>
+    </jmsQueue>
+
+    <jmsActivationSpec id="HelloJmsTest/HelloConsumer">
+        <properties.wasJms
+                destinationRef="HelloQueue"
+                destinationType="jakarta.jms.Queue"
+                destinationLookup="java:comp/jms/HelloQueue"
+        />
+    </jmsActivationSpec>
+
+    <!-- Derby Library Configuration -->
+    <library id="derbyJDBCLib">
+        <fileset dir="${shared.resource.dir}" includes="derby*.jar"/>
+    </library>
+
+    <!-- Datasource Configuration -->
+    <dataSource id="DefaultDataSource" jndiName="jdbc/__default">
+        <jdbcDriver libraryRef="derbyJDBCLib" />
+        <properties.derby.embedded databaseName="ExampleDb" createDatabase="create"/>
+    </dataSource>
+
+</server>

@@ -1,0 +1,52 @@
+name: arq-wildfly-remote
+
+on:
+  push:
+    paths-ignore:
+      - "docs/**"
+    branches:
+      - master
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    services:
+      wildfly:
+        image: quay.io/wildfly/wildfly:41.0.0.Final-jdk21
+        ports:
+          - 8080:8080
+          - 9990:9990
+        command: /bin/sh -c "/opt/jboss/wildfly/bin/add-user.sh admin Admin@123 --silent && /opt/jboss/wildfly/bin/standalone.sh -b 0.0.0.0 -bmanagement 0.0.0.0 -c standalone-full.xml"
+        options: >-
+          --health-cmd "curl -sf http://localhost:8080/ || exit 1"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 30
+          --health-start-period 30s
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Set up JDK
+        uses: actions/setup-java@v5
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: 'maven'
+
+      - name: Build with Maven
+        run: mvn clean verify -Parq-wildfly-remote
+
+      - uses: actions/upload-artifact@v7
+        if: failure()
+        with:
+          name: wildfly-remote-logs
+          path: |
+            target/surefire-reports/
+            target/failsafe-reports/
