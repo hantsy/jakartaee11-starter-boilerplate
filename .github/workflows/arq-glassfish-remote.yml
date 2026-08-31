@@ -1,0 +1,50 @@
+name: arq-glassfish-remote
+
+on:
+  push:
+    paths-ignore:
+      - "docs/**"
+    branches:
+      - master
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    services:
+      glassfish:
+        image: ghcr.io/eclipse-ee4j/glassfish:8.0.2
+        ports:
+          - 4848:4848
+          - 8080:8080
+        options: >-
+          --health-cmd "curl -f http://localhost:4848/ || exit 1"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 20
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Set up JDK
+        uses: actions/setup-java@v6
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: 'maven'
+
+      - name: Build with Maven
+        run: mvn clean verify -Parq-glassfish-remote
+
+      - uses: actions/upload-artifact@v7
+        if: failure()
+        with:
+          name: glassfish-remote-logs
+          path: |
+            **/logs/
+            target/**/*.log
