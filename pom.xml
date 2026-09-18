@@ -17,12 +17,12 @@
         <maven.compiler.release>21</maven.compiler.release>
 
         <!-- Official Maven Plugins -->
-        <maven-compiler-plugin.version>3.15.0</maven-compiler-plugin.version>
+        <maven-compiler-plugin.version>3.16.0</maven-compiler-plugin.version>
         <maven-war-plugin.version>3.5.1</maven-war-plugin.version>
         <maven-dependency-plugin.version>3.11.0</maven-dependency-plugin.version>
-        <maven-surefire-plugin.version>3.5.6</maven-surefire-plugin.version>
-        <maven-failsafe-plugin.version>3.5.6</maven-failsafe-plugin.version>
-        <maven-surefire-report-plugin.version>3.5.6</maven-surefire-report-plugin.version>
+        <maven-surefire-plugin.version>3.6.0</maven-surefire-plugin.version>
+        <maven-failsafe-plugin.version>3.6.0</maven-failsafe-plugin.version>
+        <maven-surefire-report-plugin.version>3.6.0</maven-surefire-report-plugin.version>
         <!-- Maven 4 requires declarations of the plugins -->
         <maven-clean-plugin.version>3.5.0</maven-clean-plugin.version>
         <maven-resources-plugin.version>3.5.0</maven-resources-plugin.version>
@@ -61,9 +61,11 @@
         <resteasy.version>7.0.3.Final</resteasy.version>
       
         <!-- Hibernate 7.0.0 or higher implements JPA 3.2 -->
-        <hibernate.version>7.4.6.Final</hibernate.version>
-        <jakarta-data-qbn-tools.version>1.0.0</jakarta-data-qbn-tools.version>
+        <hibernate.version>7.4.7.Final</hibernate.version>
       
+        <!-- WildFly QBN support -->
+        <jakarta-data-qbn-tools.version>1.0.0</jakarta-data-qbn-tools.version>
+     
         <!-- OpenLiberty server -->
         <!-- Since 26.0.0.4 beta added Jakarta EE 11 support.
 		See: https://openliberty.io/blog/2026/04/07/26.0.0.4-beta.html
