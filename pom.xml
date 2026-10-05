@@ -44,7 +44,7 @@
 
         <!-- Glassfish server -->
         <glassfish.version>8.0.4</glassfish.version>
-        <jersey.version>4.0.2</jersey.version>
+        <jersey.version>4.0.3</jersey.version>
         <eclipselink.version>5.0.0</eclipselink.version>
         <arquillian-glassfish.version>7.1.1</arquillian-glassfish.version>
         <embedded-glassfish-maven-plugin.version>8.0</embedded-glassfish-maven-plugin.version>
