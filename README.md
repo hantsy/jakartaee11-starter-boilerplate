@@ -112,6 +112,12 @@ Arquillian integration tests are included for several containers. **Managed** pr
 
 ### Open Liberty
 
+* Managed:
+
+  ```bash
+  mvn clean verify -Parq-liberty-managed
+  ```
+
 * Remote:
 
   ```bash
