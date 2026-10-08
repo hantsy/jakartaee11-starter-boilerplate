@@ -28,7 +28,7 @@ A clean starter template for Jakarta EE 11 applications with ready-made integrat
 
 * <del>**OpenLiberty 26.0.0.5-beta**: While all test cases pass in isolation, the runtime fails to resolve Jakarta Data repository interfaces during application startup. A fix is reportedly available in nightly builds; verification is pending.</del> Verified: OpenLiberty 26.0.0.6-beta works as expected.
 
-* **Embedded GlassFish**: The `glassfish-embedded-all` uber-JAR is missing the OpenMQ/JMS implementation classes. The `glassfish-embedded` profile works around this by extracting MQ JARs from the full GlassFish distribution and merging them into a patched `glassfish-embedded-all` via `maven-dependency-plugin` + `maven-install-plugin`. The JMS Resource Adapter starts successfully; the MDB requires an external JMS broker (REMOTE mode). See <https://github.com/eclipse-ee4j/glassfish/issues/24842>.
+* <del>**Embedded GlassFish**: The `glassfish-embedded-all` uber-JAR is missing the OpenMQ/JMS implementation classes. The `glassfish-embedded` profile works around this by extracting MQ JARs from the full GlassFish distribution and merging them into a patched `glassfish-embedded-all` via `maven-dependency-plugin` + `maven-install-plugin`. The JMS Resource Adapter starts successfully; the MDB requires an external JMS broker (REMOTE mode).</del> Fixed in GlassFish v8.0.5. See <https://github.com/eclipse-ee4j/glassfish/issues/24842>.
 
 ## Build and Run
 
@@ -66,49 +66,53 @@ Use Maven profiles to build and launch the application on different servers:
 
 ## Running Arquillian Tests
 
-Arquillian integration tests are included for several managed containers. Run the matching profile for the server you want to verify:
+Arquillian integration tests are included for several containers. **Managed** profiles start and stop the server automatically. **Remote** profiles test against an already-running server instance (local or Docker); the server must be started and accessible before running the tests.
 
-* **GlassFish Managed**:
+### GlassFish
+
+* Managed:
 
   ```bash
   mvn clean verify -Parq-glassfish-managed
   ```
 
-* **Payara Managed**:
-
-  ```bash
-  mvn clean verify -Parq-payara-managed
-  ```
-
-* **WildFly Managed**:
-
-  ```bash
-  mvn clean verify -Parq-wildfly-managed
-  ```
-
-## Running Remote Arquillian Tests
-
-Remote profiles test against an already-running server instance (local or Docker). The server must be started and accessible before running the tests.
-
-* **GlassFish Remote**:
+* Remote:
 
   ```bash
   mvn clean verify -Parq-glassfish-remote
   ```
 
-* **Payara Remote**:
+### Payara
+
+* Managed:
+
+  ```bash
+  mvn clean verify -Parq-payara-managed
+  ```
+
+* Remote:
 
   ```bash
   mvn clean verify -Parq-payara-remote
   ```
 
-* **WildFly Remote**:
+### WildFly
+
+* Managed:
+
+  ```bash
+  mvn clean verify -Parq-wildfly-managed
+  ```
+
+* Remote:
 
   ```bash
   mvn clean verify -Parq-wildfly-remote
   ```
 
-* **Open Liberty Remote**:
+### Open Liberty
+
+* Remote:
 
   ```bash
   mvn clean verify -Parq-liberty-remote
