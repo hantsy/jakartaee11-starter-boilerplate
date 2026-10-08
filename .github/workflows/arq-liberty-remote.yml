@@ -13,29 +13,7 @@ on:
       - reopened
 
 jobs:
-  prepare:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v7
-
-      - name: Download Derby JDBC driver
-        run: |
-          export DB_VERSION="10.14.2.0"
-          mkdir -p /tmp/liberty-shared
-          curl -o /tmp/liberty-shared/derby-${DB_VERSION}.jar \
-            -L https://repo1.maven.org/maven2/org/apache/derby/derby/${DB_VERSION}/derby-${DB_VERSION}.jar
-          mkdir -p /tmp/liberty-config
-          cp src/test/arq-liberty-remote/server.xml /tmp/liberty-config/server.xml
-
-      - uses: actions/upload-artifact@v7
-        with:
-          name: liberty-config
-          path: |
-            /tmp/liberty-shared/
-            /tmp/liberty-config/
-
   build:
-    needs: prepare
     runs-on: ubuntu-latest
 
     steps:
@@ -48,10 +26,14 @@ jobs:
           distribution: 'temurin'
           cache: 'maven'
 
-      - uses: actions/download-artifact@v8
-        with:
-          name: liberty-config
-          path: /tmp/liberty-artifacts
+      - name: Download Derby JDBC driver and prepare config
+        run: |
+          export DB_VERSION="10.14.2.0"
+          mkdir -p /tmp/liberty-shared
+          curl -o /tmp/liberty-shared/derby-${DB_VERSION}.jar \
+            -L https://repo1.maven.org/maven2/org/apache/derby/derby/${DB_VERSION}/derby-${DB_VERSION}.jar
+          mkdir -p /tmp/liberty-config
+          cp src/test/arq-liberty-remote/server.xml /tmp/liberty-config/server.xml
 
       - name: Prepare config directories
         run: |
@@ -61,9 +43,9 @@ jobs:
         run: |
           docker run -d --name liberty \
             -p 9080:9080 -p 9443:9443 \
-            -v /tmp/liberty-artifacts/liberty-config/server.xml:/config/server.xml \
+            -v /tmp/liberty-config/server.xml:/config/server.xml \
             -v /tmp/liberty-dropins:/config/configDropins \
-            -v /tmp/liberty-artifacts/liberty-shared:/opt/ol/wlp/usr/shared/resources \
+            -v /tmp/liberty-shared:/opt/ol/wlp/usr/shared/resources \
             icr.io/appcafe/open-liberty:full-java21-openj9-ubi-minimal
           echo "Waiting for Liberty server to start..."
           for i in $(seq 1 30); do
