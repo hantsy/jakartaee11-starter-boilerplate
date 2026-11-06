@@ -28,7 +28,7 @@
         <maven-resources-plugin.version>3.5.0</maven-resources-plugin.version>
         <!-- sonar report -->
         <sonar-maven-plugin.version>5.8.0.7211</sonar-maven-plugin.version>
-        <cargo-maven3-plugin.version>1.10.29</cargo-maven3-plugin.version>
+        <cargo-maven3-plugin.version>1.10.30</cargo-maven3-plugin.version>
 
         <!-- Jakarta EE API -->
         <jakartaee.version>11.0.0</jakartaee.version>
@@ -56,7 +56,7 @@
         <!-- WildFly -->
         <!-- WildFly 40.0.0.Beta1 added Jakarta EE 11 support -->
         <wildfly.version>42.0.0.Final</wildfly.version>
-        <wildfly-maven-plugin.version>6.1.0.Final</wildfly-maven-plugin.version>
+        <wildfly-maven-plugin.version>6.2.0.Final</wildfly-maven-plugin.version>
         <wildfly-arquillian.version>6.0.0.Alpha1</wildfly-arquillian.version>
         <resteasy.version>7.0.5.Final</resteasy.version>
       
@@ -68,9 +68,9 @@
 
         <!-- OpenLiberty server -->
         <!-- Since 26.0.0.4 beta added Jakarta EE 11 support.
-		    See: https://openliberty.io/blog/2026/04/07/26.0.0.4-beta.html
-		    -->
-        <liberty.runtime.version>26.0.0.11-beta</liberty.runtime.version>
+        See: https://openliberty.io/blog/2026/04/07/26.0.0.4-beta.html
+        -->
+        <liberty.runtime.version>26.0.0.12-beta</liberty.runtime.version>
         <liberty.runtime.groupId>io.openliberty.beta</liberty.runtime.groupId>
         <derby.version>10.14.2.0</derby.version>
         <liberty-maven-plugin.version>3.12.4</liberty-maven-plugin.version>
@@ -998,7 +998,7 @@
         <profile>
             <id>coverage</id>
             <properties>
-                <jacoco.version>0.8.15</jacoco.version>
+                <jacoco.version>0.8.16</jacoco.version>
                 <asm.version>9.11.1</asm.version>
                 <arquillian-jacoco.version>1.1.0</arquillian-jacoco.version>
             </properties>
