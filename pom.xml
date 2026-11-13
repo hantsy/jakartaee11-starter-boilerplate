@@ -61,7 +61,7 @@
         <resteasy.version>7.0.5.Final</resteasy.version>
       
         <!-- Hibernate 7.0.0 or higher implements JPA 3.2 -->
-        <hibernate.version>7.4.14.Final</hibernate.version>
+        <hibernate.version>7.4.15.Final</hibernate.version>
       
         <!-- WildFly QBN support -->
         <jakarta-data-qbn-tools.version>1.0.0</jakarta-data-qbn-tools.version>
@@ -73,7 +73,7 @@
         <liberty.runtime.version>26.0.0.12-beta</liberty.runtime.version>
         <liberty.runtime.groupId>io.openliberty.beta</liberty.runtime.groupId>
         <derby.version>10.14.2.0</derby.version>
-        <liberty-maven-plugin.version>3.12.4</liberty-maven-plugin.version>
+        <liberty-maven-plugin.version>3.12.5</liberty-maven-plugin.version>
         <arquillian-liberty-jakarta.version>3.0.0</arquillian-liberty-jakarta.version>
 
         <!-- by default skip tests -->
