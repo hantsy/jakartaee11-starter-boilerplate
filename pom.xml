@@ -27,7 +27,7 @@
         <maven-clean-plugin.version>3.5.0</maven-clean-plugin.version>
         <maven-resources-plugin.version>3.5.0</maven-resources-plugin.version>
         <!-- sonar report -->
-        <sonar-maven-plugin.version>5.8.0.7211</sonar-maven-plugin.version>
+        <sonar-maven-plugin.version>5.9.0.7382</sonar-maven-plugin.version>
         <cargo-maven3-plugin.version>1.10.30</cargo-maven3-plugin.version>
 
         <!-- Jakarta EE API -->
@@ -50,7 +50,7 @@
         <embedded-glassfish-maven-plugin.version>8.1</embedded-glassfish-maven-plugin.version>
 
         <!-- Payara server -->
-        <payara.version>7.2026.10</payara.version>
+        <payara.version>7.2026.11</payara.version>
         <arquillian-payara.version>4.0.alpha4</arquillian-payara.version>
 
         <!-- WildFly -->
@@ -58,10 +58,10 @@
         <wildfly.version>42.0.0.Final</wildfly.version>
         <wildfly-maven-plugin.version>6.2.0.Final</wildfly-maven-plugin.version>
         <wildfly-arquillian.version>6.0.0.Alpha1</wildfly-arquillian.version>
-        <resteasy.version>7.0.5.Final</resteasy.version>
+        <resteasy.version>7.0.6.Final</resteasy.version>
       
         <!-- Hibernate 7.0.0 or higher implements JPA 3.2 -->
-        <hibernate.version>7.4.15.Final</hibernate.version>
+        <hibernate.version>7.4.16.Final</hibernate.version>
       
         <!-- WildFly QBN support -->
         <jakarta-data-qbn-tools.version>1.0.0</jakarta-data-qbn-tools.version>
